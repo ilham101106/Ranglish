@@ -534,42 +534,46 @@ export default function VocabLookup({ onHistoryUpdated }) {
             setShowSuggestions(false);
             handleLookup();
           }}
-          className="w-full theme-bg-card border-2 theme-border rounded-[22px] p-2 sm:p-2.5 pl-4 sm:pl-6 flex items-center gap-3 theme-card-shadow focus-within:border-[#5842f5] focus-within:ring-4 focus-within:ring-[#5842f5]/15 transition-all shadow-md hover:shadow-lg"
+          className="w-full theme-bg-card border-2 theme-border rounded-[22px] p-2.5 sm:p-2.5 sm:pl-6 flex flex-col sm:flex-row sm:items-center gap-2.5 sm:gap-3 theme-card-shadow focus-within:border-[#5842f5] focus-within:ring-4 focus-within:ring-[#5842f5]/15 transition-all shadow-md hover:shadow-lg"
         >
-          <Search className="w-5 h-5 text-[#5842f5] shrink-0" />
+          {/* Input & Icons Group */}
+          <div className="flex items-center gap-3 flex-1 w-full pl-2 sm:pl-0">
+            <Search className="w-5 h-5 text-[#5842f5] shrink-0" />
 
-          <input
-            type="text"
-            value={inputText}
-            onChange={(e) => handleInputChange(e.target.value)}
-            onFocus={() => {
-              if (inputText.trim().length >= 2 && suggestions.length > 0) {
-                setShowSuggestions(true);
-              }
-            }}
-            placeholder="Paste kata, frasa, atau lirik yang mau dipelajari..."
-            className="flex-1 bg-transparent border-none outline-none theme-text-main text-sm sm:text-base placeholder:theme-text-faint font-semibold py-1.5"
-          />
-
-          {inputText && (
-            <button
-              type="button"
-              onClick={() => {
-                setInputText("");
-                setSuggestions([]);
-                setShowSuggestions(false);
+            <input
+              type="text"
+              value={inputText}
+              onChange={(e) => handleInputChange(e.target.value)}
+              onFocus={() => {
+                if (inputText.trim().length >= 2 && suggestions.length > 0) {
+                  setShowSuggestions(true);
+                }
               }}
-              className="theme-text-faint hover:theme-text-main p-2 rounded-xl transition"
-              title="Hapus teks"
-            >
-              <X className="w-4 h-4" />
-            </button>
-          )}
+              placeholder="Paste kata, frasa, atau lirik yang mau dipelajari..."
+              className="flex-1 bg-transparent border-none outline-none theme-text-main text-sm sm:text-base placeholder:theme-text-faint font-semibold py-1.5 min-w-0"
+            />
 
+            {inputText && (
+              <button
+                type="button"
+                onClick={() => {
+                  setInputText("");
+                  setSuggestions([]);
+                  setShowSuggestions(false);
+                }}
+                className="theme-text-faint hover:theme-text-main p-2 rounded-xl transition shrink-0"
+                title="Hapus teks"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            )}
+          </div>
+
+          {/* Submit Action Button */}
           <button
             type="submit"
             disabled={isLoading || !inputText.trim()}
-            className={`shrink-0 px-5 sm:px-8 py-3 sm:py-3.5 rounded-[16px] text-xs sm:text-[14px] font-extrabold text-white transition-all duration-150 flex items-center gap-2 shadow-md whitespace-nowrap ${
+            className={`w-full sm:w-auto sm:shrink-0 px-5 sm:px-8 py-3 sm:py-3.5 rounded-[16px] text-xs sm:text-[14px] font-extrabold text-white transition-all duration-150 flex items-center justify-center gap-2 shadow-md whitespace-nowrap ${
               isLoading || !inputText.trim()
                 ? "opacity-60 cursor-not-allowed bg-gradient-to-r from-[#5842f5] to-[#f59e0b]"
                 : "bg-gradient-to-r from-[#5842f5] to-[#f59e0b] hover:opacity-95 active:scale-[0.98] hover:shadow-lg hover:shadow-indigo-500/25"
@@ -599,7 +603,7 @@ export default function VocabLookup({ onHistoryUpdated }) {
 
         {/* Autocomplete Suggestions Dropdown */}
         {showSuggestions && suggestions.length > 0 && (
-          <div className="absolute left-0 right-0 top-[68px] theme-bg-card border theme-border rounded-2xl shadow-2xl overflow-hidden z-50 animate-slide-up divide-y theme-border-subtle">
+          <div className="absolute left-0 right-0 top-full mt-2 theme-bg-card border theme-border rounded-2xl shadow-2xl overflow-hidden z-50 animate-slide-up divide-y theme-border-subtle">
             <div className="px-4 py-2 theme-bg-subtle flex items-center justify-between text-[11px] font-bold theme-text-muted">
               <span className="flex items-center gap-1.5 text-[#5842f5]">
                 <Zap className="w-3 h-3 text-amber-500" /> SARAN INSTAN DARI BANK KOSAKATA (0ms)
