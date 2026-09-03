@@ -30,7 +30,20 @@ Untuk mempermudah pelacakan, seluruh dokumentasi proyek dibagi secara rapi:
 
 ## 📝 Log Riwayat Pembaruan (Changelog Pengerjaan)
 
-### 🚀 Update Terakhir (4 September 2026) — Milestone "Contextual Generator & Proxy Server":
+### 🚀 Update Terakhir (4 September 2026) — Milestone "Contextual Generator, Quality Standards & Proxy Server":
+- [x] **Implementasi 4 Standar Kualitas & Nilai Edukasi (`src/services/freeTranslator.js`):**
+  1. **Standar 1 (Verifikasi Silang & Prioritas Idiom):**
+     * Fungsi `fetchDualTranslationDetails` mengambil hasil dari Google Translate GTX dan MyMemory secara paralel untuk verifikasi konsistensi makna.
+     * Frasa yang cocok dengan `COMMON_IDIOMS` (seperti *"piece of cake"*, *"break a leg"*, *"cold turkey"*, *"spill the beans"*, dll.) secara mutlak **memprioritaskan makna idiomatik otentik** dibanding hasil terjemahan mesin mentah yang sering salah/harfiah (*"gampang banget"* vs *"sepotong kue"*).
+     * Deteksi transliterasi/echo huruf demi huruf (`isTransliterationEcho`) memastikan ketikan acak atau terjemahan gagal tidak disajikan sebagai jawaban valid.
+  2. **Standar 2 (Gramatikal & 3 Situasi Berbeda):**
+     * Pengecekan jenis gramatikal (noun phrase, imperative, question, emotional, statement).
+     * Setiap hasil menyajikan contoh dari **3 situasi yang benar-benar berbeda** (Obrolan Kasual / Lingkungan Kerja / Refleksi Pribadi), lengkap dengan terjemahan Indonesia yang mencakup seluruh kalimat.
+  3. **Standar 3 (Catatan Berwawasan Konkret & Asal-usul):**
+     * Catatan idiom memuat fakta asal-usul historis (misal: tradisi *cakewalk* abad ke-19 untuk *piece of cake*, takhayul teater untuk *break a leg*, tradisi voting Yunani Kuno untuk *spill the beans*).
+     * Menjelaskan register bahasa (formal vs kasual, tingkat keakraban).
+  4. **Standar 4 (Level Kepercayaan / Confidence Level):**
+     * Menambahkan field `confidenceLevel` (`"high" | "medium" | "low"`) pada payload untuk kesiapan integrasi indikator akurasi.
 - [x] **Generator Contoh Kalimat & Catatan Kontekstual (`src/services/freeTranslator.js`):**
   1. **Validasi Kelayakan Input (Anti-Gibberish):** Memeriksa respon terjemahan layanan. Jika input kosong, tidak dikenal, atau dikembalikan sama persis oleh translator (seperti ketikan acak/keyboard smash), sistem secara jujur menyatakan kata/frasa belum dikenali (`isUnrecognized: true`) dan tidak memaksakan kalimat contoh karangan.
   2. **Eliminasi Total Template Statis "Lagu":** Menghapus template kalimat statis yang selalu memaksakan konteks "lagu/lirik" untuk semua input.
