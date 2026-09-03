@@ -2,7 +2,7 @@
 // Provides high-accuracy full-sentence Indonesian translation, context analysis,
 // idiom breakdown, and Anak Rantau nuance explanations for ANY arbitrary sentence/lyric/dialogue.
 
-import { normalizeToGaulSlang } from '../utils/textClassifier.js';
+import { normalizeToGaulSlang, isSongInput } from '../utils/textClassifier.js';
 import { generateSentencePhonetics } from '../utils/sentenceTranslator.js';
 
 /**
@@ -142,46 +142,116 @@ export async function generateRichSentenceAnalysis(rawText) {
 
   // 1. Fetch genuine translation
   const liveTranslation = await fetchLiveTranslation(text);
-  const cleanTranslation = liveTranslation || text;
+
+  // LANGKAH 1 — Validasi kelayakan input SEBELUM generate contoh:
+  // Jika hasil terjemahan KOSONG atau SAMA PERSIS dengan teks aslinya
+  // (menandakan Google Translate / MyMemory tidak mengenali kata/frasa tersebut atau input acak/typo)
+  const isUnrecognized =
+    !liveTranslation ||
+    liveTranslation.trim().length === 0 ||
+    liveTranslation.toLowerCase().trim() === lower;
+
+  if (isUnrecognized) {
+    return {
+      arti: 'Kata/frasa ini belum dikenali di database maupun layanan terjemahan. Coba cek lagi ejaannya, atau ini mungkin singkatan/slang yang sangat spesifik.',
+      cara_baca: phonetics || text.toLowerCase(),
+      penggunaan: [], // JANGAN isi dengan kalimat karangan
+      catatan: 'Kalau ini kata yang beneran ada, coba cari dengan ejaan lain, atau kasih konteks kalimat lengkapnya biar lebih akurat.',
+      isUnrecognized: true,
+      isInstant: false,
+      success: true,
+    };
+  }
+
+  const cleanTranslation = liveTranslation;
 
   // 2. Identify idioms or key grammatical features
   const detectedIdioms = COMMON_IDIOMS.filter(item => item.regex.test(lower));
+  const isLyric = isSongInput(text);
 
-  // 3. Generate 3 realistic contextual examples with rich dialogues
+  // Grammatical and contextual classification
+  const isQuestion =
+    text.endsWith('?') ||
+    /^(what|why|how|where|when|who|which|whose|whom|is|are|am|was|were|do|does|did|can|could|will|would|should|may|might|have|has|had)\b/i.test(text);
+
+  const isActionOrImperative =
+    /^(please\s+)?(hug|help|tell|let|make|give|take|call|listen|look|wait|stop|try|come|go|bring|show|ask|remember|forget|keep|hold|send|check|find|leave|stand|wake|run)\b/i.test(text);
+
+  const isNounOrAdjPhrase =
+    /^(a|an|the|my|your|his|her|our|their|this|that|these|those|pretty|beautiful|handsome|good|bad|sweet|cute|little|big|small|old|new|hot|cold|warm|fresh|best|great)\b/i.test(text) &&
+    !isQuestion &&
+    !isActionOrImperative;
+
+  const isEmotional =
+    /feel|love|hate|heart|cry|pain|hurt|miss|sad|happy|afraid|scared|worried|anxious|lonely|tired|broken|tears/i.test(lower) ||
+    /cinta|sayang|sedih|rindu|takut|minder|kecewa|sakit|nangis|rapuh/i.test(cleanTranslation.toLowerCase());
+
   let examples = [];
-
-  if (detectedIdioms.length > 0) {
-    const mainIdiom = detectedIdioms[0];
-    examples = [
-      `"Did you hear the loud noise last night? It shook me up a bit." ("Lu denger suara dentuman semalem gak? Itu sempet bikin gw kaget dan goyah dikit.")`,
-      `"Take a deep breath and stay calm, don't let the sudden news shake you up." ("Tarik napas panjang dan tetep tenang, jangan biarin berita mendadak itu bikin mental lu goyah.")`,
-      `"That near-accident really shook him up, but thankfully he's safe now." ("Kejadian nyaris kecelakaan itu beneran bikin dia syok berat, tapi syukurlah sekarang dia udah aman.")`
-    ];
-  } else if (text.endsWith('?') || /^(what|why|how|where|when|who|is|are|do|does|did|can|could|will|would)\b/i.test(text)) {
-    // Question context
-    examples = [
-      `A: "${text}"\nB: "Yeah, honestly it caught me off guard at first!" (A: "${cleanTranslation}" / B: "Iya, jujur awalnya beneran bikin gw kaget gak siap!")`,
-      `"She paused for a second and asked: '${text}'" ("Dia sempet terdiam sejenak terus nanya: '${cleanTranslation}'")`,
-      `"Before making any big decisions, you should ask yourself: '${text}'" ("Sebelum ngambil keputusan besar, coba tanya dulu ke diri lu sendiri: '${cleanTranslation}'")`
-    ];
-  } else {
-    // Statement context
-    examples = [
-      `"Whenever I listen to this song, the line '${text}' always hits differently." ("Tiap kali gw dengerin lagu ini, lirik '${cleanTranslation}' selalu kerasa ngena banget di hati.")`,
-      `"He looked out the window and whispered: '${text}'" ("Dia mandang ke luar jendela sambil berbisik: '${cleanTranslation}'")`,
-      `"In a moment like this, remembering '${text}' gives me comfort." ("Di momen kayak gini, nginget '${cleanTranslation}' bikin hati gw lebih tenang.")`
-    ];
-  }
-
-  // 4. Generate intelligent, informative Anak Rantau nuance note
   let note = '';
+
+  // LANGKAH 2 & 3: Generator kalimat contoh kontekstual & catatan spesifik
   if (detectedIdioms.length > 0) {
     const mainIdiom = detectedIdioms[0];
-    note = `Kutipan ini punya idiom penting: "${mainIdiom.key}" yang artinya ${mainIdiom.arti}. ${mainIdiom.penjelasan} Di lirik musik atau film, ekspresi ini sering dipakai buat menggambarkan rasa kaget, tertegun, atau emosi yang terguncang setelah mengalami kejadian tak terduga.`;
-  } else if (text.split(/\s+/).length >= 6) {
-    note = `Kalimat ini adalah ekspresi puitis yang sering muncul di lirik lagu atau kutipan dialog emosional. Susunan bahasanya sangat luwes dan menekankan suasana hati pembicara. Lu bisa pakai frasa intinya dalam obrolan kasual buat melukiskan perasaan yang mendalam ke temen dekat.`;
+    examples = [
+      `"Did you hear the news earlier? It really ${mainIdiom.key} a bit." ("Lu udah denger beritanya tadi? Itu beneran ${mainIdiom.arti} dikit.")`,
+      `"Take a deep breath and stay calm; don't let this situation ${mainIdiom.key}." ("Tarik napas panjang dan tetep tenang; jangan biarin situasi ini ${mainIdiom.arti}.")`,
+      `"Everyone was caught off guard, but they managed to handle it without letting it ${mainIdiom.key} too much." ("Semua orang sempet kaget, tapi mereka bisa ngatasinnya tanpa bikin situasi ${mainIdiom.arti} kejauhan.")`,
+    ];
+    note = `Frasa ini mengandung idiom populer: "${mainIdiom.key}" yang bermakna "${mainIdiom.arti}". ${mainIdiom.penjelasan} Sangat sering dipakai dalam percakapan kasual maupun profesional santai.`;
+  } else if (isLyric) {
+    examples = [
+      `"Whenever this part of the track plays, '${text}' always feels so relatable." ("Tiap kali bagian lagu ini keputer, lirik '${cleanTranslation}' selalu kerasa 'ngena' banget.")`,
+      `"I wrote down that meaningful line from the verse: '${text}'" ("Gw nyatet bait yang penuh makna dari lirik itu: '${cleanTranslation}'")`,
+      `"The acoustic rendition highlights '${text}' beautifully." ("Versi akustiknya bikin penggalan '${cleanTranslation}' kedengeran makin dalam di hati.")`,
+    ];
+    note = `Kutipan ini terdeteksi sebagai penggalan lirik lagu puitis. Struktur bahasanya berfokus pada estetika emosi dan suasana hati pembicara. Di obrolan santai, lu bisa pakai frasa intinya buat melukiskan perasaan jujur ke temen dekat.`;
+  } else if (isQuestion) {
+    examples = [
+      `A: "${text}"\nB: "Honestly, I haven't even thought that far yet." (A: "${cleanTranslation}" / B: "Jujur, gw bahkan belum mikir sejauh itu.")`,
+      `"If you're still in doubt, just ask them directly: '${text}'" ("Kalo lu masih ragu, tanya langsung aja ke mereka: '${cleanTranslation}'")`,
+      `"Before we finalize the plan, let's clarify: '${text}'" ("Sebelum kita finalin rencananya, coba kita pastiin dulu: '${cleanTranslation}'")`,
+    ];
+    note = `Bentuk kalimat tanya langsung yang kasual dan lugas. Cocok dipakai dalam percakapan sehari-hari saat lu butuh konfirmasi cepat atau membuka obrolan akrab tanpa terkesan kaku.`;
+  } else if (isActionOrImperative) {
+    examples = [
+      `"When she was feeling overwhelmed after a long day, she just asked: '${text}.'" ("Pas dia lagi ngerasa capek banget abis seharian beraktivitas, dia cuma bilang: '${cleanTranslation}.'")`,
+      `"Don't hesitate to say '${text}' whenever you feel like you need some support." ("Jangan sungkan buat bilang '${cleanTranslation}' tiap kali lu ngerasa butuh dukungan.")`,
+      `"Sometimes a simple expression like '${text}' is all that someone needs to hear." ("Kadang ungkapan sederhana kayak '${cleanTranslation}' udah lebih dari cukup buat bikin tenang.")`,
+    ];
+    note = `Ungkapan ekspresif berbentuk kalimat aksi atau ajakan langsung. Dalam pergaulan santai atau hubungan akrab, gaya bahasa seperti ini terasa hangat, tulus, dan tidak berbelit-belit.`;
+  } else if (isNounOrAdjPhrase) {
+    examples = [
+      `"He spoke with a proud smile whenever someone mentioned his ${text}." ("Dia selalu senyum bangga tiap kali ada yang ngebahas soal ${cleanTranslation}-nya.")`,
+      `"Having a ${text} around really brings a warm and positive atmosphere." ("Punya ${cleanTranslation} di sekitar bener-bener bawa suasana yang hangat dan positif.")`,
+      `"They took a picture together, and everyone complimented his ${text}." ("Mereka foto bareng, dan semua orang takjub ngeliat ${cleanTranslation}-nya.")`,
+    ];
+    note = `Frasa ini merupakan frasa kata benda atau deskriptif (noun/adjective phrase). Umum dipakai dalam obrolan sehari-hari buat memuji, mendeskripsikan seseorang/sesuatu, atau menonjolkan kualitas positif secara natural.`;
+  } else if (isEmotional) {
+    examples = [
+      `"Whenever the pressure gets intense at work, I honestly ${text}." ("Tiap kali tekanan lagi tinggi-tingginya di tempat kerja, jujur gw ${cleanTranslation}.")`,
+      `"It takes real maturity to admit that you ${text} instead of pretending everything is fine." ("Butuh kedewasaan buat ngakuin kalo lu ${cleanTranslation} daripada pura-pura semua baik-baik aja.")`,
+      `"Talk to someone you trust if you ever ${text}; you don't have to carry it all alone." ("Cerita ke temen yang lu percaya kalo lu ngerasa ${cleanTranslation}; lu gak harus nanggung sendirian.")`,
+    ];
+    note = `Kalimat ini melukiskan suasana batin atau emosi personal. Native speaker sering memakainya pas lagi curhat santai (*heart-to-heart talk*) buat mengomunikasikan perasaan secara jujur tanpa gengsi.`;
   } else {
-    note = `Frasa ini sangat alami dipakai dalam percakapan sehari-hari. Pelajari pelafalan ritmenya dengan tombol audio di samping biar lidah lu makin terbiasa dengan aksen native!`;
+    // General Statement / Dialogue (Diverse variants)
+    const variants = [
+      [
+        `"We sat down and talked it through, and we realized that ${text}." ("Kita duduk bareng dan ngobrolin masalahnya, terus kita sadar kalo ${cleanTranslation}.)"`,
+        `"To be completely honest with you, I think ${text}." ("Biar jujur apa adanya sama lu, menurut gw ${cleanTranslation}.)"`,
+        `"Take your time and keep in mind: ${text}." ("Pelan-pelan aja dan inget baik-baik: ${cleanTranslation}.)"`,
+      ],
+      [
+        `"In situations like this, it is very common that ${text}." ("Di situasi kayak gini, wajar banget kalo ${cleanTranslation}.)"`,
+        `"My friend reminded me yesterday: '${text}.'" ("Temen gw kemarin ngingetin: '${cleanTranslation}.'")`,
+        `"Once you understand the context, you see why ${text}." ("Begitu lu paham konteksnya, lu bakal ngerti kenapa ${cleanTranslation}.)"`,
+      ],
+    ];
+    const pickIndex = (text.length + text.charCodeAt(0)) % variants.length;
+    examples = variants[pickIndex];
+    note = text.split(/\s+/).length >= 5
+      ? `Kalimat pernyataan lengkap yang luwes dipakai dalam diskusi santai maupun tulisan personal buat menyampaikan gagasan atau fakta secara jelas dan terstruktur.`
+      : `Frasa percakapan ringkas yang sangat alami dipakai dalam obrolan sehari-hari. Struktur kalimatnya to the point dan mudah dipadukan dengan kata lain.`;
   }
 
   return {
@@ -229,11 +299,24 @@ export async function generateSongDualPayload(rawText, detectedSongInfo = null) 
   // 3. Focus phrase meaning
   const focusPhraseMeaning = await fetchLiveTranslation(focusPhrase) || "makna frasa lirik pilihan";
 
-  // 4. Brand new original example sentence (NOT from any lyric)
-  const originalExampleSentence = `The sudden news shook everyone up a bit during the team meeting. (Berita mendadak itu bener-bener bikin semua orang kaget dan goyah dikit pas rapat tim.)`;
+  // LANGKAH 4: Generate contextual original example sentence (NOT static shook up)
+  const focusLower = focusPhrase.toLowerCase();
+  let originalExampleSentence = "";
+  if (detectedIdioms.length > 0) {
+    const idm = detectedIdioms[0];
+    originalExampleSentence = `Take a deep breath; don't let this unexpected situation ${idm.key} too much. (Tarik napas panjang; jangan biarin situasi tak terduga ini bikin ${idm.arti} kejauhan.)`;
+  } else if (/feel|small|down|sad|alone|cry|hurt|numb/i.test(focusLower)) {
+    originalExampleSentence = `Whenever work gets exhausting, it's completely normal to ${focusPhrase} for a while. (Tiap kali kerjaan lagi capek banget, wajar kok kalo lu sempet ${focusPhraseMeaning} sebentar.)`;
+  } else if (/love|heart|care|miss|kiss|lips|stay|hold/i.test(focusLower)) {
+    originalExampleSentence = `She smiled warmly and proved that she would always ${focusPhrase}. (Dia senyum tulus dan ngebuktiin kalo dia bakal selalu ${focusPhraseMeaning}.)`;
+  } else if (/run|walk|away|leave|go|time|night/i.test(focusLower)) {
+    originalExampleSentence = `Before making a rushed decision, don't just ${focusPhrase} without talking it through. (Sebelum buru-buru ambil keputusan, jangan langsung ${focusPhraseMeaning} tanpa diobrolin dulu.)`;
+  } else {
+    originalExampleSentence = `In everyday conversations, you can naturally use "${focusPhrase}" when expressing how you feel. (Di percakapan sehari-hari, lu bisa wajar memakai "${focusPhrase}" pas lagi ngungkapin perasaan lu.)`;
+  }
 
   // 5. Emotional meaning explanation
-  const meaningExplanation = `Lirik ini membawa nuansa emosional mendalam yang menggambarkan suasana hati rapuh, refleksi diri, atau pergolakan batin saat menghadapi kenyataan yang mengejutkan. Di obrolan sehari-hari, lu bisa pakai frasa intinya ("${focusPhrase}") buat ngungkapin perasaan jujur ke temen dekat tanpa terdengar kaku.`;
+  const meaningExplanation = `Lirik ini membawa nuansa emosional mendalam yang melukiskan suasana hati atau refleksi batin. Di obrolan sehari-hari, lu bisa pakai frasa intinya ("${focusPhrase}") buat ngungkapin perasaan jujur ke temen dekat tanpa terdengar kaku.`;
 
   const songTitle = detectedSongInfo?.title || null;
   const artist = detectedSongInfo?.artist || null;
@@ -252,7 +335,7 @@ export async function generateSongDualPayload(rawText, detectedSongInfo = null) 
     catatan: meaningExplanation,
     penggunaan: [
       originalExampleSentence,
-      `"I couldn't sleep because that memory kept playing in my head." ("Gw gak bisa tidur karena ingatan itu terus muter di kepala gw.")`,
+      `"Whenever you feel that way, remember you don't have to face it all by yourself." ("Tiap kali lu ngerasa kayak gitu, inget kalo lu gak harus ngadepin semuanya sendirian.")`,
     ],
     focusPhrase: focusPhrase,
   };

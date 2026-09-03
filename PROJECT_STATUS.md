@@ -30,7 +30,18 @@ Untuk mempermudah pelacakan, seluruh dokumentasi proyek dibagi secara rapi:
 
 ## 📝 Log Riwayat Pembaruan (Changelog Pengerjaan)
 
-### 🚀 Update Terakhir (4 September 2026) — Milestone "Secure Proxy Server Migration":
+### 🚀 Update Terakhir (4 September 2026) — Milestone "Contextual Generator & Proxy Server":
+- [x] **Generator Contoh Kalimat & Catatan Kontekstual (`src/services/freeTranslator.js`):**
+  1. **Validasi Kelayakan Input (Anti-Gibberish):** Memeriksa respon terjemahan layanan. Jika input kosong, tidak dikenal, atau dikembalikan sama persis oleh translator (seperti ketikan acak/keyboard smash), sistem secara jujur menyatakan kata/frasa belum dikenali (`isUnrecognized: true`) dan tidak memaksakan kalimat contoh karangan.
+  2. **Eliminasi Total Template Statis "Lagu":** Menghapus template kalimat statis yang selalu memaksakan konteks "lagu/lirik" untuk semua input.
+  3. **Generator Contoh Multikontekstual (5+ Kategori):** Kalimat contoh kini secara cerdas disesuaikan dengan jenis gramatikal & semantik teks:
+     * *Frasa Benda / Sifat (Noun Phrase)* seperti *"pretty wife"* $\rightarrow$ contoh mendeskripsikan/memuji seseorang secara wajar.
+     * *Kalimat Perintah / Aksi (Imperative)* seperti *"hug me"* $\rightarrow$ contoh meminta pelukan atau dukungan saat capek.
+     * *Kalimat Tanya (Question)* $\rightarrow$ format dialog tanya-jawab yang logis.
+     * *Ungkapan Emosional / Perasaan* $\rightarrow$ situasi curhat jujur (*heart-to-heart*).
+     * *Kalimat Pernyataan Netral / Kasual* $\rightarrow$ variasi obrolan sehari-hari & pengalaman nyata.
+  4. **Catatan Spesifik Non-Generik:** Catatan kini menjelaskan kategori linguistik yang spesifik (noun phrase, idiom, ungkapan emosional, kalimat tanya) tanpa klaim idiom palsu dan tanpa kalimat penutup generik yang berulang.
+  5. **Contoh Orisinal Dinamis pada Lirik Lagu (`generateSongDualPayload`):** Kalimat contoh orisinal kini dibuat dinamis sesuai makna `focusPhrase` yang terdeteksi, bukan template *"team meeting shook up"* statis yang sama untuk semua lagu.
 - [x] **Migrasi Pemanggilan OpenRouter AI ke Serverless Proxy (`api/lookup.js`):**
   1. **Serverless Function Vercel (`api/lookup.js`):** Memindahkan seluruh pemanggilan OpenRouter API dari browser ke sisi server Node.js. Menggunakan variabel `process.env.OPENROUTER_API_KEY` (tanpa prefix `VITE_`), sehingga API key aman 100% dan tidak pernah bocor ke client.
   2. **Rate Limiting Sederhana Berbasis IP:** Proteksi in-memory Map membatasi maksimal 10 request per 60 detik per IP (HTTP 429: *"Terlalu banyak permintaan, coba lagi sebentar"*), dengan pembersihan otomatis timestamp kadaluarsa.
