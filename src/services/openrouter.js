@@ -65,23 +65,17 @@ Kembalikan satu blok JSON valid:
   "catatan": "penjelasan nuansa/tips konteks pemakaian sehari-hari ala anak rantau & Gen Z"
 }`;
 
-const makeFetchCall = async (apiKey, model, text, timeoutMs = 3500) => {
+const makeFetchCall = async (_apiKey, model, text, timeoutMs = 5000) => {
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
 
   try {
     const response = await fetch(
-      "https://openrouter.ai/api/v1/chat/completions",
+      "/api/lookup",
       {
         method: "POST",
         signal: controller.signal,
         headers: {
-          Authorization: `Bearer ${apiKey.trim()}`,
-          "HTTP-Referer":
-            typeof window !== "undefined"
-              ? window.location.origin
-              : "https://ranglish.app",
-          "X-Title": "Ranglish App",
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
@@ -103,7 +97,7 @@ const makeFetchCall = async (apiKey, model, text, timeoutMs = 3500) => {
 
     if (!response.ok) {
       const errData = await response.json().catch(() => ({}));
-      throw new Error(errData?.error?.message || `HTTP ${response.status}`);
+      throw new Error(errData?.error?.message || errData?.error || `HTTP ${response.status}`);
     }
 
     const resData = await response.json();
@@ -492,7 +486,7 @@ function sanitizeText(str) {
 }
 
 export const lookupVocabulary = async (text) => {
-  const { apiKey, model } = getSettings();
+  const { model } = getSettings();
   const clean = text.trim();
   const wordCount = clean.split(/\s+/).length;
 
@@ -503,44 +497,13 @@ export const lookupVocabulary = async (text) => {
   const instantData = getInstantAnalysis(clean);
   const isBuiltIn = instantData && !instantData.isGenerated;
 
-  // If no API key is provided:
-  if (!apiKey) {
-    if (isSong) {
-      const songData = await generateSongDualPayload(clean);
-      return sanitizeResultPayload(songData);
-    }
-
-    if (wordCount === 1) {
-      const dictData = await fetchFreeDictionaryData(clean);
-      if (dictData) {
-        return sanitizeResultPayload({
-          ...dictData,
-          success: true,
-          isMock: true,
-        });
-      }
-    }
-
-    if (isBuiltIn) {
-      return sanitizeResultPayload({
-        ...instantData,
-        success: true,
-        isMock: true,
-      });
-    }
-
-    // High-accuracy live translation & contextual analysis for ANY sentence/phrase
-    const richAnalysis = await generateRichSentenceAnalysis(clean);
-    return sanitizeResultPayload(richAnalysis);
-  }
-
-  // If API key is provided, query OpenRouter LLM:
+  // Query OpenRouter LLM via serverless proxy /api/lookup:
   const activeModel = model || "openrouter/free";
   let rawContent = null;
 
   try {
     // ⚡ 5s timeout for OpenRouter queue
-    rawContent = await makeFetchCall(apiKey, activeModel, clean, 5000);
+    rawContent = await makeFetchCall(null, activeModel, clean, 5000);
   } catch (err1) {
     console.warn(
       `Primary model (${activeModel}) error or timeout (5s):`,
@@ -573,6 +536,7 @@ export const lookupVocabulary = async (text) => {
 
 export const SYSTEM_PROMPT_BREAKDOWN = `Kamu adalah AI tutor bahasa Inggris di aplikasi "Ranglish".
 TUGAS: Pecah kalimat bahasa Inggris yang diberikan menjadi unit-unit makna (BUKAN kata per kata mentah).
+
 ATURAN:
 1. Kata yang maknanya menyatu seperti "to see", "look for", "shake up", "give up" harus tetap jadi SATU unit, bukan dipisah.
 2. Kontraksi seperti "I'd", "we're", "don't", "can't", "it's" harus tetap jadi SATU unit, bukan dipisah.
@@ -589,26 +553,18 @@ export const lookupWordBreakdown = async (text) => {
   const clean = text.trim();
   if (!clean) return [];
 
-  const { apiKey, model } = getSettings();
-
-  if (!apiKey) {
-    return await generateWordBreakdownFallback(clean);
-  }
-
+  const { model } = getSettings();
   const activeModel = model || "openrouter/free";
 
   try {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 6500);
 
-    const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+    const response = await fetch("/api/lookup", {
       method: "POST",
       signal: controller.signal,
       headers: {
-        Authorization: `Bearer ${apiKey.trim()}`,
         "Content-Type": "application/json",
-        "HTTP-Referer": typeof window !== "undefined" ? window.location.origin : "http://localhost:3000",
-        "X-Title": "Ranglish App",
       },
       body: JSON.stringify({
         model: activeModel,

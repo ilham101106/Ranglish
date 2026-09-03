@@ -9,10 +9,9 @@ import {
   Moon, 
   Coffee 
 } from 'lucide-react';
-import { getSettings, getAppTheme, setAppTheme } from '../services/storage';
+import { getAppTheme, setAppTheme } from '../services/storage';
 
 export default function Sidebar({ activeTab, setActiveTab, historyCount, onOpenSettings }) {
-  const { apiKey } = getSettings();
   const [currentTheme, setCurrentTheme] = useState('standar');
 
   useEffect(() => {
@@ -204,13 +203,6 @@ export default function Sidebar({ activeTab, setActiveTab, historyCount, onOpenS
         >
           <Settings className="w-4 h-4 theme-text-muted group-hover:text-[#5842f5] transition-colors" />
           <span>Pengaturan</span>
-
-          {!apiKey && (
-            <span className="ml-auto flex h-2 w-2 relative">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span>
-            </span>
-          )}
         </button>
       </div>
     </aside>

@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { X, Key, Cpu, ExternalLink, Check, AlertCircle, Sparkles, Sun, Moon, Coffee, Palette } from 'lucide-react';
+import { X, Cpu, Check, Sun, Moon, Coffee, Palette } from 'lucide-react';
 import { getSettings, saveSettings, DEFAULT_MODELS, getAppTheme } from '../services/storage';
 
 export default function SettingsModal({ isOpen, onClose, onSaveSuccess }) {
-  const [apiKey, setApiKey] = useState('');
   const [selectedModel, setSelectedModel] = useState(DEFAULT_MODELS[0].id);
   const [customModel, setCustomModel] = useState('');
   const [isCustom, setIsCustom] = useState(false);
@@ -13,7 +12,6 @@ export default function SettingsModal({ isOpen, onClose, onSaveSuccess }) {
   useEffect(() => {
     if (isOpen) {
       const current = getSettings();
-      setApiKey(current.apiKey || '');
       setSelectedTheme(current.theme || getAppTheme());
       
       const isPredefined = DEFAULT_MODELS.some(m => m.id === current.model);
@@ -33,7 +31,6 @@ export default function SettingsModal({ isOpen, onClose, onSaveSuccess }) {
     e.preventDefault();
     const finalModel = isCustom ? customModel.trim() : selectedModel;
     saveSettings({
-      apiKey: apiKey.trim(),
       model: finalModel || DEFAULT_MODELS[0].id,
       theme: selectedTheme,
     });
@@ -60,7 +57,7 @@ export default function SettingsModal({ isOpen, onClose, onSaveSuccess }) {
             </div>
             <div>
               <h2 className="font-extrabold text-lg theme-text-main">Pengaturan Ranglish</h2>
-              <p className="text-xs theme-text-muted font-medium">Tema Tampilan, API Key &amp; Model AI</p>
+              <p className="text-xs theme-text-muted font-medium">Tema Tampilan &amp; Preferensi Model AI</p>
             </div>
           </div>
           <button
@@ -149,45 +146,7 @@ export default function SettingsModal({ isOpen, onClose, onSaveSuccess }) {
             </div>
           </div>
 
-          {/* SECTION 2: API KEY */}
-          <div className="space-y-1.5 pt-2 border-t theme-border-subtle">
-            <label className="block text-xs font-semibold theme-text-main flex items-center justify-between">
-              <span className="flex items-center gap-1.5 font-extrabold">
-                <Key className="w-3.5 h-3.5 text-amber-500" />
-                OpenRouter API Key
-              </span>
-              <a
-                href="https://openrouter.ai/keys"
-                target="_blank"
-                rel="noreferrer"
-                className="text-[11px] text-[#5842f5] hover:underline flex items-center gap-0.5 font-bold"
-              >
-                Dapatkan API Key gratis <ExternalLink className="w-3 h-3" />
-              </a>
-            </label>
-            <input
-              type="password"
-              value={apiKey}
-              onChange={(e) => setApiKey(e.target.value)}
-              placeholder="sk-or-v1-..."
-              className="w-full px-3.5 py-2.5 rounded-xl theme-bg-input border theme-border theme-text-main text-xs placeholder:theme-text-faint focus:outline-none focus:border-[#5842f5]"
-            />
-            {!apiKey ? (
-              <p className="mt-1 text-[11px] theme-text-muted flex items-start gap-1">
-                <AlertCircle className="w-3.5 h-3.5 shrink-0 mt-0.5 text-amber-500" />
-                <span>
-                  Opsional jika kamu ingin memakai AI live online. (Bawaan otomatis: <strong>Instan Bank AI Lokal 0ms</strong>).
-                </span>
-              </p>
-            ) : (
-              <p className="mt-1 text-[11px] text-emerald-600 dark:text-emerald-400 flex items-center gap-1 font-bold">
-                <Check className="w-3.5 h-3.5" />
-                <span>API Key aktif &amp; terhubung ke OpenRouter AI.</span>
-              </p>
-            )}
-          </div>
-
-          {/* SECTION 3: MODEL SELECTION */}
+          {/* SECTION 2: MODEL SELECTION */}
           <div className="space-y-1.5 pt-2 border-t theme-border-subtle">
             <label className="block text-xs font-extrabold theme-text-main flex items-center gap-1.5">
               <Cpu className="w-3.5 h-3.5 text-[#5842f5]" />

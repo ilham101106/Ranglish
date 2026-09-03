@@ -30,7 +30,16 @@ Untuk mempermudah pelacakan, seluruh dokumentasi proyek dibagi secara rapi:
 
 ## 📝 Log Riwayat Pembaruan (Changelog Pengerjaan)
 
-### 🚀 Update Terakhir (2 & 3 September 2026) — Milestone "Production-Ready MVP":
+### 🚀 Update Terakhir (4 September 2026) — Milestone "Secure Proxy Server Migration":
+- [x] **Migrasi Pemanggilan OpenRouter AI ke Serverless Proxy (`api/lookup.js`):**
+  1. **Serverless Function Vercel (`api/lookup.js`):** Memindahkan seluruh pemanggilan OpenRouter API dari browser ke sisi server Node.js. Menggunakan variabel `process.env.OPENROUTER_API_KEY` (tanpa prefix `VITE_`), sehingga API key aman 100% dan tidak pernah bocor ke client.
+  2. **Rate Limiting Sederhana Berbasis IP:** Proteksi in-memory Map membatasi maksimal 10 request per 60 detik per IP (HTTP 429: *"Terlalu banyak permintaan, coba lagi sebentar"*), dengan pembersihan otomatis timestamp kadaluarsa.
+  3. **Pembersihan Total Sisi Client (Zero Client-Side Key):**
+     * Menghapus input form API Key, label, link, dan state di `src/components/SettingsModal.jsx`.
+     * Menghapus warning ping orange di `src/components/Header.jsx` dan `src/components/Sidebar.jsx`.
+     * `src/services/storage.js` kini mengembalikan `apiKey: null` secara aman.
+  4. **Refactoring `src/services/openrouter.js`:** Fungsi `makeFetchCall` dan `lookupWordBreakdown` kini memanggil endpoint relatif `/api/lookup` tanpa header `Authorization`.
+  5. **Dukungan Pengujian Lokal (`vite.config.js`):** Menambahkan dev middleware di Vite sehingga pemanggilan `/api/lookup` saat `npm run dev` otomatis dieksekusi secara lokal menggunakan file `.env.local` yang terproteksi `.gitignore`.
 - [x] **Fitur Baru "Arti Per Kata / Frasa" (Interactive 3D Flip Cards):**
   1. **Komponen Flip Card 3D (`src/components/WordBreakdownGrid.jsx`):** Menghadirkan antarmuka kartu bolak-balik bergaya 3D interaktif (*English unit* di depan $\leftrightarrow$ *Arti santai Indonesia* di belakang).
   2. **AI Semantic Unit Breakdown (`lookupWordBreakdown`):** AI tutor OpenRouter membedah kalimat berdasarkan unit makna (frasa idiom, compound nouns, phrasal verbs, kontraksi kata) bukan pecahan kata mentah harfiah.

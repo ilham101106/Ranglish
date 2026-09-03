@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Settings, Sun, Moon, Coffee } from 'lucide-react';
-import { getSettings, getAppTheme, setAppTheme } from '../services/storage';
+import { getAppTheme, setAppTheme } from '../services/storage';
 
 export default function Header({ onOpenSettings }) {
-  const { apiKey } = getSettings();
   const [currentTheme, setCurrentTheme] = useState('standar');
 
   useEffect(() => {
@@ -66,16 +65,10 @@ export default function Header({ onOpenSettings }) {
           <button
             type="button"
             onClick={onOpenSettings}
-            className="relative p-2 rounded-xl theme-bg-subtle hover:theme-bg-card theme-text-main border theme-border transition flex items-center justify-center shadow-2xs"
-            title="Pengaturan OpenRouter API & Model"
+            className="p-2 rounded-xl theme-bg-subtle hover:theme-bg-card theme-text-main border theme-border transition flex items-center justify-center shadow-2xs"
+            title="Pengaturan Tema & Model AI"
           >
             <Settings className="w-4 h-4 theme-text-muted" />
-            {!apiKey && (
-              <span className="absolute -top-1 -right-1 flex h-2.5 w-2.5">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-amber-500"></span>
-              </span>
-            )}
           </button>
         </div>
       </div>

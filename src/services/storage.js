@@ -11,7 +11,6 @@ export const DEFAULT_MODELS = [
 ];
 
 export const getSettings = () => {
-  const envApiKey = (typeof import.meta !== 'undefined' && import.meta.env?.VITE_OPENROUTER_API_KEY) || '';
   const envModel = (typeof import.meta !== 'undefined' && import.meta.env?.VITE_OPENROUTER_MODEL) || DEFAULT_MODELS[0].id;
 
   try {
@@ -34,7 +33,8 @@ export const getSettings = () => {
       const theme = parsed.theme || 'standar';
 
       return {
-        apiKey: parsed.apiKey || envApiKey,
+        // API key kini sepenuhnya dikelola di server melalui serverless proxy /api/lookup
+        apiKey: null,
         model: model || 'openrouter/free',
         theme: theme,
       };
@@ -43,7 +43,7 @@ export const getSettings = () => {
     console.error('Error reading settings from localStorage:', err);
   }
   return {
-    apiKey: envApiKey,
+    apiKey: null,
     model: envModel,
     theme: 'standar',
   };
