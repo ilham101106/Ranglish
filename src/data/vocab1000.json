@@ -1,0 +1,3714 @@
+{
+  "abandon": {
+    "arti": "Meninggalkan / menelantarkan sesuatu atau menyerah",
+    "cara_baca": "uh-ban-dun",
+    "penggunaan": [
+      "Never abandon your dreams when facing difficulties. (Jangan pernah meninggalkan mimpimu saat menghadapi kesulitan.)"
+    ],
+    "catatan": "Bisa dipakai untuk tempat sepi atau menyerah pada rencana."
+  },
+  "abrupt": {
+    "arti": "Mendadak / tiba-tiba dan agak kasar tanpa peringatan",
+    "cara_baca": "uh-brapt",
+    "penggunaan": [
+      "The meeting came to an abrupt end. (Rapatnya berakhir secara mendadak banget.)"
+    ],
+    "catatan": "Dipakai saat sesuatu berhenti seketika tanpa aba-aba."
+  },
+  "absorb": {
+    "arti": "Menyerap cairan / memahami informasi mendalam sampai tuntas",
+    "cara_baca": "ab-zawrb",
+    "penggunaan": [
+      "It takes time to absorb all this new coding knowledge. (Butuh waktu untuk menyerap semua ilmu koding baru ini.)"
+    ],
+    "catatan": "Bisa menyerap air atau menyerap pelajaran."
+  },
+  "abstract": {
+    "arti": "Abstrak / konsep pemikiran yang tidak berwujud fisik nyata",
+    "cara_baca": "ab-strakt",
+    "penggunaan": [
+      "Justice and freedom are abstract concepts. (Keadilan dan kebebasan adalah konsep-konsep abstrak.)"
+    ],
+    "catatan": "Lawan dari kata concrete (nyata/berwujud)."
+  },
+  "absurd": {
+    "arti": "Konyol / tidak masuk akal dan menggelikan",
+    "cara_baca": "ab-surd",
+    "penggunaan": [
+      "That rumor is completely absurd. (Gosip itu benar-benar konyol dan tidak masuk akal.)"
+    ],
+    "catatan": "Dipakai untuk ide atau klaim yang terlalu mengada-ada."
+  },
+  "abundance": {
+    "arti": "Kelimpahan / jumlah yang sangat banyak dan berlimpah ruah",
+    "cara_baca": "uh-ban-dens",
+    "penggunaan": [
+      "The tropical forest provides an abundance of fruits. (Hutan tropis menyediakan kelimpahan buah-buahan segar.)"
+    ],
+    "catatan": "Pola pikir kelimpahan disebut abundance mindset."
+  },
+  "accelerate": {
+    "arti": "Mempercepat laju kecepatan atau pertumbuhan proses",
+    "cara_baca": "ak-sel-uh-reyt",
+    "penggunaan": [
+      "We need to accelerate our project development. (Kita harus mempercepat pengembangan proyek kita.)"
+    ],
+    "catatan": "Berasal dari pedal gas kendaraan (accelerator)."
+  },
+  "accommodate": {
+    "arti": "Menampung / menyesuaikan diri demi kebutuhan pihak lain",
+    "cara_baca": "uh-kom-uh-deyt",
+    "penggunaan": [
+      "The hotel can accommodate up to 500 guests. (Hotel ini bisa menampung sampai 500 tamu.)"
+    ],
+    "catatan": "Sering dipakai dalam perhotelan dan negosiasi."
+  },
+  "accomplish": {
+    "arti": "Mencapai / berhasil menyelesaikan tugas besar dengan sukses",
+    "cara_baca": "uh-kam-plish",
+    "penggunaan": [
+      "You have accomplished so much this year! (Lu sudah berhasil mencapai banyak hal hebat tahun ini!)"
+    ],
+    "catatan": "Prestasi pencapaian disebut accomplishment."
+  },
+  "accumulate": {
+    "arti": "Mengumpulkan / menumpuk sedikit demi sedikit seiring waktu",
+    "cara_baca": "uh-kyoo-myoo-leyt",
+    "penggunaan": [
+      "Dust accumulates quickly if a room is left empty. (Debu cepat menumpuk jika ruangan dibiarkan kosong.)"
+    ],
+    "catatan": "Bisa menimbun kekayaan, poin, atau pengalaman."
+  },
+  "accurate": {
+    "arti": "Akurat / tepat dan presisi tanpa kekeliruan data",
+    "cara_baca": "ak-yur-it",
+    "penggunaan": [
+      "Please provide an accurate financial report. (Tolong berikan laporan keuangan yang akurat.)"
+    ],
+    "catatan": "Lawan katanya adalah inaccurate."
+  },
+  "acknowledge": {
+    "arti": "Mengakui fakta / mengapresiasi kontribusi seseorang",
+    "cara_baca": "ak-nol-ij",
+    "penggunaan": [
+      "He acknowledged his mistake and apologized sincerely. (Dia mengakui kesalahannya dan meminta maaf dengan tulus.)"
+    ],
+    "catatan": "Penting dalam etika komunikasi profesional."
+  },
+  "acquire": {
+    "arti": "Memperoleh / membeli atau menguasai keahlian baru",
+    "cara_baca": "uh-kway-ur",
+    "penggunaan": [
+      "It takes practice to acquire fluent English skills. (Butuh latihan untuk memperoleh kemampuan bahasa Inggris yang lancar.)"
+    ],
+    "catatan": "Proses membeli perusahaan disebut company acquisition."
+  },
+  "adapt": {
+    "arti": "Beradaptasi / menyesuaikan diri dengan situasi atau lingkungan baru",
+    "cara_baca": "uh-dapt",
+    "penggunaan": [
+      "Living abroad teaches you how to adapt fast. (Tinggal merantau ngajarin lu cara beradaptasi dengan cepat.)"
+    ],
+    "catatan": "Kemampuan beradaptasi disebut adaptability."
+  },
+  "adequate": {
+    "arti": "Memadai / cukup memenuhi standar minimal yang dibutuhkan",
+    "cara_baca": "ad-uh-kwut",
+    "penggunaan": [
+      "Make sure you get adequate sleep every night. (Pastikan kamu mendapat istirahat yang memadai setiap malam.)"
+    ],
+    "catatan": "Cukup dan pas, lawannya adalah inadequate."
+  },
+  "adhere": {
+    "arti": "Mematuhi aturan / menempel erat pada permukaan",
+    "cara_baca": "uh-dhere",
+    "penggunaan": [
+      "All drivers must adhere to traffic rules. (Semua pengemudi wajib mematuhi aturan lalu lintas.)"
+    ],
+    "catatan": "Sering dipakai dalam frasa adhere to policy."
+  },
+  "adjacent": {
+    "arti": "Bersebelahan / berdampingan persis di sebelah",
+    "cara_baca": "uh-jey-sent",
+    "penggunaan": [
+      "The coffee shop is adjacent to the public library. (Kedai kopi itu terletak bersebelahan persis dengan perpustakaan.)"
+    ],
+    "catatan": "Dipakai untuk lokasi atau ruangan yang berdampingan."
+  },
+  "adjust": {
+    "arti": "Menyetel / menyesuaikan sedikit posisi atau pengaturan",
+    "cara_baca": "uh-djust",
+    "penggunaan": [
+      "You can adjust the seat height for more comfort. (Kamu bisa menyetel ketinggian kursi agar lebih nyaman.)"
+    ],
+    "catatan": "Penyesuaian disebut adjustment."
+  },
+  "admire": {
+    "arti": "Mengagumi / menghormati seseorang karena kehebatannya",
+    "cara_baca": "uh-dmire",
+    "penggunaan": [
+      "I really admire her dedication and hard work. (Gue bener-bener mengagumi dedikasi dan kerja kerasnya.)"
+    ],
+    "catatan": "Orang yang dikagumi disebut admirable person."
+  },
+  "adolescent": {
+    "arti": "Remaja / usia peralihan dari anak-anak menuju dewasa",
+    "cara_baca": "ad-uh-les-nt",
+    "penggunaan": [
+      "Adolescent years are full of emotional growth. (Masa-masa remaja penuh dengan pertumbuhan emosional.)"
+    ],
+    "catatan": "Istilah ilmiah untuk anak muda (teenager)."
+  },
+  "advocate": {
+    "arti": "Mendukung kuat / membela hak atau kebijakan tertentu",
+    "cara_baca": "ad-vuh-keyt",
+    "penggunaan": [
+      "She advocates for mental health awareness. (Dia mendukung kuat kesadaran kesehatan mental.)"
+    ],
+    "catatan": "Bisa bermakna pembela hukum atau aktivis."
+  },
+  "aesthetic": {
+    "arti": "Estetik / indah dipandang dan punya nilai seni visual",
+    "cara_baca": "es-thet-ik",
+    "penggunaan": [
+      "Her workspace has a clean and cozy aesthetic. (Meja kerjanya punya tampilan estetik yang bersih dan nyaman.)"
+    ],
+    "catatan": "Kata gaul yang sangat populer di media sosial."
+  },
+  "affection": {
+    "arti": "Kasih sayang / rasa cinta dan kehangatan yang tulus",
+    "cara_baca": "uh-ffecshun",
+    "penggunaan": [
+      "He showed deep affection for his rescue dog. (Dia menunjukkan kasih sayang mendalam pada anjing peliharaannya.)"
+    ],
+    "catatan": "Penuh kasih sayang disebut affectionate."
+  },
+  "afford": {
+    "arti": "Mampu secara finansial / sanggup menanggung biaya atau risiko",
+    "cara_baca": "uh-fford",
+    "penggunaan": [
+      "I cannot afford to buy a new car right now. (Gue belum mampu beli mobil baru sekarang.)"
+    ],
+    "catatan": "Barang terjangkau disebut affordable."
+  },
+  "agenda": {
+    "arti": "Agenda / daftar rencana hal yang harus dibahas atau diselesaikan",
+    "cara_baca": "uh-genda",
+    "penggunaan": [
+      "What is on the agenda for today's meeting? (Apa agenda pembahasan dalam rapat hari ini?)"
+    ],
+    "catatan": "Niat tersembunyi disebut hidden agenda."
+  },
+  "aggravate": {
+    "arti": "Memperparah masalah / membuat orang makin jengkel",
+    "cara_baca": "uh-ggravate",
+    "penggunaan": [
+      "Scratching the wound will only aggravate it. (Menggaruk luka itu cuma bakal memperparah kondisinya.)"
+    ],
+    "catatan": "Jangan memperkeruh suasana saat situasi sedang panas."
+  },
+  "agile": {
+    "arti": "Gesit / lincah dan cepat tanggap dalam beradaptasi",
+    "cara_baca": "uh-gile",
+    "penggunaan": [
+      "Modern startups must remain agile in a changing market. (Startup modern harus tetap gesit di tengah pasar yang berubah cepat.)"
+    ],
+    "catatan": "Metodologi kerja cepat di bidang IT disebut Agile."
+  },
+  "agony": {
+    "arti": "Penderitaan batin atau fisik yang sangat menyiksa",
+    "cara_baca": "uh-gony",
+    "penggunaan": [
+      "Waiting for results was pure agony. (Menunggu pengumuman hasil ujian bener-bener menyiksa batin.)"
+    ],
+    "catatan": "Puncak rasa sakit yang teramat pedih."
+  },
+  "alleviate": {
+    "arti": "Meringankan beban / meredakan rasa sakit atau derita",
+    "cara_baca": "uh-lee-vee-eyt",
+    "penggunaan": [
+      "This herbal tea helps alleviate stomach pain. (Teh herbal ini membantu meredakan sakit perut.)"
+    ],
+    "catatan": "Sering digunakan dalam konteks medis dan solusi masalah."
+  },
+  "allocate": {
+    "arti": "Mengalokasikan / membagi jatah dana, waktu, atau sumber daya",
+    "cara_baca": "al-uh-keyt",
+    "penggunaan": [
+      "We should allocate more budget for marketing. (Kita harus mengalokasikan anggaran lebih untuk promosi.)"
+    ],
+    "catatan": "Pembagian jatah yang terstruktur dan terencana."
+  },
+  "alter": {
+    "arti": "Mengubah sedikit / merombak bentuk atau rencana",
+    "cara_baca": "uh-lter",
+    "penggunaan": [
+      "She had to alter the dress to fit perfectly. (Dia harus merombak gaun itu agar pas di badan.)"
+    ],
+    "catatan": "Perubahan kecil disebut alteration."
+  },
+  "alternative": {
+    "arti": "Pilihan alternatif / opsi lain sebagai pengganti",
+    "cara_baca": "uh-lternative",
+    "penggunaan": [
+      "Is there an alternative route to avoid the traffic? (Ada rute alternatif lain gak untuk menghindari macet?)"
+    ],
+    "catatan": "Solusi cadangan saat opsi utama buntu."
+  },
+  "amateur": {
+    "arti": "Amatir / pemula yang melakukan hobi tanpa bayaran profesional",
+    "cara_baca": "uh-mateur",
+    "penggunaan": [
+      "The contest is open to both amateurs and pros. (Kontes ini terbuka bagi pemula maupun profesional.)"
+    ],
+    "catatan": "Lawan katanya adalah professional."
+  },
+  "ambiguous": {
+    "arti": "Bermakna ganda / ambigu dan membingungkan tafsirannya",
+    "cara_baca": "am-big-yoo-us",
+    "penggunaan": [
+      "His message was too ambiguous to understand. (Pesan darinya terlalu ambigu dan membingungkan maksudnya.)"
+    ],
+    "catatan": "Ketidakjelasan makna disebut ambiguity."
+  },
+  "ambition": {
+    "arti": "Ambisi / tekad kuat dan cita-cita besar untuk meraih sukses",
+    "cara_baca": "am-bish-un",
+    "penggunaan": [
+      "Her ambition is to become a top software engineer. (Ambisi dia adalah menjadi software engineer papan atas.)"
+    ],
+    "catatan": "Orang yang punya tekad tinggi disebut ambitious."
+  },
+  "amend": {
+    "arti": "Mengubah atau merevisi dokumen resmi demi perbaikan",
+    "cara_baca": "uh-mend",
+    "penggunaan": [
+      "The board agreed to amend the contract terms. (Dewan sepakat merevisi klausul dalam kontrak kerja.)"
+    ],
+    "catatan": "Perubahan undang-undang disebut constitutional amendment."
+  },
+  "amplify": {
+    "arti": "Memperkuat suara / melipatgandakan dampak pengaruh",
+    "cara_baca": "uh-mplify",
+    "penggunaan": [
+      "Social media can amplify your personal brand. (Media sosial bisa memperkuat dan melipatgandakan personal brand lu.)"
+    ],
+    "catatan": "Berasal dari alat pengeras suara amplifier."
+  },
+  "amuse": {
+    "arti": "Menghibur / membuat orang tersenyum atau tertawa geli",
+    "cara_baca": "uh-muse",
+    "penggunaan": [
+      "His funny stories always amuse the whole crowd. (Cerita lucunya selalu berhasil menghibur seisi ruangan.)"
+    ],
+    "catatan": "Taman hiburan disebut amusement park."
+  },
+  "analogous": {
+    "arti": "Serupa / mirip dalam pola fungsi walau berbeda bentuk",
+    "cara_baca": "uh-nal-uh-gus",
+    "penggunaan": [
+      "The human brain is analogous to a computer. (Otak manusia serupa fungsinya dengan komputer canggih.)"
+    ],
+    "catatan": "Perumpamaan analogi disebut analogy."
+  },
+  "ancestor": {
+    "arti": "Leluhur / nenek moyang garis keturunan masa lampau",
+    "cara_baca": "uh-ncestor",
+    "penggunaan": [
+      "My ancestors migrated to Java in the 19th century. (Nenek moyang gue bermigrasi ke Jawa di abad ke-19.)"
+    ],
+    "catatan": "Lawan dari kata descendant (keturunan)."
+  },
+  "anchor": {
+    "arti": "Jangkar / fondasi penopang yang bikin stabil dan kokoh",
+    "cara_baca": "uh-nchor",
+    "penggunaan": [
+      "She was the emotional anchor for the family. (Dia adalah penopang emosional bagi seluruh keluarga.)"
+    ],
+    "catatan": "Bisa jangkar kapal atau pembawa berita news anchor."
+  },
+  "anecdote": {
+    "arti": "Cerita singkat / kisah pengalaman pribadi yang menarik atau lucu",
+    "cara_baca": "an-ik-doht",
+    "penggunaan": [
+      "He shared a funny anecdote about his college days. (Dia menceritakan kisah singkat lucu tentang zaman kuliahnya.)"
+    ],
+    "catatan": "Biasa dipakai untuk mencairkan suasana presentasi."
+  },
+  "anguish": {
+    "arti": "Kepedihan mendalam / duka cita yang amat menyayat hati",
+    "cara_baca": "ang-gwish",
+    "penggunaan": [
+      "She cried out in anguish after hearing the sad news. (Dia menangis dalam kepedihan mendalam setelah kabar duka itu.)"
+    ],
+    "catatan": "Tingkat kepedihan emosional yang amat perih."
+  },
+  "animate": {
+    "arti": "Menghidupkan / membuat sesuatu terlihat bergerak dan ceria",
+    "cara_baca": "uh-nimate",
+    "penggunaan": [
+      "Laughter and music animated the cozy party. (Tawa canda dan musik menghidupkan suasana pesta yang hangat.)"
+    ],
+    "catatan": "Film animasi berasal dari akar kata ini."
+  },
+  "annoy": {
+    "arti": "Mengganggu / membuat jengkel dan risih dengan hal sepele",
+    "cara_baca": "uh-nnoy",
+    "penggunaan": [
+      "Please stop tapping your pen, it annoys me! (Tolong berhenti mengetuk pulpen, bikin risih!)"
+    ],
+    "catatan": "Hal yang menyebalkan disebut annoying."
+  },
+  "anonymous": {
+    "arti": "Anonim / tanpa nama pengenal identitas asli",
+    "cara_baca": "uh-non-uh-mus",
+    "penggunaan": [
+      "An anonymous donor gave one million dollars. (Seorang donatur anonim menyumbang satu juta dolar.)"
+    ],
+    "catatan": "Kerahasiaan nama disebut anonymity."
+  },
+  "anticipate": {
+    "arti": "Mengantisipasi / memperkirakan apa yang bakal terjadi",
+    "cara_baca": "an-tis-uh-peyt",
+    "penggunaan": [
+      "We anticipate heavy traffic around the stadium tonight. (Kita mengantisipasi bakal ada macet parah di sekitar stadion nanti malam.)"
+    ],
+    "catatan": "Tindakan persiapan pencegahan."
+  },
+  "apology": {
+    "arti": "Permintaan maaf / ungkapan penyesalan atas kekhilafan",
+    "cara_baca": "uh-pology",
+    "penggunaan": [
+      "He accepted her sincere apology with an open heart. (Dia menerima permintaan maaf tulusnya dengan lapang dada.)"
+    ],
+    "catatan": "Kata kerjanya adalah apologize."
+  },
+  "apparent": {
+    "arti": "Tampak jelas / terlihat nyata di permukaan",
+    "cara_baca": "uh-par-unt",
+    "penggunaan": [
+      "It was apparent that he needed some rest. (Tampak jelas bahwa dia butuh istirahat sejenak.)"
+    ],
+    "catatan": "Bisa bermakna kelihatan jelas atau sekadar tampak dari luar."
+  },
+  "appeal": {
+    "arti": "Daya tarik memikat / mengajukan permohonan banding",
+    "cara_baca": "uh-peel",
+    "penggunaan": [
+      "The vintage design has a timeless appeal. (Desain vintage itu punya daya tarik yang tak lekang oleh waktu.)"
+    ],
+    "catatan": "Bisa daya tarik pesona atau permohonan resmi."
+  },
+  "approach": {
+    "arti": "Mendekati / cara pendekatan dalam memecahkan masalah",
+    "cara_baca": "uh-prohch",
+    "penggunaan": [
+      "We need a creative approach to solve this bug. (Kita butuh pendekatan kreatif untuk mengatasi error ini.)"
+    ],
+    "catatan": "Bisa jadi kata kerja (mendekati seseorang/tempat) atau kata benda (metode/pendekatan)."
+  },
+  "approve": {
+    "arti": "Menyetujui / memberikan izin atau lampu hijau resmi",
+    "cara_baca": "uh-pprove",
+    "penggunaan": [
+      "The manager approved our project proposal. (Manajer menyetujui proposal proyek kita.)"
+    ],
+    "catatan": "Persetujuan resmi disebut approval."
+  },
+  "aptitude": {
+    "arti": "Bakat alami / potensi bawaan dalam bidang tertentu",
+    "cara_baca": "uh-ptitude",
+    "penggunaan": [
+      "He showed a remarkable aptitude for mathematics. (Dia menunjukkan bakat alami dalam matematika.)"
+    ],
+    "catatan": "Tes bakat minat disebut aptitude test."
+  },
+  "arbitrary": {
+    "arti": "Semena-mena / asal-asalan tanpa alasan yang jelas",
+    "cara_baca": "ahr-bi-trer-ee",
+    "penggunaan": [
+      "The decision seemed totally arbitrary and unfair. (Keputusan itu terasa semena-mena dan tidak adil.)"
+    ],
+    "catatan": "Tindakan yang didasarkan pada keinginan sepihak."
+  },
+  "archive": {
+    "arti": "Arsip / tempat penyimpanan dokumen sejarah penting",
+    "cara_baca": "uh-rchive",
+    "penggunaan": [
+      "Old documents are preserved in the city archive. (Dokumen lama disimpan rapi di arsip kota.)"
+    ],
+    "catatan": "Bisa jadi kata benda (arsip) atau kata kerja (mengarsipkan)."
+  },
+  "arduous": {
+    "arti": "Berat dan melelahkan / menuntut perjuangan keras",
+    "cara_baca": "ahr-joo-us",
+    "penggunaan": [
+      "Climbing the mountain was an arduous journey. (Mendaki gunung itu adalah perjalanan yang sangat berat dan melelahkan.)"
+    ],
+    "catatan": "Tugas yang membutuhkan stamina tinggi."
+  },
+  "arena": {
+    "arti": "Arena / panggung pertarungan atau gelanggang kompetisi",
+    "cara_baca": "uh-rena",
+    "penggunaan": [
+      "He entered the business arena with great ambition. (Dia terjun ke arena bisnis dengan ambisi besar.)"
+    ],
+    "catatan": "Bisa arena olahraga atau panggung persaingan karier."
+  },
+  "aroma": {
+    "arti": "Aroma harum sedap / wewangian yang menggugah selera",
+    "cara_baca": "uh-roma",
+    "penggunaan": [
+      "The aroma of fresh coffee filled the kitchen. (Aroma sedap kopi segar memenuhi seisi dapur.)"
+    ],
+    "catatan": "Wewangian relaksasi disebut aromatherapy."
+  },
+  "arouse": {
+    "arti": "Membangkitkan rasa penasaran / memicu reaksi emosi",
+    "cara_baca": "uh-rouse",
+    "penggunaan": [
+      "The mystery aroused everyone's curiosity. (Kasus misterius itu membangkitkan rasa penasaran semua orang.)"
+    ],
+    "catatan": "Memicu minat atau kesadaran."
+  },
+  "array": {
+    "arti": "Deretan susunan rapi / variasi pilihan berlimpah",
+    "cara_baca": "uh-rray",
+    "penggunaan": [
+      "The buffet offers a wide array of delicious foods. (Prasmanan itu menyediakan variasi hidangan lezat yang melimpah.)"
+    ],
+    "catatan": "Dalam kodingan, array berarti larik data berurutan."
+  },
+  "arrogant": {
+    "arti": "Sombong / angkuh memandang rendah orang lain",
+    "cara_baca": "uh-rrogant",
+    "penggunaan": [
+      "Nobody likes to work with an arrogant person. (Gak ada yang suka bekerja bareng orang yang sombong.)"
+    ],
+    "catatan": "Sifat sombong disebut arrogance."
+  },
+  "articulate": {
+    "arti": "Fasih dan jelas / pandai menyampaikan gagasan dengan runtut",
+    "cara_baca": "ahr-tik-yuh-lit",
+    "penggunaan": [
+      "She is very articulate when presenting ideas. (Dia sangat fasih dan jelas saat memaparkan ide-ide rumit.)"
+    ],
+    "catatan": "Kemampuan komunikasi yang terstruktur rapi."
+  },
+  "artifact": {
+    "arti": "Artefak / benda peninggalan bersejarah masa lampau",
+    "cara_baca": "uh-rtifact",
+    "penggunaan": [
+      "Ancient artifacts were discovered near the temple. (Artefak kuno ditemukan di dekat candi tersebut.)"
+    ],
+    "catatan": "Benda bernilai sejarah tinggi."
+  },
+  "artificial": {
+    "arti": "Buatan manusia / sintetis bukan dari alam murni",
+    "cara_baca": "uh-rtificial",
+    "penggunaan": [
+      "This drink contains no artificial colors. (Minuman ini tidak mengandung pewarna buatan sama sekali.)"
+    ],
+    "catatan": "Kecerdasan buatan disebut Artificial Intelligence (AI)."
+  },
+  "aspire": {
+    "arti": "Bercita-cita luhur / berhasrat kuat meraih impian",
+    "cara_baca": "uh-spire",
+    "penggunaan": [
+      "Many young creators aspire to make global impact. (Banyak kreator muda bercita-cita memberi dampak global.)"
+    ],
+    "catatan": "Hasrat impian disebut aspiration."
+  },
+  "assemble": {
+    "arti": "Merakit komponen / berkumpul bersama di satu lokasi",
+    "cara_baca": "uh-ssemble",
+    "penggunaan": [
+      "We need to assemble the new desk. (Kita harus merakit meja kerja yang baru dibeli.)"
+    ],
+    "catatan": "Bisa merakit perabotan atau berkumpulnya tim."
+  },
+  "assert": {
+    "arti": "Menegaskan hak / menyatakan pendapat secara tegas",
+    "cara_baca": "uh-ssert",
+    "penggunaan": [
+      "You must assert your boundaries firmly. (Kamu harus menegaskan batasan pribadimu dengan tegas.)"
+    ],
+    "catatan": "Sikap percaya diri dan tegas disebut assertive."
+  },
+  "assess": {
+    "arti": "Menilai / mengevaluasi mutu, risiko, atau kemampuan",
+    "cara_baca": "uh-ssess",
+    "penggunaan": [
+      "The teacher will assess our final projects. (Guru akan menilai tugas akhir kita.)"
+    ],
+    "catatan": "Proses penilaian evaluasi disebut assessment."
+  },
+  "asset": {
+    "arti": "Aset berharga / modal bernilai yang menguntungkan",
+    "cara_baca": "uh-sset",
+    "penggunaan": [
+      "Good health is your greatest financial asset. (Kesehatan yang prima adalah aset keuangan terbesarmu.)"
+    ],
+    "catatan": "Lawan katanya adalah liability (beban/liabilitas)."
+  },
+  "assign": {
+    "arti": "Menugaskan / membagikan tanggung jawab pekerjaan",
+    "cara_baca": "uh-ssign",
+    "penggunaan": [
+      "The manager assigned me to lead the project. (Manajer menugaskan saya untuk memimpin proyek baru tersebut.)"
+    ],
+    "catatan": "Tugas yang diberikan disebut assignment."
+  },
+  "assist": {
+    "arti": "Membantu / memberi pertolongan menyelesaikan tugas",
+    "cara_baca": "uh-ssist",
+    "penggunaan": [
+      "Can someone assist me with carrying these boxes? (Bisa ada yang bantu gue ngangkat kardus-kardus ini gak?)"
+    ],
+    "catatan": "Bantuan pertolongan disebut assistance."
+  },
+  "associate": {
+    "arti": "Mengaitkan pikiran / rekan kerja sejawat",
+    "cara_baca": "uh-ssociate",
+    "penggunaan": [
+      "I always associate that song with high school. (Gue selalu mengaitkan lagu itu dengan zaman SMA gue.)"
+    ],
+    "catatan": "Kolega bisnis sering disebut business associate."
+  },
+  "assume": {
+    "arti": "Mengasumsikan / menduga sesuatu sebelum cek fakta",
+    "cara_baca": "uh-ssume",
+    "penggunaan": [
+      "Never assume anything without checking the facts. (Jangan pernah berasumsi apa pun tanpa mengecek faktanya.)"
+    ],
+    "catatan": "Dugaan tanpa bukti disebut assumption."
+  },
+  "assure": {
+    "arti": "Meyakinkan seseorang / menjamin dengan pasti",
+    "cara_baca": "uh-ssure",
+    "penggunaan": [
+      "I assure you that your account is safe. (Saya meyakinkan Anda bahwa akun Anda aman.)"
+    ],
+    "catatan": "Jaminan rasa tenang disebut assurance."
+  },
+  "astonish": {
+    "arti": "Membuat takjub luar biasa / bikin terpana kagum",
+    "cara_baca": "uh-stonish",
+    "penggunaan": [
+      "Her magic tricks astonished the entire audience. (Trik sulapnya membuat seisi penonton terpana takjub.)"
+    ],
+    "catatan": "Rasa takjub terpana disebut astonishment."
+  },
+  "astute": {
+    "arti": "Cerdik dan jeli / pandai melihat celah keuntungan",
+    "cara_baca": "uh-stute",
+    "penggunaan": [
+      "An astute investor always spots good deals. (Investor yang cerdik dan jeli selalu melihat peluang bagus.)"
+    ],
+    "catatan": "Ketajaman insting bisnis."
+  },
+  "athlete": {
+    "arti": "Atlet / olahragawan berfisik prima",
+    "cara_baca": "uh-thlete",
+    "penggunaan": [
+      "She is a professional marathon athlete. (Dia adalah seorang atlet lari maraton profesional.)"
+    ],
+    "catatan": "Bentuk tubuh bugar disebut athletic build."
+  },
+  "atmosphere": {
+    "arti": "Suasana lingkungan / lapisan udara bumi",
+    "cara_baca": "uh-tmosfere",
+    "penggunaan": [
+      "The cafe has a warm and relaxing atmosphere. (Kafe itu memiliki suasana yang hangat dan menenangkan.)"
+    ],
+    "catatan": "Bisa atmosfer bumi atau hawa suasana ruangan."
+  },
+  "attain": {
+    "arti": "Meraih cita-cita / mencapai prestasi setelah kerja keras",
+    "cara_baca": "uh-ttain",
+    "penggunaan": [
+      "With discipline, you can attain your goals. (Dengan kedisiplinan, kamu pasti bisa meraih tujuanmu.)"
+    ],
+    "catatan": "Pencapaian tingkat tinggi disebut attainment."
+  },
+  "attempt": {
+    "arti": "Mencoba / melakukan upaya usaha menyelesaikan sesuatu",
+    "cara_baca": "uh-ttempt",
+    "penggunaan": [
+      "He made a brave attempt to climb the hill. (Dia melakukan upaya berani untuk mendaki bukit itu.)"
+    ],
+    "catatan": "Bisa jadi kata kerja (mencoba) atau kata benda (upaya)."
+  },
+  "attentive": {
+    "arti": "Penuh perhatian / menyimak dengan seksama",
+    "cara_baca": "uh-ttentive",
+    "penggunaan": [
+      "The waiter was very attentive to our needs. (Pelayan restorannya sangat tanggap dan penuh perhatian.)"
+    ],
+    "catatan": "Sikap menyimak dengan baik."
+  },
+  "attire": {
+    "arti": "Busana pakaian / pakaian formal untuk acara tertentu",
+    "cara_baca": "uh-ttire",
+    "penggunaan": [
+      "Formal business attire is required today. (Busana bisnis formal diwajibkan untuk acara hari ini.)"
+    ],
+    "catatan": "Istilah elegan untuk pakaian (clothing)."
+  },
+  "attitude": {
+    "arti": "Sikap perilaku / respon mental terhadap hidup",
+    "cara_baca": "uh-ttitude",
+    "penggunaan": [
+      "A positive attitude makes all the difference. (Sikap yang positif membawa perbedaan besar dalam hidup.)"
+    ],
+    "catatan": "Sikap mental menentukan arah keberhasilan."
+  },
+  "attorney": {
+    "arti": "Pengacara / kuasa hukum di pengadilan",
+    "cara_baca": "uh-ttorney",
+    "penggunaan": [
+      "She consulted her attorney before signing. (Dia berkonsultasi dengan pengacaranya sebelum tanda tangan.)"
+    ],
+    "catatan": "Sinonim resmi dari lawyer."
+  },
+  "attract": {
+    "arti": "Menarik minat pesona / mengundang perhatian",
+    "cara_baca": "uh-ttract",
+    "penggunaan": [
+      "The festival attracts thousands of tourists. (Festival itu menarik minat ribuan wisatawan.)"
+    ],
+    "catatan": "Daya tarik magnetis disebut attraction."
+  },
+  "attribute": {
+    "arti": "Ciri sifat khas / menisbatkan suatu keberhasilan",
+    "cara_baca": "uh-ttribute",
+    "penggunaan": [
+      "Patience is an essential attribute of a leader. (Kesabaran adalah ciri sifat penting dari seorang pemimpin.)"
+    ],
+    "catatan": "Bisa ciri khas bawaan atau menisbatkan jasa."
+  },
+  "audacious": {
+    "arti": "Sangat berani nekat / berani ambil risiko besar",
+    "cara_baca": "audacius",
+    "penggunaan": [
+      "Launching the rocket was an audacious move. (Meluncurkan roket itu adalah langkah yang sangat berani.)"
+    ],
+    "catatan": "Keberanian luar biasa tanpa gentar."
+  },
+  "audience": {
+    "arti": "Penonton / khalayak pendengar pertunjukan",
+    "cara_baca": "audience",
+    "penggunaan": [
+      "The speaker engaged the audience with stories. (Pembicara itu memikat penonton dengan cerita-cerita seru.)"
+    ],
+    "catatan": "Khalayak audiens sasaran."
+  },
+  "audit": {
+    "arti": "Audit / pemeriksaan pembukuan dan kepatuhan",
+    "cara_baca": "audit",
+    "penggunaan": [
+      "The firm conducts an annual financial audit. (Perusahaan itu mengadakan audit keuangan tahunan.)"
+    ],
+    "catatan": "Pemeriksaan kepatuhan resmi."
+  },
+  "authority": {
+    "arti": "Otoritas wewenang / pihak pengambil keputusan sah",
+    "cara_baca": "authority",
+    "penggunaan": [
+      "The local authority approved the permit. (Pihak otoritas setempat menyetujui izin tersebut.)"
+    ],
+    "catatan": "Kewenangan resmi yang sah."
+  },
+  "autonomy": {
+    "arti": "Kemandirian otonomi / kebebasan mengatur diri",
+    "cara_baca": "aw-ton-uh-mee",
+    "penggunaan": [
+      "Remote workers enjoy a high degree of autonomy. (Pekerja remote menikmati tingkat kemandirian kerja yang tinggi.)"
+    ],
+    "catatan": "Hak menentukan langkah sendiri."
+  },
+  "avalanche": {
+    "arti": "Longsoran salju / luapan beruntun yang membanjiri",
+    "cara_baca": "av-uh-lanch",
+    "penggunaan": [
+      "The store received an avalanche of orders. (Toko itu kebanjiran luapan pesanan setelah viral.)"
+    ],
+    "catatan": "Kiasan banjir pesanan atau pesan."
+  },
+  "avenue": {
+    "arti": "Jalan raya lebar / jalur jalan menuju solusi",
+    "cara_baca": "uh-venue",
+    "penggunaan": [
+      "We explored every avenue to solve the bug. (Kita sudah menjajaki setiap jalur kemungkinan untuk menyelesaikan error itu.)"
+    ],
+    "catatan": "Bisa jalan raya kota atau jalur pemecahan masalah."
+  },
+  "avert": {
+    "arti": "Mencegah bahaya / memalingkan pandangan mata",
+    "cara_baca": "uh-vert",
+    "penggunaan": [
+      "Quick action helped avert a car accident. (Tindakan cepat membantu mencegah terjadinya kecelakaan mobil.)"
+    ],
+    "catatan": "Tindakan tanggap darurat menghindar bencana."
+  },
+  "avid": {
+    "arti": "Sangat antusias / gemar sekali melakukan hobi",
+    "cara_baca": "uh-vid",
+    "penggunaan": [
+      "She is an avid reader who finishes books fast. (Dia adalah pembaca yang sangat antusias dan membaca cepat.)"
+    ],
+    "catatan": "Gairah kecintaan pada hobi."
+  },
+  "avoid": {
+    "arti": "Menghindari / menjauhkan diri dari potensi masalah",
+    "cara_baca": "uh-void",
+    "penggunaan": [
+      "Always avoid driving when feeling tired. (Selalu hindari menyetir kendaraan saat merasa lelah.)"
+    ],
+    "catatan": "Tindakan pencegahan dini."
+  },
+  "await": {
+    "arti": "Menanti dengan sabar / menunggu kabar baik",
+    "cara_baca": "uh-wait",
+    "penggunaan": [
+      "Exciting opportunities await you here. (Peluang-peluang menarik sedang menanti dirimu di sini.)"
+    ],
+    "catatan": "Bentuk puitis dari kata wait."
+  },
+  "awaken": {
+    "arti": "Membangunkan / menyadarkan potensi yang terlelap",
+    "cara_baca": "uh-waken",
+    "penggunaan": [
+      "The sunrise awakened the whole forest. (Fajar matahari terbit membangunkan seisi hutan rimba.)"
+    ],
+    "catatan": "Kesadaran spiritual disebut spiritual awakening."
+  },
+  "award": {
+    "arti": "Penghargaan anugerah / hadiah kehormatan prestasi",
+    "cara_baca": "uh-ward",
+    "penggunaan": [
+      "She won the best developer award. (Dia memenangkan penghargaan pengembang terbaik.)"
+    ],
+    "catatan": "Anugerah prestasi kehormatan."
+  },
+  "aware": {
+    "arti": "Sadar dan paham / tanggap pada situasi sekitar",
+    "cara_baca": "uh-ware",
+    "penggunaan": [
+      "Are you aware of the new rules? (Apakah kamu sadar dan tahu tentang peraturan baru ini?)"
+    ],
+    "catatan": "Kesadaran diri disebut self-awareness."
+  },
+  "awe": {
+    "arti": "Rasa takjub terkesima / terpana memandang keagungan",
+    "cara_baca": "uh-we",
+    "penggunaan": [
+      "We looked at the stars in silent awe. (Kita memandangi bintang-bintang dengan rasa takjub dalam hening.)"
+    ],
+    "catatan": "Sesuatu yang menakjubkan disebut awesome."
+  },
+  "awkward": {
+    "arti": "Canggung dan kikuk / situasi bikin serba salah",
+    "cara_baca": "awk-werd",
+    "penggunaan": [
+      "There was an awkward silence in the room. (Terjadi keheningan yang canggung di ruangan itu.)"
+    ],
+    "catatan": "Momen serba salah yang bikin canggung."
+  },
+  "backbone": {
+    "arti": "Tulang punggung / pilar fondasi terkuat yang menopang",
+    "cara_baca": "bakbone",
+    "penggunaan": [
+      "Small businesses are the backbone of the economy. (Usaha kecil adalah tulang punggung perekonomian.)"
+    ],
+    "catatan": "💡 Kata \"backbone\" sangat sering dipakai dalam percakapan sehari-hari dan ujian bahasa Inggris."
+  },
+  "baffle": {
+    "arti": "Membingungkan / bikin geleng kepala tak mengerti",
+    "cara_baca": "baf-ul",
+    "penggunaan": [
+      "His strange behavior baffles everyone. (Kelakuan anehnya membingungkan semua orang.)"
+    ],
+    "catatan": "💡 Kata \"baffle\" sangat sering dipakai dalam percakapan sehari-hari dan ujian bahasa Inggris."
+  },
+  "balance": {
+    "arti": "Keseimbangan / menjaga keselarasan dua hal penting",
+    "cara_baca": "balance",
+    "penggunaan": [
+      "Work-life balance is crucial for well-being. (Keseimbangan kerja dan hidup sangat penting.)"
+    ],
+    "catatan": "💡 Kata \"balance\" sangat sering dipakai dalam percakapan sehari-hari dan ujian bahasa Inggris."
+  },
+  "banish": {
+    "arti": "Mengusir / membuang jauh-jauh pikiran negatif",
+    "cara_baca": "banish",
+    "penggunaan": [
+      "Banish self-doubt and believe in yourself. (Usir keraguan diri dan percayalah pada dirimu.)"
+    ],
+    "catatan": "💡 Kata \"banish\" sangat sering dipakai dalam percakapan sehari-hari dan ujian bahasa Inggris."
+  },
+  "barren": {
+    "arti": "Gersang tandus / tidak menghasilkan buah atau ide",
+    "cara_baca": "barren",
+    "penggunaan": [
+      "The barren desert stretched to the horizon. (Gurun gersang itu membentang hingga cakrawala.)"
+    ],
+    "catatan": "💡 Kata \"barren\" sangat sering dipakai dalam percakapan sehari-hari dan ujian bahasa Inggris."
+  },
+  "barrier": {
+    "arti": "Rintangan penghalang / pembatas yang menghalangi",
+    "cara_baca": "barrier",
+    "penggunaan": [
+      "Language should never be a barrier to friendship. (Bahasa tidak boleh jadi penghalang pertemanan.)"
+    ],
+    "catatan": "💡 Kata \"barrier\" sangat sering dipakai dalam percakapan sehari-hari dan ujian bahasa Inggris."
+  },
+  "beacon": {
+    "arti": "Mercusuar pemandu / lentera harapan di kegelapan",
+    "cara_baca": "bee-kun",
+    "penggunaan": [
+      "Her kindness was a beacon of hope. (Kebaikan hatinya adalah lentera harapan.)"
+    ],
+    "catatan": "💡 Kata \"beacon\" sangat sering dipakai dalam percakapan sehari-hari dan ujian bahasa Inggris."
+  },
+  "beaming": {
+    "arti": "Tersenyum berseri-seri / memancarkan kebahagiaan",
+    "cara_baca": "beaming",
+    "penggunaan": [
+      "She walked on stage beaming with pride. (Dia melangkah ke panggung tersenyum berseri-seri.)"
+    ],
+    "catatan": "💡 Kata \"beaming\" sangat sering dipakai dalam percakapan sehari-hari dan ujian bahasa Inggris."
+  },
+  "beloved": {
+    "arti": "Tercinta / sangat disayangi dan dihargai",
+    "cara_baca": "beloved",
+    "penggunaan": [
+      "He is a beloved teacher in our school. (Dia adalah guru yang sangat dicintai di sekolah kita.)"
+    ],
+    "catatan": "💡 Kata \"beloved\" sangat sering dipakai dalam percakapan sehari-hari dan ujian bahasa Inggris."
+  },
+  "benchmark": {
+    "arti": "Tolok ukur standar / patokan pembanding mutu",
+    "cara_baca": "bench-mahrk",
+    "penggunaan": [
+      "This app sets a new benchmark for speed. (Aplikasi ini menetapkan tolok ukur kecepatan baru.)"
+    ],
+    "catatan": "💡 Kata \"benchmark\" sangat sering dipakai dalam percakapan sehari-hari dan ujian bahasa Inggris."
+  },
+  "benevolent": {
+    "arti": "Berhati mulia / dermawan suka menolong tulus",
+    "cara_baca": "buh-nev-uh-lunt",
+    "penggunaan": [
+      "The benevolent donor funded scholarships. (Donatur berhati mulia itu membiayai beasiswa.)"
+    ],
+    "catatan": "💡 Kata \"benevolent\" sangat sering dipakai dalam percakapan sehari-hari dan ujian bahasa Inggris."
+  },
+  "bewilder": {
+    "arti": "Membingungkan / bikin linglung tersesat",
+    "cara_baca": "bih-wil-der",
+    "penggunaan": [
+      "The subway map bewildered the foreign tourist. (Peta kereta itu bikin linglung wisatawan asing.)"
+    ],
+    "catatan": "💡 Kata \"bewilder\" sangat sering dipakai dalam percakapan sehari-hari dan ujian bahasa Inggris."
+  },
+  "bias": {
+    "arti": "Bias prasangka / kecenderungan memihak sepihak",
+    "cara_baca": "bias",
+    "penggunaan": [
+      "A good judge must remain free from bias. (Hakim yang baik harus bebas dari prasangka sepihak.)"
+    ],
+    "catatan": "💡 Kata \"bias\" sangat sering dipakai dalam percakapan sehari-hari dan ujian bahasa Inggris."
+  },
+  "bilingual": {
+    "arti": "Dwibahasa / fasih menguasai dua bahasa",
+    "cara_baca": "bay-ling-gwul",
+    "penggunaan": [
+      "Being bilingual opens up global career doors. (Menguasai dwibahasa membuka banyak peluang karier.)"
+    ],
+    "catatan": "💡 Kata \"bilingual\" sangat sering dipakai dalam percakapan sehari-hari dan ujian bahasa Inggris."
+  },
+  "blueprint": {
+    "arti": "Cetak biru rancangan / panduan sketsa dasar",
+    "cara_baca": "bloo-print",
+    "penggunaan": [
+      "The architect finalized the project blueprint. (Arsitek menyelesaikan cetak biru proyek tersebut.)"
+    ],
+    "catatan": "💡 Kata \"blueprint\" sangat sering dipakai dalam percakapan sehari-hari dan ujian bahasa Inggris."
+  },
+  "blunder": {
+    "arti": "Kecerobohan fatal / kesalahan konyol kurang teliti",
+    "cara_baca": "blan-der",
+    "penggunaan": [
+      "A small typo led to a costly blunder. (Salah ketik kecil berujung pada kecerobohan fatal.)"
+    ],
+    "catatan": "💡 Kata \"blunder\" sangat sering dipakai dalam percakapan sehari-hari dan ujian bahasa Inggris."
+  },
+  "blush": {
+    "arti": "Muka memerah merona / malu tersipu dipuji",
+    "cara_baca": "blush",
+    "penggunaan": [
+      "She blushed when complimented on her singing. (Pipinya memerah tersipu saat dipuji suaranya.)"
+    ],
+    "catatan": "💡 Kata \"blush\" sangat sering dipakai dalam percakapan sehari-hari dan ujian bahasa Inggris."
+  },
+  "boast": {
+    "arti": "Membanggakan diri / memamerkan kelebihan",
+    "cara_baca": "boast",
+    "penggunaan": [
+      "He likes to boast about his high game scores. (Dia suka membanggakan diri tentang skor game-nya.)"
+    ],
+    "catatan": "💡 Kata \"boast\" sangat sering dipakai dalam percakapan sehari-hari dan ujian bahasa Inggris."
+  },
+  "bold": {
+    "arti": "Berani dan tegas / percaya diri mengambil risiko",
+    "cara_baca": "bold",
+    "penggunaan": [
+      "Making a bold decision changed her life. (Mengambil keputusan berani mengubah hidupnya.)"
+    ],
+    "catatan": "💡 Kata \"bold\" sangat sering dipakai dalam percakapan sehari-hari dan ujian bahasa Inggris."
+  },
+  "bolster": {
+    "arti": "Memperkuat menopang / menyokong semangat tim",
+    "cara_baca": "bolster",
+    "penggunaan": [
+      "Customer reviews bolster trust in the brand. (Ulasan pelanggan memperkuat rasa percaya pada merek.)"
+    ],
+    "catatan": "💡 Kata \"bolster\" sangat sering dipakai dalam percakapan sehari-hari dan ujian bahasa Inggris."
+  },
+  "bond": {
+    "arti": "Ikatan erat / hubungan batin yang kuat",
+    "cara_baca": "bond",
+    "penggunaan": [
+      "Adversity created an unbreakable bond. (Kesulitan menciptakan ikatan erat yang tak terpisahkan.)"
+    ],
+    "catatan": "💡 Kata \"bond\" sangat sering dipakai dalam percakapan sehari-hari dan ujian bahasa Inggris."
+  },
+  "bonus": {
+    "arti": "Bonus tambahan / imbalan ekstra atas prestasi",
+    "cara_baca": "bonus",
+    "penggunaan": [
+      "Employees received an annual bonus. (Karyawan menerima bonus kinerja tahunan.)"
+    ],
+    "catatan": "💡 Kata \"bonus\" sangat sering dipakai dalam percakapan sehari-hari dan ujian bahasa Inggris."
+  },
+  "boost": {
+    "arti": "Meningkatkan / mendongkrak dorongan energi",
+    "cara_baca": "boost",
+    "penggunaan": [
+      "Good coffee boosts my morning focus. (Kopi enak mendongkrak fokus kerja pagi gue.)"
+    ],
+    "catatan": "💡 Kata \"boost\" sangat sering dipakai dalam percakapan sehari-hari dan ujian bahasa Inggris."
+  },
+  "bountiful": {
+    "arti": "Berlimpah ruah / panen yang sangat subur",
+    "cara_baca": "bountiful",
+    "penggunaan": [
+      "Autumn brought a bountiful apple harvest. (Musim gugur membawa panen berlimpah buah apel.)"
+    ],
+    "catatan": "💡 Kata \"bountiful\" sangat sering dipakai dalam percakapan sehari-hari dan ujian bahasa Inggris."
+  },
+  "bravery": {
+    "arti": "Keberanian / keteguhan hati hadapi bahaya",
+    "cara_baca": "bravery",
+    "penggunaan": [
+      "The firefighters were honored for bravery. (Petugas pemadam kebakaran dihargai atas keberaniannya.)"
+    ],
+    "catatan": "💡 Kata \"bravery\" sangat sering dipakai dalam percakapan sehari-hari dan ujian bahasa Inggris."
+  },
+  "breakthrough": {
+    "arti": "Terobosan revolusioner / penemuan besar",
+    "cara_baca": "breyk-throo",
+    "penggunaan": [
+      "Scientists made a major medical breakthrough. (Ilmuwan membuat terobosan medis yang besar.)"
+    ],
+    "catatan": "💡 Kata \"breakthrough\" sangat sering dipakai dalam percakapan sehari-hari dan ujian bahasa Inggris."
+  },
+  "breathtaking": {
+    "arti": "Sangat memukau / pemandangan bikin takjub",
+    "cara_baca": "breth-tey-king",
+    "penggunaan": [
+      "The sunrise view was breathtaking. (Pemandangan matahari terbit sangat memukau.)"
+    ],
+    "catatan": "💡 Kata \"breathtaking\" sangat sering dipakai dalam percakapan sehari-hari dan ujian bahasa Inggris."
+  },
+  "brevity": {
+    "arti": "Keringkasan / padat dan singkat tanpa berbelit",
+    "cara_baca": "brev-i-tee",
+    "penggunaan": [
+      "Brevity is the soul of wit in writing. (Keringkasan adalah kunci tulisan yang cerdas.)"
+    ],
+    "catatan": "💡 Kata \"brevity\" sangat sering dipakai dalam percakapan sehari-hari dan ujian bahasa Inggris."
+  },
+  "brilliant": {
+    "arti": "Brilian cemerlang / luar biasa pintar",
+    "cara_baca": "brilliant",
+    "penggunaan": [
+      "She came up with a brilliant solution. (Dia menemukan solusi brilian untuk masalah itu.)"
+    ],
+    "catatan": "💡 Kata \"brilliant\" sangat sering dipakai dalam percakapan sehari-hari dan ujian bahasa Inggris."
+  },
+  "brisk": {
+    "arti": "Cepat dan bertenaga / segar bersemangat",
+    "cara_baca": "brisk",
+    "penggunaan": [
+      "A brisk walk every morning keeps you fit. (Jalan cepat tiap pagi menjaga tubuh tetap bugar.)"
+    ],
+    "catatan": "💡 Kata \"brisk\" sangat sering dipakai dalam percakapan sehari-hari dan ujian bahasa Inggris."
+  },
+  "brittle": {
+    "arti": "Rapuh mudah patah / rentan hancur jika ditekan",
+    "cara_baca": "brittle",
+    "penggunaan": [
+      "Dry twigs become brittle in cold weather. (Ranting kering menjadi rapuh saat cuaca dingin.)"
+    ],
+    "catatan": "💡 Kata \"brittle\" sangat sering dipakai dalam percakapan sehari-hari dan ujian bahasa Inggris."
+  },
+  "broad": {
+    "arti": "Luas dan lebar / cakupan pandangan menyeluruh",
+    "cara_baca": "broad",
+    "penggunaan": [
+      "He has broad knowledge of world history. (Dia memiliki pengetahuan luas tentang sejarah dunia.)"
+    ],
+    "catatan": "💡 Kata \"broad\" sangat sering dipakai dalam percakapan sehari-hari dan ujian bahasa Inggris."
+  },
+  "brutal": {
+    "arti": "Kejam tanpa ampun / keras menyakitkan",
+    "cara_baca": "brutal",
+    "penggunaan": [
+      "The truth can be brutal, but it sets you free. (Kenyataan terkadang terasa kejam, tapi membebaskanmu.)"
+    ],
+    "catatan": "💡 Kata \"brutal\" sangat sering dipakai dalam percakapan sehari-hari dan ujian bahasa Inggris."
+  },
+  "buffer": {
+    "arti": "Penyangga penahan benturan / jeda pengaman",
+    "cara_baca": "buffer",
+    "penggunaan": [
+      "Keep a cash buffer for emergencies. (Simpan tabungan penyangga untuk keadaan darurat.)"
+    ],
+    "catatan": "💡 Kata \"buffer\" sangat sering dipakai dalam percakapan sehari-hari dan ujian bahasa Inggris."
+  },
+  "buoyant": {
+    "arti": "Mengapung ringan / ceria pantang menyerah",
+    "cara_baca": "boy-unt",
+    "penggunaan": [
+      "Her buoyant personality lifted our spirits. (Kepribadian cerianya mengangkat semangat kami.)"
+    ],
+    "catatan": "💡 Kata \"buoyant\" sangat sering dipakai dalam percakapan sehari-hari dan ujian bahasa Inggris."
+  },
+  "burden": {
+    "arti": "Beban berat / tanggung jawab membebani",
+    "cara_baca": "burden",
+    "penggunaan": [
+      "Sharing troubles lightens the burden. (Berbagi cerita meringankan beban di pundak.)"
+    ],
+    "catatan": "💡 Kata \"burden\" sangat sering dipakai dalam percakapan sehari-hari dan ujian bahasa Inggris."
+  },
+  "bustling": {
+    "arti": "Ramai dan sibuk / penuh hiruk-pikuk kota",
+    "cara_baca": "bustling",
+    "penggunaan": [
+      "The downtown market is always bustling. (Pasar pusat kota selalu ramai dan sibuk.)"
+    ],
+    "catatan": "💡 Kata \"bustling\" sangat sering dipakai dalam percakapan sehari-hari dan ujian bahasa Inggris."
+  },
+  "calamity": {
+    "arti": "Bencana dahsyat / malapetaka besar",
+    "cara_baca": "kuh-lam-i-tee",
+    "penggunaan": [
+      "The flood was a terrible calamity. (Banjir itu adalah malapetaka bencana yang dahsyat.)"
+    ],
+    "catatan": "💡 Kata \"calamity\" sangat sering dipakai dalam percakapan sehari-hari dan ujian bahasa Inggris."
+  },
+  "calculate": {
+    "arti": "Menghitung memperhitungkan / menimbang risiko",
+    "cara_baca": "calculate",
+    "penggunaan": [
+      "Calculate risks carefully before investing. (Perhitungkan risiko dengan cermat sebelum investasi.)"
+    ],
+    "catatan": "💡 Kata \"calculate\" sangat sering dipakai dalam percakapan sehari-hari dan ujian bahasa Inggris."
+  },
+  "caliber": {
+    "arti": "Kualitas kaliber / tingkatan mutu keahlian",
+    "cara_baca": "caliber",
+    "penggunaan": [
+      "We only hire candidates of high caliber. (Kita hanya merekrut kandidat dengan kaliber bermutu.)"
+    ],
+    "catatan": "💡 Kata \"caliber\" sangat sering dipakai dalam percakapan sehari-hari dan ujian bahasa Inggris."
+  },
+  "calm": {
+    "arti": "Tenang dan hening / tidak panik di tengah badai",
+    "cara_baca": "calm",
+    "penggunaan": [
+      "Stay calm and breathe deeply. (Tetaplah tenang dan tarik napas dalam-dalam.)"
+    ],
+    "catatan": "💡 Kata \"calm\" sangat sering dipakai dalam percakapan sehari-hari dan ujian bahasa Inggris."
+  },
+  "camouflage": {
+    "arti": "Kamuflase penyamaran / menyatu dengan sekitar",
+    "cara_baca": "kam-uh-flahzh",
+    "penggunaan": [
+      "The chameleon uses camouflage to hide. (Bunglon menggunakan kamuflase untuk bersembunyi.)"
+    ],
+    "catatan": "💡 Kata \"camouflage\" sangat sering dipakai dalam percakapan sehari-hari dan ujian bahasa Inggris."
+  },
+  "campaign": {
+    "arti": "Kampanye terencana / rangkaian kegiatan terarah",
+    "cara_baca": "campaign",
+    "penggunaan": [
+      "The campaign boosted our app downloads. (Kampanye itu mendongkrak unduhan aplikasi kita.)"
+    ],
+    "catatan": "💡 Kata \"campaign\" sangat sering dipakai dalam percakapan sehari-hari dan ujian bahasa Inggris."
+  },
+  "candid": {
+    "arti": "Jujur apa adanya / foto spontan tanpa jaim",
+    "cara_baca": "candid",
+    "penggunaan": [
+      "I appreciate your candid feedback. (Gue menghargai masukan lu yang jujur apa adanya.)"
+    ],
+    "catatan": "💡 Kata \"candid\" sangat sering dipakai dalam percakapan sehari-hari dan ujian bahasa Inggris."
+  },
+  "capable": {
+    "arti": "Mampu dan kompeten / sanggup menyelesaikan",
+    "cara_baca": "capable",
+    "penggunaan": [
+      "She is fully capable of leading the team. (Dia sangat mampu dan kompeten memimpin tim.)"
+    ],
+    "catatan": "💡 Kata \"capable\" sangat sering dipakai dalam percakapan sehari-hari dan ujian bahasa Inggris."
+  },
+  "capacity": {
+    "arti": "Kapasitas daya tampung / batas kemampuan",
+    "cara_baca": "capacity",
+    "penggunaan": [
+      "The stadium was filled to capacity. (Stadion itu terisi penuh hingga kapasitas maksimal.)"
+    ],
+    "catatan": "💡 Kata \"capacity\" sangat sering dipakai dalam percakapan sehari-hari dan ujian bahasa Inggris."
+  },
+  "captivate": {
+    "arti": "Memikat hati / mempesona perhatian orang",
+    "cara_baca": "kap-tuh-veyt",
+    "penggunaan": [
+      "The singer captivated the entire audience. (Penyanyi itu memikat hati seluruh penonton.)"
+    ],
+    "catatan": "💡 Kata \"captivate\" sangat sering dipakai dalam percakapan sehari-hari dan ujian bahasa Inggris."
+  },
+  "carefree": {
+    "arti": "Bebas lepas tanpa beban / santai menikmati hidup",
+    "cara_baca": "carefree",
+    "penggunaan": [
+      "He spent a carefree holiday by the sea. (Dia menikmati liburan santai tanpa beban di tepi laut.)"
+    ],
+    "catatan": "💡 Kata \"carefree\" sangat sering dipakai dalam percakapan sehari-hari dan ujian bahasa Inggris."
+  },
+  "catalyst": {
+    "arti": "Katalis pemicu / faktor yang mempercepat perubahan",
+    "cara_baca": "kat-l-ist",
+    "penggunaan": [
+      "The policy served as a catalyst for growth. (Kebijakan itu menjadi katalis bagi pertumbuhan.)"
+    ],
+    "catatan": "💡 Kata \"catalyst\" sangat sering dipakai dalam percakapan sehari-hari dan ujian bahasa Inggris."
+  },
+  "catastrophe": {
+    "arti": "Malapetaka bencana / kehancuran besar",
+    "cara_baca": "kuh-tas-truh-fee",
+    "penggunaan": [
+      "Poor planning caused a total catastrophe. (Perencanaan buruk memicu malapetaka kehancuran total.)"
+    ],
+    "catatan": "💡 Kata \"catastrophe\" sangat sering dipakai dalam percakapan sehari-hari dan ujian bahasa Inggris."
+  },
+  "cautious": {
+    "arti": "Berhati-hati waspada / tidak gegabah bertindak",
+    "cara_baca": "cautius",
+    "penggunaan": [
+      "Be cautious when sharing passwords online. (Berhati-hatilah saat membagikan kata sandi online.)"
+    ],
+    "catatan": "💡 Kata \"cautious\" sangat sering dipakai dalam percakapan sehari-hari dan ujian bahasa Inggris."
+  },
+  "cease": {
+    "arti": "Berhenti menghentikan / menyudahi pertikaian",
+    "cara_baca": "cease",
+    "penggunaan": [
+      "The factory ceased operations today. (Pabrik menghentikan operasional hari ini.)"
+    ],
+    "catatan": "💡 Kata \"cease\" sangat sering dipakai dalam percakapan sehari-hari dan ujian bahasa Inggris."
+  },
+  "celebrate": {
+    "arti": "Merayakan meriah / mensyukuri keberhasilan",
+    "cara_baca": "celebrate",
+    "penggunaan": [
+      "Let's celebrate your big achievement! (Yuk kita rayakan pencapaian besarmu!)"
+    ],
+    "catatan": "💡 Kata \"celebrate\" sangat sering dipakai dalam percakapan sehari-hari dan ujian bahasa Inggris."
+  },
+  "celebrity": {
+    "arti": "Pesohor selebriti / orang terkenal publik",
+    "cara_baca": "celebrity",
+    "penggunaan": [
+      "The gala was attended by famous celebrities. (Acara itu dihadiri oleh selebriti terkenal.)"
+    ],
+    "catatan": "💡 Kata \"celebrity\" sangat sering dipakai dalam percakapan sehari-hari dan ujian bahasa Inggris."
+  },
+  "censure": {
+    "arti": "Kecaman teguran keras / kritik resmi etika",
+    "cara_baca": "censure",
+    "penggunaan": [
+      "The minister faced public censure. (Menteri itu menghadapi kecaman publik yang keras.)"
+    ],
+    "catatan": "💡 Kata \"censure\" sangat sering dipakai dalam percakapan sehari-hari dan ujian bahasa Inggris."
+  },
+  "certainty": {
+    "arti": "Kepastian mutlak / keyakinan tanpa ragu",
+    "cara_baca": "certainty",
+    "penggunaan": [
+      "Adaptability is the only certainty today. (Kemampuan beradaptasi adalah satu-satunya kepastian hari ini.)"
+    ],
+    "catatan": "💡 Kata \"certainty\" sangat sering dipakai dalam percakapan sehari-hari dan ujian bahasa Inggris."
+  },
+  "certificate": {
+    "arti": "Sertifikat ijazah / dokumen tanda kelulusan",
+    "cara_baca": "certificate",
+    "penggunaan": [
+      "She earned a certificate in data science. (Dia meraih sertifikat dalam ilmu sains data.)"
+    ],
+    "catatan": "💡 Kata \"certificate\" sangat sering dipakai dalam percakapan sehari-hari dan ujian bahasa Inggris."
+  },
+  "champion": {
+    "arti": "Juara kampiun / pejuang pembela kebaikan",
+    "cara_baca": "champion",
+    "penggunaan": [
+      "He is a champion of human rights. (Dia adalah pejuang gigih pembela hak asasi manusia.)"
+    ],
+    "catatan": "💡 Kata \"champion\" sangat sering dipakai dalam percakapan sehari-hari dan ujian bahasa Inggris."
+  },
+  "chaos": {
+    "arti": "Kekacauan total / situasi tanpa aturan teratur",
+    "cara_baca": "chaos",
+    "penggunaan": [
+      "Traffic was in complete chaos after the storm. (Lalu lintas kacau balau sehabis badai menerjang.)"
+    ],
+    "catatan": "💡 Kata \"chaos\" sangat sering dipakai dalam percakapan sehari-hari dan ujian bahasa Inggris."
+  },
+  "characteristic": {
+    "arti": "Ciri khas unik / sifat yang membedakan",
+    "cara_baca": "characteristic",
+    "penggunaan": [
+      "Curiosity is a key characteristic of scientists. (Rasa ingin tahu adalah ciri khas utama ilmuwan.)"
+    ],
+    "catatan": "💡 Kata \"characteristic\" sangat sering dipakai dalam percakapan sehari-hari dan ujian bahasa Inggris."
+  },
+  "charisma": {
+    "arti": "Karisma wibawa / pesona kepemimpinan memikat",
+    "cara_baca": "kuh-riz-muh",
+    "penggunaan": [
+      "His charisma inspired thousands of supporters. (Karisma wibawanya menginspirasi ribuan pendukung.)"
+    ],
+    "catatan": "💡 Kata \"charisma\" sangat sering dipakai dalam percakapan sehari-hari dan ujian bahasa Inggris."
+  },
+  "charity": {
+    "arti": "Amal kebajikan / yayasan penyalur donasi",
+    "cara_baca": "charity",
+    "penggunaan": [
+      "She donates monthly to local charity. (Dia menyumbang setiap bulan ke yayasan amal lokal.)"
+    ],
+    "catatan": "💡 Kata \"charity\" sangat sering dipakai dalam percakapan sehari-hari dan ujian bahasa Inggris."
+  },
+  "charming": {
+    "arti": "Menawan mempesona / ramah bikin betah",
+    "cara_baca": "charming",
+    "penggunaan": [
+      "The seaside cottage was truly charming. (Pondok tepi laut itu sangat menawan dan indah.)"
+    ],
+    "catatan": "💡 Kata \"charming\" sangat sering dipakai dalam percakapan sehari-hari dan ujian bahasa Inggris."
+  },
+  "chasm": {
+    "arti": "Jurang pemisah / kesenjangan yang dalam",
+    "cara_baca": "chasm",
+    "penggunaan": [
+      "A deep chasm separated the two factions. (Jurang pemisah yang dalam memisahkan kedua kubu.)"
+    ],
+    "catatan": "💡 Kata \"chasm\" sangat sering dipakai dalam percakapan sehari-hari dan ujian bahasa Inggris."
+  },
+  "cherish": {
+    "arti": "Menghargai menyayangi / menjaga kenangan indah",
+    "cara_baca": "cherish",
+    "penggunaan": [
+      "Cherish every moment with your family. (Hargai dan rawatlah setiap momen bersama keluarga.)"
+    ],
+    "catatan": "💡 Kata \"cherish\" sangat sering dipakai dalam percakapan sehari-hari dan ujian bahasa Inggris."
+  },
+  "chivalry": {
+    "arti": "Sikap ksatria budiman / kesopanan santun",
+    "cara_baca": "shiv-ul-ree",
+    "penggunaan": [
+      "Kind manners are acts of true chivalry. (Tata krama yang baik adalah wujud sikap ksatria sejati.)"
+    ],
+    "catatan": "💡 Kata \"chivalry\" sangat sering dipakai dalam percakapan sehari-hari dan ujian bahasa Inggris."
+  },
+  "chronic": {
+    "arti": "Menahun kronis / masalah berlangsung lama",
+    "cara_baca": "kron-ik",
+    "penggunaan": [
+      "He suffers from chronic knee pain. (Dia menderita sakit lutut menahun.)"
+    ],
+    "catatan": "💡 Kata \"chronic\" sangat sering dipakai dalam percakapan sehari-hari dan ujian bahasa Inggris."
+  },
+  "clarify": {
+    "arti": "Memperjelas menerangkan / uraikan agar paham",
+    "cara_baca": "klar-uh-fay",
+    "penggunaan": [
+      "Could you please clarify your question? (Bisa tolong perjelas pertanyaan Anda?)"
+    ],
+    "catatan": "💡 Kata \"clarify\" sangat sering dipakai dalam percakapan sehari-hari dan ujian bahasa Inggris."
+  },
+  "clarity": {
+    "arti": "Kejelasan / kejernihan pikiran dan bahasa",
+    "cara_baca": "clarity",
+    "penggunaan": [
+      "Writing with clarity makes ideas strong. (Menulis dengan kejelasan membuat ide menjadi kuat.)"
+    ],
+    "catatan": "💡 Kata \"clarity\" sangat sering dipakai dalam percakapan sehari-hari dan ujian bahasa Inggris."
+  },
+  "clash": {
+    "arti": "Benturan tabrakan / perselisihan pandangan",
+    "cara_baca": "clash",
+    "penggunaan": [
+      "Their differing views caused a clash. (Pandangan mereka yang berbeda memicu perselisihan.)"
+    ],
+    "catatan": "💡 Kata \"clash\" sangat sering dipakai dalam percakapan sehari-hari dan ujian bahasa Inggris."
+  },
+  "classic": {
+    "arti": "Klasik abadi / karya bermutu tak lekang zaman",
+    "cara_baca": "classic",
+    "penggunaan": [
+      "That movie is an all-time classic. (Film itu adalah karya klasik abadi sepanjang masa.)"
+    ],
+    "catatan": "💡 Kata \"classic\" sangat sering dipakai dalam percakapan sehari-hari dan ujian bahasa Inggris."
+  },
+  "classify": {
+    "arti": "Mengelompokkan / membagi ke kategori rapi",
+    "cara_baca": "classify",
+    "penggunaan": [
+      "Biologists classify animals into families. (Ahli biologi mengelompokkan hewan ke dalam famili.)"
+    ],
+    "catatan": "💡 Kata \"classify\" sangat sering dipakai dalam percakapan sehari-hari dan ujian bahasa Inggris."
+  },
+  "climax": {
+    "arti": "Puncak klimaks / titik puncak keseruan cerita",
+    "cara_baca": "climax",
+    "penggunaan": [
+      "The novel reached its dramatic climax. (Novel itu mencapai puncak klimaksnya yang dramatis.)"
+    ],
+    "catatan": "💡 Kata \"climax\" sangat sering dipakai dalam percakapan sehari-hari dan ujian bahasa Inggris."
+  },
+  "cling": {
+    "arti": "Menempel erat / berpegangan kuat tak lepas",
+    "cara_baca": "cling",
+    "penggunaan": [
+      "The child clung to her mother's hand. (Anak itu berpegangan erat pada tangan ibunya.)"
+    ],
+    "catatan": "💡 Kata \"cling\" sangat sering dipakai dalam percakapan sehari-hari dan ujian bahasa Inggris."
+  },
+  "clumsy": {
+    "arti": "Canggung ceroboh / sering menjatuhkan barang",
+    "cara_baca": "clumsy",
+    "penggunaan": [
+      "I felt clumsy dropping my coffee cup. (Gue merasa ceroboh menjatuhkan cangkir kopi gue.)"
+    ],
+    "catatan": "💡 Kata \"clumsy\" sangat sering dipakai dalam percakapan sehari-hari dan ujian bahasa Inggris."
+  },
+  "cluster": {
+    "arti": "Gugusan kelompok / gerombolan berkumpul rapat",
+    "cara_baca": "cluster",
+    "penggunaan": [
+      "A cluster of cafes opened downtown. (Gugusan kafe bermunculan di pusat kota.)"
+    ],
+    "catatan": "💡 Kata \"cluster\" sangat sering dipakai dalam percakapan sehari-hari dan ujian bahasa Inggris."
+  },
+  "coalition": {
+    "arti": "Koalisi gabungan / persekutuan bersama",
+    "cara_baca": "coalishun",
+    "penggunaan": [
+      "Parties formed a coalition to govern. (Partai-partai membentuk koalisi untuk memerintah.)"
+    ],
+    "catatan": "💡 Kata \"coalition\" sangat sering dipakai dalam percakapan sehari-hari dan ujian bahasa Inggris."
+  },
+  "cohesive": {
+    "arti": "Kompak menyatu / rekat saling mendukung",
+    "cara_baca": "koh-hee-siv",
+    "penggunaan": [
+      "A cohesive team overcomes all challenges. (Tim yang kompak menyatu sanggup melewati semua tantangan.)"
+    ],
+    "catatan": "💡 Kata \"cohesive\" sangat sering dipakai dalam percakapan sehari-hari dan ujian bahasa Inggris."
+  },
+  "collaborate": {
+    "arti": "Bekerja sama / menyatukan keahlian bersama",
+    "cara_baca": "collaborate",
+    "penggunaan": [
+      "Artists collaborate on musical albums. (Para seniman bekerja sama dalam proyek album musik.)"
+    ],
+    "catatan": "💡 Kata \"collaborate\" sangat sering dipakai dalam percakapan sehari-hari dan ujian bahasa Inggris."
+  },
+  "collapse": {
+    "arti": "Runtuh ambruk / tumbang lemas kelelahan",
+    "cara_baca": "collapse",
+    "penggunaan": [
+      "The old bridge collapsed in the quake. (Jembatan tua itu ambruk saat gempa bumi.)"
+    ],
+    "catatan": "💡 Kata \"collapse\" sangat sering dipakai dalam percakapan sehari-hari dan ujian bahasa Inggris."
+  },
+  "colleague": {
+    "arti": "Rekan sejawat / teman kerja sekantor",
+    "cara_baca": "kol-eeg",
+    "penggunaan": [
+      "I had lunch with my office colleagues. (Gue makan siang bareng rekan kerja sekantor.)"
+    ],
+    "catatan": "💡 Kata \"colleague\" sangat sering dipakai dalam percakapan sehari-hari dan ujian bahasa Inggris."
+  },
+  "collective": {
+    "arti": "Kolektif bersama / gotong royong terpadu",
+    "cara_baca": "collective",
+    "penggunaan": [
+      "Success is the result of collective effort. (Keberhasilan adalah buah dari usaha kolektif bersama.)"
+    ],
+    "catatan": "💡 Kata \"collective\" sangat sering dipakai dalam percakapan sehari-hari dan ujian bahasa Inggris."
+  },
+  "collide": {
+    "arti": "Bertabrakan / berbenturan keras di jalan",
+    "cara_baca": "collide",
+    "penggunaan": [
+      "The two cars collided at the crossing. (Dua mobil bertabrakan di persimpangan jalan.)"
+    ],
+    "catatan": "💡 Kata \"collide\" sangat sering dipakai dalam percakapan sehari-hari dan ujian bahasa Inggris."
+  },
+  "colossal": {
+    "arti": "Raksasa luar biasa / ukuran teramat besar",
+    "cara_baca": "kuh-los-ul",
+    "penggunaan": [
+      "The pyramid was a colossal achievement. (Piramida adalah pencapaian raksasa yang menakjubkan.)"
+    ],
+    "catatan": "💡 Kata \"colossal\" sangat sering dipakai dalam percakapan sehari-hari dan ujian bahasa Inggris."
+  },
+  "commence": {
+    "arti": "Memulai resmi / mengawali acara formal",
+    "cara_baca": "kuh-mens",
+    "penggunaan": [
+      "The ceremony commences at nine AM sharp. (Upacara resmi dimulai tepat jam sembilan pagi.)"
+    ],
+    "catatan": "💡 Kata \"commence\" sangat sering dipakai dalam percakapan sehari-hari dan ujian bahasa Inggris."
+  },
+  "commend": {
+    "arti": "Memuji mengapresiasi / penghargaan terpuji",
+    "cara_baca": "commend",
+    "penggunaan": [
+      "The mayor commended the brave citizen. (Walikota memuji warga pemberani tersebut.)"
+    ],
+    "catatan": "💡 Kata \"commend\" sangat sering dipakai dalam percakapan sehari-hari dan ujian bahasa Inggris."
+  },
+  "compassion": {
+    "arti": "Belas kasih empati / peduli sesama manusia",
+    "cara_baca": "kuhm-pash-un",
+    "penggunaan": [
+      "Treating others with compassion brings peace. (Memperlakukan sesama dengan belas kasih membawa kedamaian.)"
+    ],
+    "catatan": "💡 Kata \"compassion\" sangat sering dipakai dalam percakapan sehari-hari dan ujian bahasa Inggris."
+  },
+  "daunting": {
+    "arti": "Menakutkan / terasa sangat berat dan bikin ciut nyali",
+    "cara_baca": "dawn-ting",
+    "penggunaan": [
+      "Starting a new career in a foreign country can be a daunting task. (Memulai karir baru di negeri orang bisa jadi tugas yang bikin ciut nyali.)"
+    ],
+    "catatan": "Dipakai untuk tantangan besar yang butuh keberanian ekstra."
+  },
+  "dazzle": {
+    "arti": "Memukau / menyilaukan mata karena saking indahnya",
+    "cara_baca": "daz-ul",
+    "penggunaan": [
+      "Her performance on stage dazzled the entire audience. (Penampilannya di atas panggung memukau seluruh penonton.)"
+    ],
+    "catatan": "Bisa untuk cahaya yang sangat terang atau bakat yang luar biasa."
+  },
+  "debris": {
+    "arti": "Puing-puing / serpihan reruntuhan sisa kehancuran",
+    "cara_baca": "duh-bree",
+    "penggunaan": [
+      "Workers spent days clearing the debris after the storm. (Petugas menghabiskan berhari-hari membersihkan puing-puing pasca badai.)"
+    ],
+    "catatan": "Huruf 's' di akhir kata ini tidak dibaca (silent 's')."
+  },
+  "deceive": {
+    "arti": "Menipu / membohongi orang dengan sengaja",
+    "cara_baca": "dih-seev",
+    "penggunaan": [
+      "Do not let their sweet words deceive you. (Jangan biarkan kata-kata manis mereka menipumu.)"
+    ],
+    "catatan": "Sering dipakai dalam hubungan atau manipulasi bisnis."
+  },
+  "decisive": {
+    "arti": "Tegas / mampu mengambil keputusan cepat dan bulat",
+    "cara_baca": "dih-say-siv",
+    "penggunaan": [
+      "A great leader must take decisive action during a crisis. (Pemimpin hebat harus mengambil tindakan tegas saat krisis.)"
+    ],
+    "catatan": "Lawan dari kata indecisive (plin-plan / ragu-ragu)."
+  },
+  "dedicate": {
+    "arti": "Mendedikasikan / mencurahkan waktu dan tenaga untuk suatu tujuan",
+    "cara_baca": "ded-ih-keyt",
+    "penggunaan": [
+      "She dedicated her entire life to medical research. (Dia mendedikasikan seluruh hidupnya untuk riset medis.)"
+    ],
+    "catatan": "Bentuk kata sifatnya adalah dedicated (berdedikasi)."
+  },
+  "deduce": {
+    "arti": "Menyimpulkan / menarik kesimpulan berdasarkan bukti yang ada",
+    "cara_baca": "dih-dyoos",
+    "penggunaan": [
+      "From the footprints, the detective deduced that someone had escaped. (Dari jejak kaki, detektif menyimpulkan ada yang melarikan diri.)"
+    ],
+    "catatan": "Metode berpikir deduktif (deductive reasoning ala Sherlock Holmes)."
+  },
+  "deficiency": {
+    "arti": "Kekurangan / defisiensi nutrisi atau unsur penting",
+    "cara_baca": "dih-fish-un-see",
+    "penggunaan": [
+      "Vitamin D deficiency can cause extreme fatigue. (Kekurangan vitamin D bisa menyebabkan rasa lelah ekstrem.)"
+    ],
+    "catatan": "Sering dipakai dalam konteks kesehatan dan gizi."
+  },
+  "definitive": {
+    "arti": "Pasti / mutlak dan tidak bisa diganggu gugat lagi",
+    "cara_baca": "dih-fin-ih-tiv",
+    "penggunaan": [
+      "We are still waiting for a definitive answer from the management. (Kita masih menunggu jawaban pasti dari pihak manajemen.)"
+    ],
+    "catatan": "Dipakai untuk panduan, buku, atau keputusan final terlengkap."
+  },
+  "delegate": {
+    "arti": "Melimpahkan wewenang / menugaskan tugas ke anggota tim",
+    "cara_baca": "del-uh-geyt",
+    "penggunaan": [
+      "A smart manager knows how to delegate tasks effectively. (Manajer cerdas tahu cara melimpahkan tugas secara efektif.)"
+    ],
+    "catatan": "Bisa sebagai kata kerja (melimpahkan) atau kata benda (utusan/delegasi)."
+  },
+  "deliberate": {
+    "arti": "Sengaja / direncanakan secara matang dan sadar",
+    "cara_baca": "dih-lib-er-it",
+    "penggunaan": [
+      "It was not an accident; it was a deliberate choice. (Itu bukan kecelakaan; itu adalah pilihan yang disengaja.)"
+    ],
+    "catatan": "Sebagai kata sifat dibaca 'dih-lib-er-it', sebagai kata kerja dibaca 'dih-lib-er-eyt'."
+  },
+  "delicate": {
+    "arti": "Halus / rapuh dan butuh penanganan sangat hati-hati",
+    "cara_baca": "del-ih-kit",
+    "penggunaan": [
+      "Handle this antique vase with care; it is extremely delicate. (Pegang vas antik ini hati-hati; barang ini sangat rapuh.)"
+    ],
+    "catatan": "Bisa dipakai untuk benda pecah belah maupun situasi sensitif (delicate situation)."
+  },
+  "demolish": {
+    "arti": "Merobohkan / menghancurkan bangunan sampai rata dengan tanah",
+    "cara_baca": "dih-mol-ish",
+    "penggunaan": [
+      "The old factory was demolished to make way for a new park. (Pabrik tua itu dirobohkan untuk dijadikan taman baru.)"
+    ],
+    "catatan": "Bisa juga dipakai secara metaforis: 'demolish the argument' (membantai argumen)."
+  },
+  "denounce": {
+    "arti": "Mengecam / mengutuk perbuatan buruk di depan umum",
+    "cara_baca": "dih-nowns",
+    "penggunaan": [
+      "The government strongly denounced the act of violence. (Pemerintah mengecam keras tindakan kekerasan tersebut.)"
+    ],
+    "catatan": "Kecaman resmi atau moral terhadap ketidakadilan."
+  },
+  "deplete": {
+    "arti": "Menguras / menghabiskan persediaan sampai menipis",
+    "cara_baca": "dih-pleet",
+    "penggunaan": [
+      "Endless overtime will quickly deplete your energy. (Lembur tanpa henti bakal cepat menguras energimu.)"
+    ],
+    "catatan": "Sering dipakai untuk energi tubuh, saldo rekening, atau sumber daya alam."
+  },
+  "deprive": {
+    "arti": "Merampas hak / mencabut kebutuhan dasar seseorang",
+    "cara_baca": "dih-prayv",
+    "penggunaan": [
+      "Being sleep deprived makes it impossible to focus. (Kurang tidur / terampas waktu tidurnya bikin gak bisa fokus.)"
+    ],
+    "catatan": "Frasa umum: 'sleep deprived' (kurang tidur kronis)."
+  },
+  "derive": {
+    "arti": "Berasal dari / memperoleh manfaat atau arti dari sumber tertentu",
+    "cara_baca": "dih-rayv",
+    "penggunaan": [
+      "Many English words are derived from Latin and Greek. (Banyak kata bahasa Inggris berasal dari bahasa Latin dan Yunani.)"
+    ],
+    "catatan": "Bentuk kata bendanya adalah derivative (turunan)."
+  },
+  "desolate": {
+    "arti": "Sunyi sepi / gersang dan terabaikan tanpa penghuni",
+    "cara_baca": "des-uh-lit",
+    "penggunaan": [
+      "They found themselves in a desolate ghost town. (Mereka mendapati diri mereka berada di kota hantu yang sunyi sepi.)"
+    ],
+    "catatan": "Menggambarkan suasana hampa, sepi, atau kesepian batin."
+  },
+  "despise": {
+    "arti": "Memandang rendah / sangat membenci dan muak pada seseorang",
+    "cara_baca": "dih-spayz",
+    "penggunaan": [
+      "I despise hypocrites who never practice what they preach. (Gue muak banget sama orang munafik yang gak pernah ngelakuin apa yang mereka omongin.)"
+    ],
+    "catatan": "Tingkat kebencian yang disertai rasa jijik atau meremehkan."
+  },
+  "deteriorate": {
+    "arti": "Memburuk / mengalami penurunan kondisi secara bertahap",
+    "cara_baca": "dih-teer-ee-uh-reyt",
+    "penggunaan": [
+      "His health began to deteriorate rapidly after the incident. (Kesehatannya mulai memburuk dengan cepat setelah kejadian itu.)"
+    ],
+    "catatan": "Bisa dipakai untuk kondisi medis, kualitas jalan, atau hubungan sosial."
+  },
+  "deviate": {
+    "arti": "Menyimpang / keluar dari jalur atau rencana semula",
+    "cara_baca": "dee-vee-eyt",
+    "penggunaan": [
+      "Do not deviate from the safety instructions. (Jangan menyimpang dari instruksi keselamatan kerja.)"
+    ],
+    "catatan": "Istilah statistik: 'standard deviation' (standar deviasi)."
+  },
+  "devour": {
+    "arti": "Melalap habis / menyantap makanan dengan rakus dan cepat",
+    "cara_baca": "dih-vow-er",
+    "penggunaan": [
+      "He was so starving that he devoured the entire pizza in minutes. (Dia saking laparnya melalap habis seluruh pizza dalam hitungan menit.)"
+    ],
+    "catatan": "Bisa juga: 'devour a book' (membaca buku tebal sampai habis dengan antusias)."
+  },
+  "dilute": {
+    "arti": "Mengencerkan / mengurangi kadar kepekatan cairan atau makna",
+    "cara_baca": "dih-loot",
+    "penggunaan": [
+      "Dilute the concentrated juice with water before serving. (Encerkan sari buah pekat itu dengan air sebelum disajikan.)"
+    ],
+    "catatan": "Dalam bisnis: 'dilute shares' (mengurangi porsi kepemilikan saham)."
+  },
+  "diminish": {
+    "arti": "Menyusut / berkurang ukuran, nilai, atau pengaruhnya",
+    "cara_baca": "dih-min-ish",
+    "penggunaan": [
+      "The passage of time did not diminish their strong friendship. (Berlalunya waktu tidak menyusutkan persahabatan erat mereka.)"
+    ],
+    "catatan": "Frasa ekonomi: 'law of diminishing returns'."
+  },
+  "discern": {
+    "arti": "Mengenali / membedakan sesuatu yang samar dengan ketajaman pikiran",
+    "cara_baca": "dih-sern",
+    "penggunaan": [
+      "It is hard to discern the truth from exaggerated rumors. (Susah membedakan kebenaran dari gosip yang dilebih-lebihkan.)"
+    ],
+    "catatan": "Bentuk kata sifatnya adalah discerning (kritis dan berkelas)."
+  },
+  "discreet": {
+    "arti": "Bijaksana menjaga rahasia / tidak mencolok agar tidak menimbulkan kecurigaan",
+    "cara_baca": "dih-skreet",
+    "penggunaan": [
+      "Please be discreet about our meeting; no one else should know. (Tolong jaga rahasia tentang pertemuan kita; jangan sampai ada yang tahu.)"
+    ],
+    "catatan": "Berbeda dengan 'discrete' (terpisah/berbeda komponennya)."
+  },
+  "dismantle": {
+    "arti": "Membongkar / melepaskan bagian-bagian mesin atau sistem satu per satu",
+    "cara_baca": "dis-man-tul",
+    "penggunaan": [
+      "The mechanic dismantled the engine to find the broken part. (Montir membongkar mesin untuk mencari komponen yang rusak.)"
+    ],
+    "catatan": "Bisa dipakai membongkar mesin fisik atau membongkar sindikat kriminal."
+  },
+  "dispute": {
+    "arti": "Perselisihan / sengketa atau perdebatan resmi antara dua pihak",
+    "cara_baca": "dih-spyoot",
+    "penggunaan": [
+      "The two companies settled their legal dispute out of court. (Kedua perusahaan menyelesaikan sengketa hukum mereka di luar pengadilan.)"
+    ],
+    "catatan": "Sering dipakai dalam ranah hukum, kontrak kerja, atau perbatasan wilayah."
+  },
+  "distinct": {
+    "arti": "Jelas berbeda / memiliki ciri khas yang mudah dikenali",
+    "cara_baca": "dih-stinkt",
+    "penggunaan": [
+      "There is a distinct difference between being confident and arrogant. (Ada perbedaan jelas antara percaya diri dan sombong.)"
+    ],
+    "catatan": "Bentuk kata bendanya adalah distinction (keunggulan / pembeda)."
+  },
+  "diverse": {
+    "arti": "Beragam / bervariasi dengan banyak latar belakang berbeda",
+    "cara_baca": "day-vers",
+    "penggunaan": [
+      "Our team consists of people from diverse cultural backgrounds. (Tim kami terdiri dari orang-orang dengan latar belakang budaya yang beragam.)"
+    ],
+    "catatan": "Bentuk kata bendanya adalah diversity (keberagaman)."
+  },
+  "drastic": {
+    "arti": "Drastis / perubahan ekstrem dan berdampak sangat besar",
+    "cara_baca": "dras-tik",
+    "penggunaan": [
+      "The doctor advised a drastic change in his daily diet. (Dokter menyarankan perubahan drastis pada pola makan hariannya.)"
+    ],
+    "catatan": "Dipakai untuk langkah darurat atau perubahan radikal."
+  },
+  "dubious": {
+    "arti": "Meragukan / mencurigakan dan belum terbukti kebenarannya",
+    "cara_baca": "doo-bee-us",
+    "penggunaan": [
+      "I received a dubious email asking for my bank password. (Gue dapet email mencurigakan yang minta password rekening bank.)"
+    ],
+    "catatan": "Dipakai saat nalurimu merasa ada yang tidak beres / janggal."
+  },
+  "durable": {
+    "arti": "Awet / tahan lama dan tidak mudah rusak meski dipakai terus",
+    "cara_baca": "door-uh-bul",
+    "penggunaan": [
+      "This backpack is made of durable and waterproof material. (Tas ransel ini terbuat dari bahan yang awet dan tahan air.)"
+    ],
+    "catatan": "Bentuk kata bendanya adalah durability (daya tahan)."
+  },
+  "dwell": {
+    "arti": "Tinggal / terus-menerus memikirkan hal buruk di masa lalu",
+    "cara_baca": "dwel",
+    "penggunaan": [
+      "Don't dwell on your past mistakes; focus on today. (Jangan terus-terusan meratapi kesalahan masa lalu; fokuslah pada hari ini.)"
+    ],
+    "catatan": "Frasa emas: 'dwell on the past' (terjebak memikirkan masa lalu)."
+  },
+  "dynamic": {
+    "arti": "Dinamis / penuh energi, aktif berubah, dan terus berkembang",
+    "cara_baca": "day-nam-ik",
+    "penggunaan": [
+      "The tech startup is a fast-paced and dynamic environment. (Startup teknologi adalah lingkungan yang serba cepat dan dinamis.)"
+    ],
+    "catatan": "Lawan dari kata static (statis / diam tidak bergerak)."
+  },
+  "eager": {
+    "arti": "Antusias / sangat bersemangat dan tidak sabar ingin melakukan sesuatu",
+    "cara_baca": "ee-ger",
+    "penggunaan": [
+      "The interns were eager to learn new skills from the senior engineers. (Para peserta magang sangat antusias belajar keahlian baru dari insinyur senior.)"
+    ],
+    "catatan": "Sering dipadukan dengan kata kerja: 'eager to know / eager to help'."
+  },
+  "earnest": {
+    "arti": "Sungguh-sungguh / tulus dan berdedikasi tinggi tanpa main-main",
+    "cara_baca": "er-nist",
+    "penggunaan": [
+      "He made an earnest effort to apologize for what happened. (Dia melakukan usaha yang sungguh-sungguh untuk meminta maaf atas apa yang terjadi.)"
+    ],
+    "catatan": "Frasa umum: 'in all earnestness' (dengan segala ketulusan hati)."
+  },
+  "eccentric": {
+    "arti": "Eksentrik / unik dan agak aneh tapi tidak berbahaya",
+    "cara_baca": "ek-sen-trik",
+    "penggunaan": [
+      "The eccentric artist lived in a house full of clock towers. (Seniman eksentrik itu tinggal di rumah yang penuh dengan menara jam.)"
+    ],
+    "catatan": "Menggambarkan kepribadian unik di luar kebiasaan orang banyak."
+  },
+  "elaborate": {
+    "arti": "Rumit mendetail / menjelaskan sesuatu secara panjang lebar",
+    "cara_baca": "ih-lab-er-it",
+    "penggunaan": [
+      "Could you please elaborate on your proposed marketing strategy? (Bisa tolong jelaskan lebih mendalam tentang strategi pemasaran yang kamu usulkan?)"
+    ],
+    "catatan": "Bisa sebagai kata sifat (mewah/detail) atau kata kerja (memperjelas)."
+  },
+  "elevate": {
+    "arti": "Meningkatkan / mengangkat derajat, posisi, atau kualitas ke level lebih tinggi",
+    "cara_baca": "el-uh-veyt",
+    "penggunaan": [
+      "Reading high-quality books will elevate your vocabulary and thinking. (Membaca buku bermutu akan meningkatkan kosakata dan cara berpikirmu.)"
+    ],
+    "catatan": "Berasal dari kata yang sama dengan elevator (lift pengangkat)."
+  },
+  "eligible": {
+    "arti": "Memenuhi syarat / berhak mendapatkan hak atau posisi tertentu",
+    "cara_baca": "el-ih-juh-bul",
+    "penggunaan": [
+      "Only full-time students are eligible for this scholarship. (Hanya mahasiswa reguler penuh waktu yang memenuhi syarat untuk beasiswa ini.)"
+    ],
+    "catatan": "Lawan katanya adalah ineligible (tidak memenuhi syarat)."
+  },
+  "eloquent": {
+    "arti": "Fasih / pandai berbicara dengan kata-kata yang indah dan memikat",
+    "cara_baca": "el-uh-kwent",
+    "penggunaan": [
+      "His eloquent speech inspired thousands of young entrepreneurs. (Pidatonya yang fasih dan memukau menginspirasi ribuan pengusaha muda.)"
+    ],
+    "catatan": "Kualitas kemampuan retorika dan berbicara di depan publik."
+  },
+  "elusive": {
+    "arti": "Sulit ditangkap / sukar dipahami atau susah ditemukan jejaknya",
+    "cara_baca": "ee-loo-siv",
+    "penggunaan": [
+      "Success in this competitive industry can be elusive without consistency. (Kesuksesan di industri kompetitif ini bisa sulit diraih tanpa konsistensi.)"
+    ],
+    "catatan": "Dipakai untuk target yang licin atau buronan yang lihai kabur."
+  },
+  "embark": {
+    "arti": "Memulai perjalanan baru / naik ke kapal atau petualangan besar",
+    "cara_baca": "em-bahrk",
+    "penggunaan": [
+      "She is ready to embark on a new journey as a startup founder. (Dia siap memulai perjalanan baru sebagai pendiri startup.)"
+    ],
+    "catatan": "Frasa andalan: 'embark on a new journey / project'."
+  },
+  "embrace": {
+    "arti": "Merangkul / menerima perubahan atau ide baru dengan tangan terbuka",
+    "cara_baca": "em-breys",
+    "penggunaan": [
+      "We must learn to embrace uncertainty and adapt quickly. (Kita harus belajar merangkul ketidakpastian dan beradaptasi dengan cepat.)"
+    ],
+    "catatan": "Bisa berarti memeluk fisik atau merangkul mindset baru."
+  },
+  "emerge": {
+    "arti": "Muncul ke permukaan / timbul dari kegelapan atau kesulitan",
+    "cara_baca": "ih-merj",
+    "penggunaan": [
+      "The butterfly emerged from its cocoon after several weeks. (Kupu-kupu muncul dari kepompongnya setelah beberapa minggu.)"
+    ],
+    "catatan": "Istilah bisnis: 'emerging markets' (pasar negara berkembang)."
+  },
+  "eminent": {
+    "arti": "Terkemuka / sangat dihormati karena prestasi dan keahliannya",
+    "cara_baca": "em-uh-nent",
+    "penggunaan": [
+      "The seminar will be delivered by an eminent professor from Harvard. (Seminar ini akan dibawakan oleh profesor terkemuka dari Harvard.)"
+    ],
+    "catatan": "Jangan tertukar dengan 'imminent' (segera terjadi)."
+  },
+  "empirical": {
+    "arti": "Empiris / berdasarkan bukti observasi dan eksperimen nyata",
+    "cara_baca": "em-peer-ih-kul",
+    "penggunaan": [
+      "His scientific theory is supported by strong empirical data. (Teori ilmiahnya didukung oleh data empiris yang kuat.)"
+    ],
+    "catatan": "Lawan dari teori spekulatif tanpa bukti data."
+  },
+  "emulate": {
+    "arti": "Meniru dan menyamai / meneladani keberhasilan orang lain",
+    "cara_baca": "em-yuh-leyt",
+    "penggunaan": [
+      "Young coders often try to emulate the work ethic of tech pioneers. (Programmer muda sering mencoba meneladani etos kerja perintis teknologi.)"
+    ],
+    "catatan": "Dalam teknologi: emulator (program peniru sistem perangkat keras)."
+  },
+  "endeavor": {
+    "arti": "Ikhtiar keras / usaha sungguh-sungguh untuk mencapai cita-cita besar",
+    "cara_baca": "en-dev-er",
+    "penggunaan": [
+      "We wish you the best of luck in all your future endeavors. (Kami mendoakan yang terbaik untuk semua ikhtiar masa depanmu.)"
+    ],
+    "catatan": "Bisa sebagai kata kerja (berikhtiar) atau kata benda (usaha mulia)."
+  },
+  "endorse": {
+    "arti": "Mendukung resmi / mempromosikan produk atau kebijakan publik",
+    "cara_baca": "en-dawrs",
+    "penggunaan": [
+      "The famous athlete was paid millions to endorse the new running shoes. (Atlet terkenal itu dibayar jutaan untuk mempromosikan sepatu lari baru.)"
+    ],
+    "catatan": "Sangat umum di dunia influencer sosmed dan politik."
+  },
+  "endure": {
+    "arti": "Bertahan / sanggup menanggung penderitaan atau beban berat",
+    "cara_baca": "en-dyoor",
+    "penggunaan": [
+      "He endured years of hardship before building a successful business. (Dia bertahan melewati tahun-tahun penuh kesulitan sebelum membangun bisnis yang sukses.)"
+    ],
+    "catatan": "Bentuk kata sifatnya adalah endurance (daya tahan tubuh/mental)."
+  },
+  "enhance": {
+    "arti": "Meningkatkan / mempercantik mutu, keindahan, atau performa",
+    "cara_baca": "en-hans",
+    "penggunaan": [
+      "Using good lighting will enhance the quality of your video recordings. (Menggunakan pencahayaan yang baik akan meningkatkan kualitas rekaman videomu.)"
+    ],
+    "catatan": "Sering dipakai dalam software: 'enhanced features' (fitur yang ditingkatkan)."
+  },
+  "envision": {
+    "arti": "Membayangkan masa depan / memvisualisasikan visi masa depan",
+    "cara_baca": "en-vizh-un",
+    "penggunaan": [
+      "The founder envisioned a world where education is free for everyone. (Pendiri itu membayangkan dunia di mana pendidikan gratis untuk semua orang.)"
+    ],
+    "catatan": "Berkaitan dengan visi jangka panjang yang futuristik."
+  },
+  "eradicate": {
+    "arti": "Membasmi tuntas / melenyapkan penyakit atau masalah sampai ke akar-akarnya",
+    "cara_baca": "ih-rad-ih-keyt",
+    "penggunaan": [
+      "Global vaccination programs helped eradicate deadly viruses. (Program vaksinasi global membantu membasmi virus mematikan sampai tuntas.)"
+    ],
+    "catatan": "Berasal dari bahasa Latin 'radix' yang artinya akar."
+  },
+  "escalate": {
+    "arti": "Meningkat tajam / situasi yang memanas dan membesar dengan cepat",
+    "cara_baca": "es-kuh-leyt",
+    "penggunaan": [
+      "The minor disagreement quickly escalated into a heated argument. (Perselisihan kecil itu dengan cepat memanas menjadi pertengkaran sengit.)"
+    ],
+    "catatan": "Berasal dari kata escalator (tangga berjalan naik)."
+  },
+  "exaggerate": {
+    "arti": "Melebih-lebihkan / mendramatisasi cerita di luar kenyataan",
+    "cara_baca": "ig-zaj-uh-reyt",
+    "penggunaan": [
+      "Don't exaggerate the problem; it is actually very simple to fix. (Jangan melebih-lebihkan masalahnya; itu sebenarnya sangat gampang diperbaiki.)"
+    ],
+    "catatan": "Sering dipakai saat orang curhat lebay."
+  },
+  "exemplary": {
+    "arti": "Patut dicontoh / sangat teladan dan layak dijadikan panutan",
+    "cara_baca": "ig-zem-pluh-ree",
+    "penggunaan": [
+      "Her dedication to community service was truly exemplary. (Dedikasinya pada pelayanan masyarakat benar-benar patut dicontoh.)"
+    ],
+    "catatan": "Pujian tertinggi untuk etos kerja dan integritas moral."
+  },
+  "exquisite": {
+    "arti": "Sangat indah / elok dan dibuat dengan keahlian cita rasa tinggi",
+    "cara_baca": "ek-skwiz-it",
+    "penggunaan": [
+      "The royal palace was decorated with exquisite handmade carpets. (Istana kerajaan dihiasi dengan karpet buatan tangan yang sangat elok.)"
+    ],
+    "catatan": "Dipakai untuk karya seni, masakan fine dining, atau perhiasan mahal."
+  },
+  "fabricate": {
+    "arti": "Membuat-buat / mereka-reka kebohongan atau memproduksi barang",
+    "cara_baca": "fab-rih-keyt",
+    "penggunaan": [
+      "He fabricated an excuse because he forgot to do his homework. (Dia membuat-buat alasan bohong karena lupa mengerjakan PR.)"
+    ],
+    "catatan": "Bisa berarti memproduksi baja/konstruksi atau mengarang cerita palsu."
+  },
+  "facilitate": {
+    "arti": "Memfasilitasi / mempermudah dan memperlancar jalannya suatu proses",
+    "cara_baca": "fuh-sil-ih-teyt",
+    "penggunaan": [
+      "Modern project management tools facilitate smooth team communication. (Alat manajemen proyek modern mempermudah komunikasi tim yang lancar.)"
+    ],
+    "catatan": "Bentuk pelakunya adalah facilitator (fasilitator)."
+  },
+  "fascinate": {
+    "arti": "Memikat hati / membuat orang sangat terpana dan penasaran",
+    "cara_baca": "fas-uh-neyt",
+    "penggunaan": [
+      "Astronomy has always fascinated me since I was a child. (Astronomi selalu memikat hati gue sejak gue masih kecil.)"
+    ],
+    "catatan": "Bentuk kata sifatnya adalah fascinating (sangat memikat/menarik)."
+  },
+  "feasible": {
+    "arti": "Layak dijalankan / masuk akal dan memungkinkan untuk dieksekusi",
+    "cara_baca": "fee-zuh-bul",
+    "penggunaan": [
+      "We need to conduct a study to see if this business plan is feasible. (Kita perlu studi kelayakan untuk melihat apakah rencana bisnis ini memungkinkan dijalankan.)"
+    ],
+    "catatan": "Istilah bisnis: 'feasibility study' (studi kelayakan)."
+  },
+  "flourish": {
+    "arti": "Berkembang pesat / tumbuh subur, makmur, dan sukses",
+    "cara_baca": "fler-ish",
+    "penggunaan": [
+      "Local cafes flourished after the new train station opened nearby. (Kafe-kafe lokal berkembang pesat setelah stasiun kereta baru dibuka di dekatnya.)"
+    ],
+    "catatan": "Bisa dipakai untuk tanaman subur, bisnis maju, atau kebudayaan yang makmur."
+  },
+  "fluctuate": {
+    "arti": "Fluktuatif / naik-turun secara tidak menentu",
+    "cara_baca": "flak-choo-eyt",
+    "penggunaan": [
+      "Stock market prices fluctuate wildly depending on global news. (Harga pasar saham naik-turun tajam tergantung berita global.)"
+    ],
+    "catatan": "Sangat umum dalam grafik keuangan, harga crypto, dan suhu cuaca."
+  },
+  "formidable": {
+    "arti": "Tangguh menakutkan / lawan hebat yang disegani karena kekuatannya",
+    "cara_baca": "fawr-mid-uh-bul",
+    "penggunaan": [
+      "They are facing a formidable opponent in the championship finals. (Mereka menghadapi lawan yang sangat tangguh di babak final kejuaraan.)"
+    ],
+    "catatan": "Bukan sekadar jahat, tapi memiliki keahlian atau kekuatan yang bikin gentar."
+  },
+  "foster": {
+    "arti": "Membina / merawat dan menumbuhkan hubungan baik atau bibit bakat",
+    "cara_baca": "faws-ter",
+    "penggunaan": [
+      "Good teachers foster a love of reading in their students. (Guru yang baik menumbuhkan rasa cinta membaca pada murid-muridnya.)"
+    ],
+    "catatan": "Bisa juga: 'foster parents' (orang tua asuh)."
+  },
+  "fragile": {
+    "arti": "Rapuh / mudah pecah atau rentan mengalami kerusakan",
+    "cara_baca": "fraj-ul",
+    "penggunaan": [
+      "Handle the package gently because the glassware inside is fragile. (Pegang paket itu pelan-pelan karena gelas di dalamnya sangat rapuh.)"
+    ],
+    "catatan": "Sering tertera pada stiker paket ekspedisi barang pecah belah."
+  },
+  "futile": {
+    "arti": "Sia-sia / percuma dan tidak ada gunanya sama sekali",
+    "cara_baca": "fyoo-tayl",
+    "penggunaan": [
+      "All their attempts to rescue the sunken ship proved futile. (Semua usaha mereka untuk menyelamatkan kapal tenggelam itu terbukti sia-sia.)"
+    ],
+    "catatan": "Frasa klasik: 'resistance is futile' (perlawananmu sia-sia)."
+  },
+  "gauge": {
+    "arti": "Mengukur / menakar perkiraan situasi atau reaksi orang",
+    "cara_baca": "geyj",
+    "penggunaan": [
+      "It is difficult to gauge the customer's satisfaction without surveys. (Sulit menakar kepuasan pelanggan tanpa adanya survei.)"
+    ],
+    "catatan": "Ejaannya 'gauge' tapi dibaca persis seperti kata 'gage'."
+  },
+  "generate": {
+    "arti": "Menghasilkan / memproduksi energi, ide, atau pendapatan baru",
+    "cara_baca": "jen-uh-reyt",
+    "penggunaan": [
+      "Solar panels generate clean electricity from sunlight. (Panel surya menghasilkan listrik bersih dari sinar matahari.)"
+    ],
+    "catatan": "Sering dipakai dalam istilah AI: 'generative AI' (AI penghasil konten)."
+  },
+  "genuine": {
+    "arti": "Asli / tulus dari lubuk hati dan bukan barang tiruan",
+    "cara_baca": "jen-yoo-in",
+    "penggunaan": [
+      "She showed genuine concern when she heard about his accident. (Dia menunjukkan kekhawatiran yang tulus saat mendengar kabar kecelakaannya.)"
+    ],
+    "catatan": "Bisa untuk barang asli (genuine leather) atau ketulusan sifat manusia."
+  },
+  "glimpse": {
+    "arti": "Sekilas pandang / melihat sesuatu dengan sangat cepat",
+    "cara_baca": "glimps",
+    "penggunaan": [
+      "I caught a glimpse of the celebrity as she stepped into her car. (Gue sempat melihat sekilas artis itu saat dia melangkah masuk ke mobilnya.)"
+    ],
+    "catatan": "Frasa umum: 'catch a glimpse of someone/something'."
+  },
+  "gloomy": {
+    "arti": "Suram mendung / suasana redup yang bikin hati galau",
+    "cara_baca": "gloo-mee",
+    "penggunaan": [
+      "The rainy weather made the afternoon feel gloomy and lazy. (Cuaca hujan membuat suasana sore terasa mendung suram dan bikin mager.)"
+    ],
+    "catatan": "Bisa untuk cuaca mendung gelap atau proyeksi ekonomi yang lesu."
+  },
+  "gratitude": {
+    "arti": "Rasa syukur / ucapan terima kasih mendalam atas kebaikan",
+    "cara_baca": "grat-ih-tyood",
+    "penggunaan": [
+      "I want to express my deepest gratitude to my parents for their support. (Gue ingin menyampaikan rasa syukur dan terima kasih terdalam kepada orang tua atas dukungannya.)"
+    ],
+    "catatan": "Praktik 'gratitude journal' (buku catatan harian hal-hal yang disyukuri)."
+  },
+  "grim": {
+    "arti": "Mencekam suram / tanpa harapan dan berwajah muram",
+    "cara_baca": "grim",
+    "penggunaan": [
+      "The doctors delivered the grim news to the patient's family. (Para dokter menyampaikan kabar suram yang berat itu kepada keluarga pasien.)"
+    ],
+    "catatan": "Tokoh 'Grim Reaper' (malaikat maut pencabut nyawa)."
+  },
+  "habitat": {
+    "arti": "Habitat / lingkungan alam tempat hidup asli hewan dan tumbuhan",
+    "cara_baca": "hab-ih-tat",
+    "penggunaan": [
+      "Deforestation destroys the natural habitat of wild orangutans. (Penebangan hutan merusak habitat alami orangutan liar.)"
+    ],
+    "catatan": "Istilah biologi dan pelestarian lingkungan alam."
+  },
+  "hamper": {
+    "arti": "Menghambat / merintangi pergerakan atau kemajuan proses",
+    "cara_baca": "ham-per",
+    "penggunaan": [
+      "Heavy fog hampered the rescue team's efforts in the mountains. (Kabut tebal menghambat upaya tim penyelamat di pegunungan.)"
+    ],
+    "catatan": "Sebagai kata kerja artinya menghambat; sebagai kata benda artinya keranjang bingkisan (hampers lebaran)."
+  },
+  "hasty": {
+    "arti": "Terburu-buru / gegabah mengambil keputusan tanpa dipikir matang",
+    "cara_baca": "heys-tee",
+    "penggunaan": [
+      "Do not make a hasty decision that you might regret later. (Jangan membuat keputusan terburu-buru yang mungkin bakal kamu sesali nanti.)"
+    ],
+    "catatan": "Pepatah Inggris: 'Haste makes waste' (Biar lambat asal selamat / jangan gegabah)."
+  },
+  "hectic": {
+    "arti": "Sibuk luar biasa / padat merayap penuh hiruk-pikuk aktivitas",
+    "cara_baca": "hek-tik",
+    "penggunaan": [
+      "I had a hectic day at the office with five consecutive client meetings. (Hari gue di kantor padat dan sibuk luar biasa dengan lima rapat klien berturut-turut.)"
+    ],
+    "catatan": "Kosakata wajib pekerja kantoran dan mahasiswa saat minggu ujian/deadline."
+  },
+  "heritage": {
+    "arti": "Warisan leluhur / peninggalan budaya bersejarah yang turun-temurun",
+    "cara_baca": "hair-ih-tij",
+    "penggunaan": [
+      "Batik is an invaluable cultural heritage of Indonesia. (Batik adalah warisan budaya Indonesia yang tak ternilai harganya.)"
+    ],
+    "catatan": "Sering dipakai dalam UNESCO World Heritage Sites (Situs Warisan Dunia)."
+  },
+  "hollow": {
+    "arti": "Kopong / berongga kosong di dalam atau janji hampa",
+    "cara_baca": "hol-oh",
+    "penggunaan": [
+      "The bird made its nest inside a hollow tree trunk. (Burung itu membuat sarangnya di dalam batang pohon yang berongga kopong.)"
+    ],
+    "catatan": "Metafora: 'hollow victory' (kemenangan hampa yang mengorbankan banyak hal)."
+  },
+  "humble": {
+    "arti": "Rendah hati / sederhana dan tidak suka menyombongkan diri",
+    "cara_baca": "ham-bul",
+    "penggunaan": [
+      "Despite his billionaire status, he remains humble and down to earth. (Meskipun sudah berstatus miliarder, dia tetap rendah hati dan membumi.)"
+    ],
+    "catatan": "Frasa gaul internet: 'humble brag' (pamer terselubung berkedok merendah)."
+  },
+  "hypothesis": {
+    "arti": "Hipotesis / dugaan sementara ilmiah yang harus dibuktikan lewat uji coba",
+    "cara_baca": "hay-poth-uh-sis",
+    "penggunaan": [
+      "The laboratory experiment confirmed our initial hypothesis. (Eksperimen laboratorium membuktikan hipotesis awal kami.)"
+    ],
+    "catatan": "Bentuk jamaknya adalah hypotheses (dibaca 'hay-poth-uh-seez')."
+  },
+  "ignite": {
+    "arti": "Menyulut / memantik api atau membakar semangat juang",
+    "cara_baca": "ig-nayt",
+    "penggunaan": [
+      "A single spark was enough to ignite the dry grass. (Satu percikan api sudah cukup untuk menyulut rumput kering.)"
+    ],
+    "catatan": "Bisa berarti menyalakan api mesin atau memantik inspirasi (ignite passion)."
+  },
+  "illuminate": {
+    "arti": "Menerangi / menyinari ruangan atau menjelaskan konsep rumit jadi terang benderang",
+    "cara_baca": "ih-loo-muh-neyt",
+    "penggunaan": [
+      "The full moon illuminated the entire beach at midnight. (Bulan purnama menerangi seluruh pantai di tengah malam.)"
+    ],
+    "catatan": "Bentuk kata sifatnya adalah illuminating (sangat mencerahkan wawasan)."
+  },
+  "imminent": {
+    "arti": "Sudah di depan mata / bakal segera terjadi dalam waktu sangat dekat",
+    "cara_baca": "im-uh-nent",
+    "penggunaan": [
+      "Dark storm clouds indicated that heavy rain was imminent. (Awan badai gelap menandakan bahwa hujan lebat sudah di depan mata.)"
+    ],
+    "catatan": "Sering dipakai untuk peringatan bahaya atau peluncuran yang sudah dekat."
+  },
+  "impeccable": {
+    "arti": "Sempurna tanpa cela / rapi jali dan bebas dari segala kesalahan",
+    "cara_baca": "im-pek-uh-bul",
+    "penggunaan": [
+      "She spoke English with impeccable grammar and pronunciation. (Dia berbicara bahasa Inggris dengan tata bahasa dan pelafalan yang sempurna tanpa cela.)"
+    ],
+    "catatan": "Pujian tertinggi untuk etika, penampilan busana, atau kualitas kerja."
+  },
+  "imperative": {
+    "arti": "Sangat krusial / wajib mutlak dilakukan dan tidak boleh ditunda",
+    "cara_baca": "im-peer-uh-tiv",
+    "penggunaan": [
+      "It is imperative that all bugs are fixed before the app launch. (Sangat wajib dan krusial agar semua bug diperbaiki sebelum aplikasi diluncurkan.)"
+    ],
+    "catatan": "Dalam tata bahasa: 'imperative sentence' (kalimat perintah)."
+  },
+  "implicit": {
+    "arti": "Tersirat / dipahami secara tidak langsung tanpa diucapkan gamblang",
+    "cara_baca": "im-plis-it",
+    "penggunaan": [
+      "There was an implicit trust between the two business partners. (Ada rasa saling percaya yang tersirat di antara kedua mitra bisnis itu.)"
+    ],
+    "catatan": "Lawan dari kata explicit (tersurat / dinyatakan secara gamblang dan terang-terangan)."
+  },
+  "impose": {
+    "arti": "Memaksakan / memberlakukan aturan, pajak, atau beban pada orang lain",
+    "cara_baca": "im-pohz",
+    "penggunaan": [
+      "The city government imposed strict restrictions during the pandemic. (Pemerintah kota memberlakukan pembatasan ketat selama pandemi.)"
+    ],
+    "catatan": "Bisa berarti memaksakan kehendak atau mengenakan sanksi."
+  },
+  "incentive": {
+    "arti": "Insentif / bonus pendorong atau rangsangan agar orang lebih giat bekerja",
+    "cara_baca": "in-sen-tiv",
+    "penggunaan": [
+      "The company offers cash incentives for employees who exceed their targets. (Perusahaan menawarkan insentif uang tunai bagi karyawan yang melampaui target.)"
+    ],
+    "catatan": "Kunci utama dalam teori ekonomi perilaku dan motivasi kerja."
+  },
+  "indispensable": {
+    "arti": "Tak tergantikan / mutlak diperlukan dan tidak bisa hidup tanpanya",
+    "cara_baca": "in-dih-spen-suh-bul",
+    "penggunaan": [
+      "A smartphone has become an indispensable tool in modern daily life. (Ponsel pintar telah menjadi alat yang tak tergantikan dalam kehidupan modern saat ini.)"
+    ],
+    "catatan": "Tingkat kepentingan tertinggi, jika hilang sistem tidak bisa jalan."
+  },
+  "inevitable": {
+    "arti": "Pasti terjadi / tak terelakkan dan tidak bisa dicegah oleh siapa pun",
+    "cara_baca": "in-ev-ih-tuh-bul",
+    "penggunaan": [
+      "With technological advancement, digital transformation is inevitable. (Dengan kemajuan teknologi, transformasi digital adalah hal yang tak terelakkan.)"
+    ],
+    "catatan": "Kutipan terkenal Thanos di Avengers: 'I am inevitable'."
+  },
+  "ingenious": {
+    "arti": "Jenius cerdik / ide yang sangat kreatif dan pintar memecahkan masalah",
+    "cara_baca": "in-jeen-yus",
+    "penggunaan": [
+      "She came up with an ingenious solution to reduce plastic waste. (Dia menemukan solusi cerdik dan jenius untuk mengurangi sampah plastik.)"
+    ],
+    "catatan": "Perhatikan ejaannya: ingenious (cerdik), bukan ingenuous (polos/lugu)."
+  },
+  "inherent": {
+    "arti": "Melekat alami / sifat bawaan yang sudah ada sejak awal dan tak terpisahkan",
+    "cara_baca": "in-heer-unt",
+    "penggunaan": [
+      "Risk is an inherent part of any financial investment. (Risiko adalah bagian bawaan yang melekat pada setiap investasi keuangan.)"
+    ],
+    "catatan": "Dipakai untuk sifat dasar yang tidak bisa dipisahkan dari suatu hal."
+  },
+  "innovate": {
+    "arti": "Berinovasi / menciptakan pembaruan dan terobosan mutakhir",
+    "cara_baca": "in-uh-veyt",
+    "penggunaan": [
+      "Companies must constantly innovate to survive in the digital era. (Perusahaan harus terus berinovasi agar bisa bertahan di era digital.)"
+    ],
+    "catatan": "Bentuk kata bendanya adalah innovation (inovasi)."
+  },
+  "insight": {
+    "arti": "Wawasan mendalam / pemahaman tajam terhadap inti permasalahan",
+    "cara_baca": "in-sayt",
+    "penggunaan": [
+      "The mentor provided valuable insights into launching a tech startup. (Mentor itu memberikan wawasan mendalam yang sangat berharga tentang merintis startup.)"
+    ],
+    "catatan": "Sering dipakai dalam dunia data analisis: 'actionable insights'."
+  },
+  "intact": {
+    "arti": "Utuh / masih lengkap dan tidak rusak sedikit pun setelah melewati insiden",
+    "cara_baca": "in-takt",
+    "penggunaan": [
+      "Miraculously, the ancient artifact remained intact after the earthquake. (Secara ajaib, artefak kuno itu tetap utuh tanpa lecet pasca gempa bumi.)"
+    ],
+    "catatan": "Dipakai saat sesuatu selamat tanpa cacat dari musibah."
+  },
+  "integrate": {
+    "arti": "Mengintegrasikan / menggabungkan berbagai komponen jadi satu kesatuan padu",
+    "cara_baca": "in-tuh-greyt",
+    "penggunaan": [
+      "We need to integrate the payment gateway into our mobile app. (Kita perlu mengintegrasikan sistem pembayaran ke dalam aplikasi mobile kita.)"
+    ],
+    "catatan": "Istilah wajib dalam dunia software engineering dan API."
+  },
+  "integrity": {
+    "arti": "Integritas / kejujuran teguh dan konsistensi moral yang kokoh",
+    "cara_baca": "in-teg-ruh-tee",
+    "penggunaan": [
+      "A leader with high integrity always does the right thing even when no one is watching. (Pemimpin berintegritas tinggi selalu melakukan hal yang benar bahkan saat tidak ada yang melihat.)"
+    ],
+    "catatan": "Karakter nomor satu yang dicari perusahaan profesional."
+  },
+  "intricate": {
+    "arti": "Rumit berbelit-belit / memiliki banyak detail yang sangat halus dan kompleks",
+    "cara_baca": "in-trih-kit",
+    "penggunaan": [
+      "The traditional wood carving features intricate floral patterns. (Ukiran kayu tradisional itu menampilkan pola bunga yang sangat rumit dan mendetail.)"
+    ],
+    "catatan": "Dipakai untuk arsitektur, pola batik, atau algoritma rumit."
+  },
+  "intrigue": {
+    "arti": "Membuat sangat penasaran / intrik atau tipu muslihat tersembunyi",
+    "cara_baca": "in-treeg",
+    "penggunaan": [
+      "The mysterious detective novel completely intrigued me. (Novel misteri detektif itu benar-benar membuat gue sangat penasaran.)"
+    ],
+    "catatan": "Bentuk kata sifatnya adalah intriguing (sangat menarik rasa ingin tahu)."
+  },
+  "intuition": {
+    "arti": "Intuisi / bisikan hati atau firasat naluriah tanpa perlu analisa panjang",
+    "cara_baca": "in-too-ish-un",
+    "penggunaan": [
+      "Trust your intuition when making tough decisions under pressure. (Percayalah pada intuisimu saat mengambil keputusan sulit di bawah tekanan.)"
+    ],
+    "catatan": "Frasa sehari-hari: 'gut feeling' (perasaan dari dalam lubuk hati)."
+  },
+  "invaluable": {
+    "arti": "Sangat berharga / saking bernilainya sampai tak ternilai dengan uang",
+    "cara_baca": "in-val-yoo-uh-bul",
+    "penggunaan": [
+      "Her advice was invaluable during our company's difficult transition. (Nasihatnya sangat berharga tak ternilai selama masa transisi sulit perusahaan kami.)"
+    ],
+    "catatan": "Ingat: 'invaluable' BUKAN berarti tidak berharga, melainkan SANGAT BERHARGA."
+  },
+  "isolate": {
+    "arti": "Mengisolasi / memisahkan atau mengasingkan dari keramaian",
+    "cara_baca": "ay-suh-leyt",
+    "penggunaan": [
+      "Patients with infectious diseases must be isolated in special wards. (Pasien dengan penyakit menular harus diisolasi di bangsal khusus.)"
+    ],
+    "catatan": "Bisa berarti karantina kesehatan atau mengisolasi variabel dalam eksperimen."
+  },
+  "jeopardize": {
+    "arti": "Membahayakan / mempertaruhkan keselamatan atau kelangsungan sesuatu",
+    "cara_baca": "jep-er-dayz",
+    "penggunaan": [
+      "One careless mistake could jeopardize the entire space mission. (Satu kesalahan ceroboh bisa membahayakan seluruh misi luar angkasa.)"
+    ],
+    "catatan": "Bentuk kata bendanya adalah jeopardy (bahaya besar)."
+  },
+  "judicious": {
+    "arti": "Bijaksana / cermat dan penuh pertimbangan akal sehat",
+    "cara_baca": "joo-dish-us",
+    "penggunaan": [
+      "A judicious use of company funds ensures long-term business stability. (Penggunaan dana perusahaan secara bijaksana menjamin stabilitas bisnis jangka panjang.)"
+    ],
+    "catatan": "Berasal dari akar kata judge (menilai dengan adil)."
+  },
+  "juggle": {
+    "arti": "Menyeimbangkan banyak hal / multitasking mengurus banyak tugas sekaligus",
+    "cara_baca": "jag-ul",
+    "penggunaan": [
+      "It is challenging to juggle a full-time job and master's degree studies. (Cukup menantang untuk menyeimbangkan pekerjaan penuh waktu sambil kuliah S2.)"
+    ],
+    "catatan": "Berasal dari aksi pemain sirkus melempar-tangkap banyak bola."
+  },
+  "junction": {
+    "arti": "Persimpangan / titik pertemuan dua jalan atau rel kereta",
+    "cara_baca": "jank-shun",
+    "penggunaan": [
+      "Turn left at the next highway junction. (Belok kiri di persimpangan jalan tol berikutnya.)"
+    ],
+    "catatan": "Bisa persimpangan jalan fisik atau pertemuan kabel listrik."
+  },
+  "justify": {
+    "arti": "Menjustifikasi / memberikan alasan kuat dan pembenaran yang sah",
+    "cara_baca": "jus-tih-fay",
+    "penggunaan": [
+      "You cannot justify being rude to innocent people. (Kamu tidak bisa membenarkan sikap kasar kepada orang yang tidak bersalah.)"
+    ],
+    "catatan": "Dalam format teks: 'justify text' (rata kanan-kiri)."
+  },
+  "juxtapose": {
+    "arti": "Menjajarkan dua hal kontras / membandingkan sisi berbeda berdampingan",
+    "cara_baca": "juk-stuh-pohz",
+    "penggunaan": [
+      "The exhibition juxtaposed modern digital art with classical Renaissance paintings. (Pameran itu menjajarkan seni digital modern dengan lukisan klasik era Renaisans.)"
+    ],
+    "catatan": "Istilah seni dan literatur untuk menonjolkan efek kontras."
+  },
+  "keen": {
+    "arti": "Sangat tajam / antusias tinggi dan memiliki minat mendalam",
+    "cara_baca": "keen",
+    "penggunaan": [
+      "She has a keen eye for finding bugs in complex source code. (Dia punya mata yang sangat jeli dan tajam dalam menemukan bug di kode rumit.)"
+    ],
+    "catatan": "Frasa umum: 'keen on learning' (sangat berminat belajar)."
+  },
+  "kindle": {
+    "arti": "Menyalakan api / membangkitkan kembali semangat dan inspirasi",
+    "cara_baca": "kin-dul",
+    "penggunaan": [
+      "His inspiring TED talk kindled my passion for environmental science. (Ceramah TED-nya yang inspiratif membangkitkan kembali semangat gue pada ilmu lingkungan.)"
+    ],
+    "catatan": "Juga menjadi nama perangkat e-reader populer buatan Amazon."
+  },
+  "kinetic": {
+    "arti": "Kinetik / berhubungan dengan energi gerak dinamis",
+    "cara_baca": "kih-net-ik",
+    "penggunaan": [
+      "A moving roller coaster possesses enormous kinetic energy. (Roller coaster yang meluncur kencang memiliki energi kinetik yang sangat besar.)"
+    ],
+    "catatan": "Istilah fisika: 'kinetic energy' (energi kinetik gerak)."
+  },
+  "knack": {
+    "arti": "Bakat alami / keahlian lihai dalam melakukan trik tertentu dengan mudah",
+    "cara_baca": "nak",
+    "penggunaan": [
+      "He has a natural knack for negotiating the best prices. (Dia punya bakat alami yang lihai dalam menawar harga terbaik.)"
+    ],
+    "catatan": "Huruf 'k' di awal kata tidak dibaca (silent 'k')."
+  },
+  "kudos": {
+    "arti": "Pujian kehormatan / selamat dan apresiasi tinggi atas pencapaian hebat",
+    "cara_baca": "koo-dohz",
+    "penggunaan": [
+      "Kudos to the engineering team for launching the update on time! (Salut dan selamat kepada tim insinyur yang berhasil meluncurkan update tepat waktu!)"
+    ],
+    "catatan": "Berasal dari bahasa Yunani kuno yang berarti kemuliaan/kejayaan."
+  },
+  "lavish": {
+    "arti": "Mewah berlimpah / royal dan jor-joran mengeluarkan biaya",
+    "cara_baca": "lav-ish",
+    "penggunaan": [
+      "The celebrity hosted a lavish wedding party at a five-star resort. (Selebriti itu menggelar pesta pernikahan mewah berlimpah di resor bintang lima.)"
+    ],
+    "catatan": "Bisa untuk pesta mewah (lavish party) atau pujian melimpah (lavish praise)."
+  },
+  "legacy": {
+    "arti": "Warisan peninggalan / jejak pengaruh besar yang ditinggalkan untuk generasi masa depan",
+    "cara_baca": "leg-uh-see",
+    "penggunaan": [
+      "Nelson Mandela left a timeless legacy of peace and equality. (Nelson Mandela meninggalkan warisan abadi tentang perdamaian dan kesetaraan.)"
+    ],
+    "catatan": "Dalam koding: 'legacy code' (kode lama yang masih dipakai)."
+  },
+  "legitimate": {
+    "arti": "Sah / legal dan sesuai dengan hukum atau aturan yang berlaku",
+    "cara_baca": "luh-jit-uh-mit",
+    "penggunaan": [
+      "Always ensure you buy software licenses from legitimate vendors. (Selalu pastikan kamu membeli lisensi perangkat lunak dari penjual yang sah.)"
+    ],
+    "catatan": "Slang gaul sering menyingkatnya jadi 'legit' (beneran mantap/asli)."
+  },
+  "lenient": {
+    "arti": "Penyayang longgar / tidak galak dan suka memberi pengampunan atau toleransi",
+    "cara_baca": "leen-yunt",
+    "penggunaan": [
+      "The judge was surprisingly lenient with the first-time offender. (Hakim secara mengejutkan cukup berbelas kasih dan longgar kepada pelanggar pemula itu.)"
+    ],
+    "catatan": "Lawan dari kata strict (ketat/galak)."
+  },
+  "leverage": {
+    "arti": "Memanfaatkan peluang / menggunakan daya ungkit modal atau kelebihan diri",
+    "cara_baca": "lev-er-ij",
+    "penggunaan": [
+      "You should leverage your networking skills to find better career opportunities. (Kamu harus memanfaatkan keahlian relasimu untuk mencari peluang karir yang lebih baik.)"
+    ],
+    "catatan": "Kosakata emas dunia startup, investasi, dan strategi bisnis."
+  },
+  "linger": {
+    "arti": "Berlama-lama / tidak mau pergi atau aroma/kenangan yang membekas lama",
+    "cara_baca": "ling-ger",
+    "penggunaan": [
+      "The sweet scent of coffee lingered in the room all morning. (Aroma manis kopi membekas wangi di dalam ruangan sepanjang pagi.)"
+    ],
+    "catatan": "Sering dipakai untuk rasa rindu atau aroma parfum yang tahan lama."
+  },
+  "lucid": {
+    "arti": "Sangat jernih / berpikir terang benderang atau mimpi sadar",
+    "cara_baca": "loo-sid",
+    "penggunaan": [
+      "The professor gave a lucid explanation of quantum physics. (Profesor itu memberikan penjelasan yang sangat jernih dan mudah dipahami tentang fisika kuantum.)"
+    ],
+    "catatan": "Fenomena psikologi: 'lucid dream' (kondisi sadar saat sedang bermimpi)."
+  },
+  "lucrative": {
+    "arti": "Sangat menguntungkan / mendatangkan cuan dan profit besar",
+    "cara_baca": "loo-kruh-tiv",
+    "penggunaan": [
+      "Software engineering remains one of the most lucrative careers in the world. (Rekayasa perangkat lunak tetap menjadi salah satu karir paling menguntungkan di dunia.)"
+    ],
+    "catatan": "Dipakai untuk peluang bisnis atau kontrak kerja bernilai tinggi."
+  },
+  "luminous": {
+    "arti": "Bercahaya terang / memancarkan pendar sinar di tengah kegelapan",
+    "cara_baca": "loo-muh-nus",
+    "penggunaan": [
+      "The watch has luminous hands so you can read the time in the dark. (Jam tangan itu memiliki jarum yang bercahaya sehingga kamu bisa melihat waktu di tempat gelap.)"
+    ],
+    "catatan": "Berkaitan dengan benda yang memancarkan kilau pendar cahaya (glow)."
+  },
+  "magnificent": {
+    "arti": "Megah luar biasa / sangat agung, indah, dan menakjubkan",
+    "cara_baca": "mag-nif-ih-sunt",
+    "penggunaan": [
+      "We enjoyed the magnificent view of Mount Fuji at sunrise. (Kami menikmati pemandangan Gunung Fuji yang megah luar biasa saat matahari terbit.)"
+    ],
+    "catatan": "Pujian untuk keindahan panorama alam atau arsitektur istana megah."
+  },
+  "magnitude": {
+    "arti": "Skala besaran / tingkat keparahan atau kekuatan gempa bumi",
+    "cara_baca": "mag-nih-tyood",
+    "penggunaan": [
+      "They did not realize the true magnitude of the financial crisis. (Mereka tidak menyadari skala besaran sebenarnya dari krisis keuangan tersebut.)"
+    ],
+    "catatan": "Satuan kekuatan gempa (magnitude) atau besarnya skala dampak."
+  },
+  "mandatory": {
+    "arti": "Wajib mutlak / diharuskan oleh hukum atau peraturan resmi",
+    "cara_baca": "man-duh-tawr-ee",
+    "penggunaan": [
+      "Wearing a helmet is mandatory for all motorcycle riders. (Memakai helm adalah hal yang wajib mutlak bagi semua pengendara motor.)"
+    ],
+    "catatan": "Lawan dari kata optional (pilihan sukarela)."
+  },
+  "manifest": {
+    "arti": "Mewujudkan nyata / tampak jelas kelihatan di depan mata",
+    "cara_baca": "man-ih-fest",
+    "penggunaan": [
+      "His deep stress began to manifest as physical headaches. (Stres beratnya mulai berwujud nyata sebagai sakit kepala fisik.)"
+    ],
+    "catatan": "Tren Gen Z: 'manifesting your dreams' (mewujudkan mimpi jadi kenyataan)."
+  },
+  "manipulate": {
+    "arti": "Memanipulasi / mengendalikan pikiran orang atau data demi keuntungan pribadi",
+    "cara_baca": "muh-nip-yuh-leyt",
+    "penggunaan": [
+      "Do not let toxic friends manipulate your emotions. (Jangan biarkan teman toxic memanipulasi perasaan dan emosimu.)"
+    ],
+    "catatan": "Bisa manipulasi data statistik atau manipulasi psikologis (gaslighting)."
+  },
+  "masterpiece": {
+    "arti": "Mahakarya / karya seni terbaik dan paling agung sepanjang masa",
+    "cara_baca": "mas-ter-pees",
+    "penggunaan": [
+      "Leonardo da Vinci's Mona Lisa is widely regarded as a masterpiece. (Mona Lisa karya Leonardo da Vinci secara luas dianggap sebagai sebuah mahakarya.)"
+    ],
+    "catatan": "Puncak pencapaian tertinggi seorang seniman atau kreator."
+  },
+  "mediocre": {
+    "arti": "Biasa-biasa saja / pas-pasan dan tidak ada yang istimewa",
+    "cara_baca": "mee-dee-oh-ker",
+    "penggunaan": [
+      "The food was mediocre considering the expensive price they charged. (Makanannya biasa-biasa aja jika melihat harga mahal yang mereka patok.)"
+    ],
+    "catatan": "Kualitas standar tengah yang cenderung mengecewakan."
+  },
+  "melancholy": {
+    "arti": "Melankolis / rasa sedih puitis yang hening dan mendalam",
+    "cara_baca": "mel-un-kol-ee",
+    "penggunaan": [
+      "Listening to acoustic songs on a rainy night brings a sweet sense of melancholy. (Mendengarkan lagu akustik pas hujan malam membawa rasa melankolis yang syahdu.)"
+    ],
+    "catatan": "Kesedihan bernuansa estetis, sering jadi tema puisi dan musik indie."
+  },
+  "meticulous": {
+    "arti": "Sangat teliti / cermat hingga detail terkecil tanpa ada yang terlewat",
+    "cara_baca": "muh-tik-yuh-lus",
+    "penggunaan": [
+      "The watchmaker worked with meticulous precision on the tiny gears. (Pembuat jam tangan itu bekerja dengan ketelitian sangat cermat pada roda gigi kecilnya.)"
+    ],
+    "catatan": "Karakter orang yang perfeksionis dan sangat teliti pada kerapian."
+  },
+  "mitigate": {
+    "arti": "Memitigasi / mengurangi tingkat keparahan risiko atau dampak buruk",
+    "cara_baca": "mit-ih-geyt",
+    "penggunaan": [
+      "Planting mangrove trees along the coast helps mitigate flood risks. (Menanam pohon bakau di sepanjang pantai membantu memitigasi risiko banjir.)"
+    ],
+    "catatan": "Istilah standar dalam 'risk management' (manajemen risiko)."
+  },
+  "momentum": {
+    "arti": "Momentum / daya dorong percepatan maju yang sedang kuat-kuatnya",
+    "cara_baca": "moh-men-tum",
+    "penggunaan": [
+      "The team gained strong momentum after scoring their first victory. (Tim mendapatkan momentum dorongan kuat setelah mencetak kemenangan pertama mereka.)"
+    ],
+    "catatan": "Frasa umum: 'keep the momentum going' (jaga ritme dan semangatnya)."
+  },
+  "mundane": {
+    "arti": "Monoton membosankan / urusan duniawi rutin sehari-hari yang biasa saja",
+    "cara_baca": "mun-deyn",
+    "penggunaan": [
+      "Doing laundry and washing dishes are mundane daily chores. (Mencuci baju dan mencuci piring adalah pekerjaan rumah tangga harian yang monoton.)"
+    ],
+    "catatan": "Lawan dari hal-hal yang magis, seru, atau luar biasa."
+  },
+  "mutual": {
+    "arti": "Saling menguntungkan / timbal balik yang disepakati kedua belah pihak",
+    "cara_baca": "myoo-choo-ul",
+    "penggunaan": [
+      "Healthy relationships are always built on mutual respect and honesty. (Hubungan yang sehat selalu dibangun atas dasar saling menghargai dan kejujuran timbal balik.)"
+    ],
+    "catatan": "Istilah sosmed: 'mutual friends' (teman bersama / kenalan satu circle)."
+  },
+  "naive": {
+    "arti": "Naif / terlalu polos dan mudah percaya sehingga gampang dibohongi",
+    "cara_baca": "nah-eev",
+    "penggunaan": [
+      "It was naive of him to believe that he could get rich overnight without effort. (Terlalu naif baginya percaya bisa kaya mendadak dalam semalam tanpa kerja keras.)"
+    ],
+    "catatan": "Kepolosan yang timbul akibat kurangnya pengalaman hidup."
+  },
+  "narrative": {
+    "arti": "Narasi / alur cerita atau sudut pandang penyampaian peristiwa",
+    "cara_baca": "nar-uh-tiv",
+    "penggunaan": [
+      "The documentary presented a compelling narrative about climate change. (Film dokumenter itu menyajikan narasi cerita yang sangat memikat tentang perubahan iklim.)"
+    ],
+    "catatan": "Bisa berarti karya fiksi atau narasi opini publik di media."
+  },
+  "nascent": {
+    "arti": "Baru lahir / baru mulai berkembang dan punya potensi masa depan cerah",
+    "cara_baca": "nas-unt",
+    "penggunaan": [
+      "The nascent space tourism industry is attracting massive venture investments. (Industri pariwisata luar angkasa yang baru lahir ini menarik investasi modal ventura yang masif.)"
+    ],
+    "catatan": "Dipakai untuk teknologi perintis atau tren baru yang baru bertunas."
+  },
+  "navigate": {
+    "arti": "Menavigasi / mengarungi jalan atau memandu arah melewati rintangan",
+    "cara_baca": "nav-ih-geyt",
+    "penggunaan": [
+      "The captain skillfully navigated the ship through the stormy sea. (Kapten dengan lihai menavigasi kapal melewati lautan badai.)"
+    ],
+    "catatan": "Bisa untuk mengemudi kendaraan atau menavigasi karir di dunia kerja."
+  },
+  "neglect": {
+    "arti": "Menelantarkan / mengabaikan kewajiban dan membiarkan terbengkalai",
+    "cara_baca": "nih-glekt",
+    "penggunaan": [
+      "Do not neglect your physical health while chasing your career goals. (Jangan menelantarkan kesehatan fisikmu saat mengejar impian karirmu.)"
+    ],
+    "catatan": "Kelalaian yang menimbulkan kerusakan pada hal yang diabaikan."
+  },
+  "neutral": {
+    "arti": "Netral / tidak memihak ke kubu mana pun dalam perselisihan",
+    "cara_baca": "nyoo-trul",
+    "penggunaan": [
+      "Switzerland remained neutral during international conflicts. (Swiss tetap bersikap netral selama konflik internasional.)"
+    ],
+    "catatan": "Bisa posisi politik, warna netral (putih/abu), atau gigi transmisi mobil (N)."
+  },
+  "nimble": {
+    "arti": "Lincah gesit / cepat bergerak dan tangkas beradaptasi",
+    "cara_baca": "nim-bul",
+    "penggunaan": [
+      "Startups are often nimble and can pivot much faster than huge corporations. (Startup seringkali lincah dan bisa mengubah haluan jauh lebih cepat daripada korporasi raksasa.)"
+    ],
+    "catatan": "Kelincahan fisik (tubuh pesenam) atau kelincahan berpikir (mental agility)."
+  },
+  "noble": {
+    "arti": "Mulia luhur / memiliki budi pekerti tinggi atau keturunan bangsawan",
+    "cara_baca": "noh-bul",
+    "penggunaan": [
+      "Dedication to teaching in remote villages is a truly noble profession. (Dedikasi mengajar di pelosok desa adalah profesi yang sungguh mulia.)"
+    ],
+    "catatan": "Bisa untuk sifat terpuji (noble deed) atau gas mulia kimia (noble gas)."
+  },
+  "notorious": {
+    "arti": "Tersohor karena keburukannya / terkenal punya reputasi jahat",
+    "cara_baca": "noh-tawr-ee-us",
+    "penggunaan": [
+      "The intersection is notorious for frequent motorcycle accidents. (Persimpangan jalan itu terkenal buruk karena sering terjadi kecelakaan motor.)"
+    ],
+    "catatan": "Bedakan: 'famous' (terkenal positif), 'notorious' (terkenal negatif/buruk)."
+  },
+  "nuance": {
+    "arti": "Nuansa / perbedaan makna atau rasa yang sangat halus dan tersirat",
+    "cara_baca": "nyoo-ahns",
+    "penggunaan": [
+      "A great translator understands the cultural nuances of every single phrase. (Penerjemah hebat memahami nuansa budaya yang halus di setiap frasa.)"
+    ],
+    "catatan": "Perbedaan kecil yang membedakan kualitas amatir dan profesional."
+  },
+  "nurture": {
+    "arti": "Mengasuh dan merawat / membina bibit bakat dengan penuh kasih sayang",
+    "cara_baca": "ner-cher",
+    "penggunaan": [
+      "Parents and teachers should nurture children's natural curiosity. (Orang tua dan guru harus merawat dan menumbuhkan rasa ingin tahu alami anak-anak.)"
+    ],
+    "catatan": "Perdebatan klasik psikologi: 'nature vs nurture' (bawaan lahir vs pola asuh)."
+  },
+  "oblivious": {
+    "arti": "Tidak sadar sama sekali / cuek bebek dan tidak tahu apa yang sedang terjadi di sekitarnya",
+    "cara_baca": "uh-bliv-ee-us",
+    "penggunaan": [
+      "He was so absorbed in his smartphone that he was completely oblivious to the rain outside. (Dia saking asyiknya main HP sampai sama sekali gak sadar kalau di luar lagi hujan lebat.)"
+    ],
+    "catatan": "Dipakai saat seseorang tidak peka terhadap situasi genting di sekitarnya."
+  },
+  "obscure": {
+    "arti": "Samar tidak terkenal / rumit dan sulit dipahami orang awam",
+    "cara_baca": "ub-skyoor",
+    "penggunaan": [
+      "The musician likes to sample sounds from obscure vintage records. (Musisi itu suka mengambil sampel suara dari piringan hitam lawas yang jarang diketahui orang.)"
+    ],
+    "catatan": "Bisa berarti terpencil/tidak terkenal atau mengaburkan fakta."
+  },
+  "obsolete": {
+    "arti": "Ketinggalan zaman / usang dan sudah tidak terpakai lagi karena tergantikan teknologi baru",
+    "cara_baca": "ob-suh-leet",
+    "penggunaan": [
+      "Floppy disks became obsolete after flash drives were invented. (Disket menjadi usang dan punah setelah flashdisk ditemukan.)"
+    ],
+    "catatan": "Istilah teknologi untuk perangkat atau sistem yang sudah kadaluwarsa."
+  },
+  "obstacle": {
+    "arti": "Rintangan / halangan yang menghadang di tengah jalan",
+    "cara_baca": "ob-stuh-kul",
+    "penggunaan": [
+      "Fear of failure is the biggest obstacle to achieving your dreams. (Rasa takut gagal adalah rintangan terbesar dalam meraih mimpimu.)"
+    ],
+    "catatan": "Sering dipakai dalam motivasi: 'overcome obstacles' (menaklukkan rintangan)."
+  },
+  "ominous": {
+    "arti": "Pertanda buruk / firasat mencekam bahwa musibah akan segera tiba",
+    "cara_baca": "om-uh-nus",
+    "penggunaan": [
+      "The deep sound of thunder in the dark sky sounded ominous. (Suara gemuruh petir di langit gelap terdengar sebagai firasat yang mencekam.)"
+    ],
+    "catatan": "Berasal dari kata omen (pertanda gaib)."
+  },
+  "opaque": {
+    "arti": "Buram tidak tembus pandang / rumit dan tidak transparan",
+    "cara_baca": "oh-peyk",
+    "penggunaan": [
+      "The frosted glass door is completely opaque to ensure bathroom privacy. (Pintu kaca buram itu tidak tembus pandang untuk memastikan privasi kamar mandi.)"
+    ],
+    "catatan": "Lawan dari transparent (tembus pandang / transparan)."
+  },
+  "opportune": {
+    "arti": "Tepat pada waktunya / momen emas yang paling pas untuk bertindak",
+    "cara_baca": "op-er-tyoon",
+    "penggunaan": [
+      "He waited for an opportune moment to ask his boss for a salary raise. (Dia menunggu momen yang paling tepat untuk meminta kenaikan gaji ke bosnya.)"
+    ],
+    "catatan": "Bentuk kata bendanya adalah opportunity (peluang/kesempatan emas)."
+  },
+  "optimistic": {
+    "arti": "Optimistis / berpandangan positif dan yakin masa depan akan cerah",
+    "cara_baca": "op-tuh-mis-tik",
+    "penggunaan": [
+      "Despite the economic crisis, the young founders remained optimistic about their growth. (Meski ada krisis ekonomi, para pendiri muda itu tetap optimistis tentang pertumbuhan bisnis mereka.)"
+    ],
+    "catatan": "Lawan dari kata pessimistic (pesimistis / memandang suram)."
+  },
+  "opulent": {
+    "arti": "Mewah gemerlap / serba bergelimang harta dan kemegahan ningrat",
+    "cara_baca": "op-yoo-lunt",
+    "penggunaan": [
+      "The sultan's dining hall was furnished with opulent gold chandeliers. (Ruang makan sultan dihiasi dengan lampu kristal emas yang serba mewah gemerlap.)"
+    ],
+    "catatan": "Menunjukkan kemewahan tingkat tinggi para bangsawan dan konglomerat."
+  },
+  "orthodox": {
+    "arti": "Ortodoks / konvensional memegang teguh ajaran atau tradisi lama yang murni",
+    "cara_baca": "awr-thuh-doks",
+    "penggunaan": [
+      "He prefers orthodox medical treatments over experimental therapies. (Dia lebih memilih pengobatan medis konvensional daripada terapi eksperimental.)"
+    ],
+    "catatan": "Lawan katanya adalah unorthodox (tidak konvensional / nyeleneh)."
+  },
+  "outrageous": {
+    "arti": "Keterlaluan / di luar batas akal sehat dan bikin geram",
+    "cara_baca": "owt-rey-jus",
+    "penggunaan": [
+      "Charging ten dollars for a bottle of mineral water is simply outrageous! (Menagih sepuluh dolar untuk sebotol air mineral itu benar-benar keterlaluan!)"
+    ],
+    "catatan": "Dipakai saat harga terlalu mahal atau tindakan orang kelewatan batas."
+  },
+  "outspoken": {
+    "arti": "Vokal blak-blakan / berani menyuarakan pendapat secara jujur dan lugas",
+    "cara_baca": "owt-spoh-kun",
+    "penggunaan": [
+      "She is an outspoken critic of government corruption. (Dia adalah seorang kritikus vokal yang blak-blakan menentang korupsi pemerintah.)"
+    ],
+    "catatan": "Sifat orang yang berani bicara apa adanya tanpa takut diintimidasi."
+  },
+  "palpable": {
+    "arti": "Sangat terasa nyata / ketegangan atau atmosfer yang saking pekatnya seolah bisa disentuh",
+    "cara_baca": "pal-puh-bul",
+    "penggunaan": [
+      "The tension in the courtroom was palpable before the verdict was announced. (Ketegangan di ruang sidang terasa sangat nyata sebelum vonis dibacakan.)"
+    ],
+    "catatan": "Frasa umum: 'palpable tension / palpable excitement'."
+  },
+  "paramount": {
+    "arti": "Teramat penting / prioritas tertinggi di atas segalanya",
+    "cara_baca": "par-uh-mownt",
+    "penggunaan": [
+      "Passenger safety is of paramount importance to the airline. (Keselamatan penumpang adalah hal yang teramat penting nomor satu bagi maskapai penerbangan.)"
+    ],
+    "catatan": "Juga menjadi nama studio film legendaris Hollywood (Paramount Pictures)."
+  },
+  "peculiar": {
+    "arti": "Aneh ganjil / punya kebiasaan atau karakteristik yang khas dan unik",
+    "cara_baca": "pih-kyool-yer",
+    "penggunaan": [
+      "There was a peculiar smell coming from the abandoned laboratory. (Ada bau aneh yang ganjil tercium dari laboratorium terbengkalai itu.)"
+    ],
+    "catatan": "Bisa berarti aneh mencurigakan atau ciri khas khusus daerah tertentu."
+  },
+  "perceive": {
+    "arti": "Mempersepsikan / menangkap dan mengartikan sesuatu melalui sudut pandang pikiran",
+    "cara_baca": "per-seev",
+    "penggunaan": [
+      "How people perceive your brand determines your business success. (Bagaimana orang mempersepsikan brand produkmu menentukan kesuksesan bisnismu.)"
+    ],
+    "catatan": "Bentuk kata bendanya adalah perception (persepsi sudut pandang)."
+  },
+  "peril": {
+    "arti": "Bahaya maut / ancaman malapetaka besar yang mengancam nyawa",
+    "cara_baca": "pair-ul",
+    "penggunaan": [
+      "The brave firefighters put their lives in peril to rescue the trapped family. (Petugas pemadam kebakaran yang berani mempertaruhkan nyawa mereka dalam bahaya maut demi menyelamatkan keluarga yang terjebak.)"
+    ],
+    "catatan": "Bentuk kata sifatnya adalah perilous (sangat berbahaya)."
+  },
+  "permanent": {
+    "arti": "Permanen / abadi dan bertahan selamanya tanpa berubah",
+    "cara_baca": "per-muh-nunt",
+    "penggunaan": [
+      "Think carefully before getting a tattoo; it is a permanent mark on your skin. (Pikirkan matang-matang sebelum bikin tato; itu adalah tanda permanen di kulitmu.)"
+    ],
+    "catatan": "Lawan dari kata temporary (sementara)."
+  },
+  "permeate": {
+    "arti": "Meresap menembus / menyebar ke seluruh penjuru ruangan atau masyarakat",
+    "cara_baca": "per-mee-eyt",
+    "penggunaan": [
+      "The smell of freshly baked bread permeated the entire bakery. (Aroma roti yang baru matang meresap wangi ke seluruh sudut toko roti.)"
+    ],
+    "catatan": "Bisa meresap secara fisik (cairan/bau) atau meresap ke budaya."
+  },
+  "persevere": {
+    "arti": "Pantang menyerah / gigih berjuang terus meski menghadapi rintangan bertubi-tubi",
+    "cara_baca": "per-suh-veer",
+    "penggunaan": [
+      "If you persevere through hard times, you will eventually succeed. (Jika kamu gigih pantang menyerah melewati masa-masa sulit, kamu pasti akan berhasil.)"
+    ],
+    "catatan": "Bentuk kata bendanya adalah perseverance (kegigihan pantang menyerah)."
+  },
+  "pessimistic": {
+    "arti": "Pesimistis / selalu memandang suram dan cenderung menduga hal terburuk",
+    "cara_baca": "pes-uh-mis-tik",
+    "penggunaan": [
+      "Don't be so pessimistic before we even try! (Jangan terlalu pesimistis dulu sebelum kita mencoba!)"
+    ],
+    "catatan": "Kecenderungan psikologis melihat gelas 'setengah kosong'."
+  },
+  "pivotal": {
+    "arti": "Titik balik penentu / momen kunci yang mengubah arah masa depan",
+    "cara_baca": "piv-uh-tul",
+    "penggunaan": [
+      "Graduating from college was a pivotal moment in her personal life. (Lulus dari bangku kuliah adalah momen titik balik penentu dalam kehidupan pribadinya.)"
+    ],
+    "catatan": "Frasa umum: 'a pivotal role / a pivotal moment'."
+  },
+  "plausible": {
+    "arti": "Masuk akal / terdengar logis dan sangat masuk dalam nalar",
+    "cara_baca": "plaw-zuh-bul",
+    "penggunaan": [
+      "His explanation for being late sounded perfectly plausible. (Alasannya terlambat terdengar sangat masuk akal dan bisa diterima.)"
+    ],
+    "catatan": "Lawan katanya adalah implausible (tidak masuk akal / mengada-ada)."
+  },
+  "ponder": {
+    "arti": "Merenungkan / memikirkan sesuatu dalam-dalam dengan tenang",
+    "cara_baca": "pon-der",
+    "penggunaan": [
+      "He sat by the lake, pondering the meaning of life. (Dia duduk di tepi danau, merenungkan makna kehidupan dengan tenang.)"
+    ],
+    "catatan": "Proses kontemplasi pemikiran yang tidak tergesa-gesa."
+  },
+  "pragmatic": {
+    "arti": "Pragmatis / fokus pada solusi praktis nyata daripada sekadar teori muluk-muluk",
+    "cara_baca": "prag-mat-ik",
+    "penggunaan": [
+      "We need a pragmatic approach to fix the budget deficit immediately. (Kita butuh pendekatan pragmatis yang nyata untuk segera menambal defisit anggaran.)"
+    ],
+    "catatan": "Pola pikir berorientasi hasil yang bisa langsung diterapkan."
+  },
+  "precious": {
+    "arti": "Sangat berharga / bernilai tinggi dan disayangi sepenuh hati",
+    "cara_baca": "presh-us",
+    "penggunaan": [
+      "Time spent with beloved family is truly precious. (Waktu yang dihabiskan bersama keluarga tercinta sungguh sangat berharga.)"
+    ],
+    "catatan": "Bisa untuk batu permata mulia (precious stones) atau waktu/kenangan hidup."
+  },
+  "precise": {
+    "arti": "Presisi tepat akurat / teliti tanpa meleset sedikit pun",
+    "cara_baca": "prih-says",
+    "penggunaan": [
+      "The surgeon made a precise cut during the brain operation. (Dokter bedah membuat sayatan yang sangat presisi akurat selama operasi otak.)"
+    ],
+    "catatan": "Bentuk kata bendanya adalah precision (akurasi ketelitian)."
+  },
+  "predominant": {
+    "arti": "Dominan utama / unsur yang paling menonjol dan berkuasa",
+    "cara_baca": "prih-dom-uh-nunt",
+    "penggunaan": [
+      "English is the predominant language in global business communications. (Bahasa Inggris adalah bahasa dominan utama dalam komunikasi bisnis global.)"
+    ],
+    "catatan": "Unsur terbesar yang menguasai porsi mayoritas."
+  },
+  "procrastinate": {
+    "arti": "Menunda-nunda pekerjaan / hobi mager dan ngerjain tugas pas mepet deadline",
+    "cara_baca": "proh-kras-tuh-neyt",
+    "penggunaan": [
+      "Stop procrastinating and finish your thesis chapter today! (Berhenti menunda-nunda dan selesaikan bab skripsimu hari ini juga!)"
+    ],
+    "catatan": "Penyakit nomor satu mahasiswa dan pekerja yang suka sistem kebut semalam."
+  },
+  "profound": {
+    "arti": "Mendalam / memiliki makna filosofis yang sangat luas dan menyentuh hati",
+    "cara_baca": "pruh-fownd",
+    "penggunaan": [
+      "The book had a profound impact on how I view humanity. (Buku itu memberikan pengaruh yang sangat mendalam pada cara gue memandang kemanusiaan.)"
+    ],
+    "catatan": "Dipakai untuk wawasan bijak, cinta sejati, atau duka mendalam."
+  },
+  "prominent": {
+    "arti": "Terkemuka menonjol / tokoh penting yang sangat disegani publik",
+    "cara_baca": "prom-uh-nunt",
+    "penggunaan": [
+      "Several prominent scientists attended the international symposium. (Beberapa ilmuwan terkemuka menghadiri simposium internasional tersebut.)"
+    ],
+    "catatan": "Bisa untuk tokoh terkenal atau fitur fisik yang menonjol."
+  },
+  "prompt": {
+    "arti": "Tepat waktu sigap / merangsang timbulnya aksi atau instruksi teks pada AI",
+    "cara_baca": "prompt",
+    "penggunaan": [
+      "Thank you for your prompt response to our email inquiry. (Terima kasih atas tanggapan sigap dan tepat waktumu terhadap pertanyaan email kami.)"
+    ],
+    "catatan": "Dalam era AI: 'prompt' adalah teks instruksi yang diketik user ke model AI."
+  },
+  "prosper": {
+    "arti": "Makmur sejahtera / berkembang subur dan meraih kemakmuran finansial",
+    "cara_baca": "pros-per",
+    "penggunaan": [
+      "May your new business venture prosper in the years ahead. (Semoga usaha barumu makmur dan sukses besar di tahun-tahun mendatang.)"
+    ],
+    "catatan": "Bentuk kata sifatnya adalah prosperous (makmur sejahtera)."
+  },
+  "prudent": {
+    "arti": "Hati-hati cermat / bijak mengelola risiko dan keuangan masa depan",
+    "cara_baca": "proo-dunt",
+    "penggunaan": [
+      "It is prudent to save at least six months of living expenses for emergencies. (Sangat bijak dan cermat untuk menabung setidaknya enam bulan biaya hidup untuk dana darurat.)"
+    ],
+    "catatan": "Lawan dari sifat boros dan ceroboh."
+  },
+  "quaint": {
+    "arti": "Unik antik / memesona dengan gaya klasik kuno yang nyaman",
+    "cara_baca": "kweynt",
+    "penggunaan": [
+      "They spent their vacation in a quaint little village in Switzerland. (Mereka menghabiskan liburan di sebuah desa kecil yang antik dan memesona di Swiss.)"
+    ],
+    "catatan": "Dipakai untuk kafe vintage, pondok kayu tua, atau kota kuno yang asri."
+  },
+  "qualify": {
+    "arti": "Memenuhi kualifikasi / lulus uji kelayakan untuk suatu posisi",
+    "cara_baca": "kwol-uh-fay",
+    "penggunaan": [
+      "Her extensive experience qualifies her for the senior developer role. (Pengalamannya yang luas membuatnya memenuhi kualifikasi untuk posisi developer senior.)"
+    ],
+    "catatan": "Bentuk kata bendanya adalah qualification (kualifikasi keahlian)."
+  },
+  "quench": {
+    "arti": "Memuaskan dahaga / memadamkan rasa haus atau api yang berkobar",
+    "cara_baca": "kwench",
+    "penggunaan": [
+      "A cold glass of fresh coconut water quenched my thirst instantly. (Segelas es kelapa muda dingin langsung memuaskan rasa dahaga gue seketika.)"
+    ],
+    "catatan": "Frasa umum: 'quench your thirst' (melepas dahaga)."
+  },
+  "query": {
+    "arti": "Kueri pertanyaan / permintaan pencarian data dalam basis data atau mesin pencari",
+    "cara_baca": "kweer-ee",
+    "penggunaan": [
+      "The database returned millions of results in milliseconds for that search query. (Basis data menampilkan jutaan hasil dalam hitungan milidetik untuk kueri pencarian tersebut.)"
+    ],
+    "catatan": "Istilah teknis dalam SQL, database, dan Google Search."
+  },
+  "quest": {
+    "arti": "Pencarian petualangan / misi mulia untuk mencari sesuatu yang berharga",
+    "cara_baca": "kwest",
+    "penggunaan": [
+      "The scientists are on a quest to discover a clean source of infinite energy. (Para ilmuwan sedang dalam misi pencarian untuk menemukan sumber energi bersih tak terbatas.)"
+    ],
+    "catatan": "Sangat populer dalam game RPG: 'main quest' (misi utama)."
+  },
+  "quirk": {
+    "arti": "Ciri khas unik / kebiasaan kecil yang aneh tapi lucu dan menarik",
+    "cara_baca": "kwerk",
+    "penggunaan": [
+      "Everyone has their own little quirks that make them unique. (Setiap orang punya kebiasaan uniknya masing-masing yang bikin mereka istimewa.)"
+    ],
+    "catatan": "Bentuk kata sifatnya adalah quirky (unik, nyentrik, dan menggemaskan)."
+  },
+  "quota": {
+    "arti": "Kuota / jatah batas jumlah maksimum atau minimum yang ditentukan",
+    "cara_baca": "kwoh-tuh",
+    "penggunaan": [
+      "I need to connect to Wi-Fi because my cellular data quota is running low. (Gue harus nyambung ke Wi-Fi karena kuota data internet HP gue udah menipis.)"
+    ],
+    "catatan": "Bisa untuk kuota internet HP atau kuota target penjualan sales."
+  },
+  "radiant": {
+    "arti": "Berseri-seri / memancarkan cahaya kebahagiaan dan kecantikan dari dalam",
+    "cara_baca": "rey-dee-unt",
+    "penggunaan": [
+      "The bride looked radiant as she walked down the aisle. (Pengantin wanita terlihat berseri-seri cantik saat melangkah di lorong pelaminan.)"
+    ],
+    "catatan": "Bisa untuk sinar matahari yang hangat atau wajah orang yang bahagia."
+  },
+  "random": {
+    "arti": "Acak / tanpa pola tertentu dan terjadi begitu saja secara kebetulan",
+    "cara_baca": "ran-dum",
+    "penggunaan": [
+      "The music app plays songs on a random shuffle mode. (Aplikasi musik memutar lagu dalam mode acak / shuffle.)"
+    ],
+    "catatan": "Bahasa gaul: 'random banget' (ngomong/bertindak gak terduga tanpa konteks)."
+  },
+  "reassure": {
+    "arti": "Menenangkan hati / meyakinkan kembali seseorang agar tidak cemas",
+    "cara_baca": "ree-uh-shoor",
+    "penggunaan": [
+      "The doctor reassured the nervous patient that the surgery was completely safe. (Dokter menenangkan hati pasien yang gugup itu bahwa operasinya sepenuhnya aman.)"
+    ],
+    "catatan": "Tindakan memberi ketenangan saat seseorang overthinking."
+  },
+  "reconcile": {
+    "arti": "Berdamai kembali / merukunkan kembali hubungan yang sempat retak",
+    "cara_baca": "rek-un-sayl",
+    "penggunaan": [
+      "After years of silence, the two estranged brothers finally reconciled. (Setelah bertahun-tahun tak saling sapa, dua saudara itu akhirnya berdamai kembali.)"
+    ],
+    "catatan": "Dalam akuntansi: 'reconcile accounts' (mencocokkan mutasi kas)."
+  },
+  "redundant": {
+    "arti": "Mubazir berlebihan / pengulangan yang tidak perlu dan membuang-buang ruang",
+    "cara_baca": "rih-dan-dunt",
+    "penggunaan": [
+      "Remove redundant code to optimize software loading speed. (Hapus kode yang mubazir berulang untuk mengoptimalkan kecepatan muat software.)"
+    ],
+    "catatan": "Istilah teknis dalam optimasi database dan penulisan esai."
+  },
+  "refine": {
+    "arti": "Memperhalus / menyempurnakan kualitas produk atau ide agar makin matang",
+    "cara_baca": "rih-fayn",
+    "penggunaan": [
+      "We need to refine our UI design based on user feedback. (Kita perlu memperhalus desain tampilan kita berdasarkan masukan pengguna.)"
+    ],
+    "catatan": "Bisa untuk kilang minyak (oil refinery) atau memoles ide bisnis."
+  },
+  "relentless": {
+    "arti": "Tak kenal lelah / terus maju tanpa henti dan tidak pernah menyerah",
+    "cara_baca": "rih-lent-lis",
+    "penggunaan": [
+      "Her relentless pursuit of excellence made her a world champion. (Usahanya yang tak kenal lelah mengejar keunggulan menjadikannya juara dunia.)"
+    ],
+    "catatan": "Bisa untuk etos kerja gigih atau badai hujan yang tak kunjung reda."
+  },
+  "resilient": {
+    "arti": "Tahan banting / cepat bangkit kembali setelah diterpa musibah atau kegagalan",
+    "cara_baca": "rih-zil-yunt",
+    "penggunaan": [
+      "Children are remarkably resilient and can adapt to new environments quickly. (Anak-anak luar biasa tahan banting dan bisa beradaptasi dengan lingkungan baru dengan cepat.)"
+    ],
+    "catatan": "Karakter mental juara: jatuh tujuh kali, bangkit delapan kali."
+  },
+  "robust": {
+    "arti": "Kuat kokoh / sistem tangguh yang tahan banting menghadapi berbagai eror",
+    "cara_baca": "roh-bast",
+    "penggunaan": [
+      "Our backend architecture is robust enough to handle millions of daily requests. (Arsitektur backend kami sangat kokoh dan tangguh menangani jutaan permintaan tiap hari.)"
+    ],
+    "catatan": "Standar emas dalam menilai kualitas software atau kesehatan fisik."
+  },
+  "ruthless": {
+    "arti": "Kejam tanpa ampun / tega melakukan apa saja demi meraih ambisi",
+    "cara_baca": "rooth-lis",
+    "penggunaan": [
+      "The ruthless dictator crushed any form of political opposition. (Diktator kejam tanpa ampun itu menumpas segala bentuk oposisi politik.)"
+    ],
+    "catatan": "Seseorang yang tidak memiliki rasa belas kasihan."
+  },
+  "salient": {
+    "arti": "Paling menonjol / poin utama yang paling penting dan menyita perhatian",
+    "cara_baca": "sey-lee-unt",
+    "penggunaan": [
+      "He summarized the salient points of the long legal document in one page. (Dia merangkum poin-poin paling menonjol dari dokumen hukum panjang itu dalam satu halaman.)"
+    ],
+    "catatan": "Frasa umum: 'salient features / salient points'."
+  },
+  "salvage": {
+    "arti": "Menyelamatkan sisa-sisa / memulihkan barang berharga dari reruntuhan",
+    "cara_baca": "sal-vij",
+    "penggunaan": [
+      "Divers managed to salvage ancient gold coins from the shipwreck. (Penyelam berhasil menyelamatkan koin emas kuno dari bangkai kapal karam.)"
+    ],
+    "catatan": "Bisa menyelamatkan barang fisik atau menyelamatkan proyek yang hampir gagal."
+  },
+  "sanctuary": {
+    "arti": "Suaka perlindungan / tempat suci yang tenang dan aman dari marabahaya",
+    "cara_baca": "sank-choo-air-ee",
+    "penggunaan": [
+      "The national park serves as a protected sanctuary for endangered elephants. (Taman nasional itu berfungsi sebagai suaka perlindungan bagi gajah yang terancam punah.)"
+    ],
+    "catatan": "Bisa berarti suaka margasatwa (wildlife sanctuary) atau kamar tidur yang tenang."
+  },
+  "sarcasm": {
+    "arti": "Sarkasme / sindiran pedas dengan kata-kata ironis untuk menyindir",
+    "cara_baca": "sahr-kaz-um",
+    "penggunaan": [
+      "His voice was dripping with sarcasm when he complimented his rival. (Suaranya penuh nada sarkasme saat dia memuji lawan saingnya.)"
+    ],
+    "catatan": "Gaya humor cerdas menyindir yang populer di kalangan Gen Z."
+  },
+  "scrutinize": {
+    "arti": "Memeriksa dengan sangat teliti / menginspeksi setiap detail secara mendalam",
+    "cara_baca": "skroo-tuh-nayz",
+    "penggunaan": [
+      "Auditors scrutinized the company's financial records for any irregularities. (Auditor memeriksa dengan sangat teliti pembukuan keuangan perusahaan untuk mencari kejanggalan.)"
+    ],
+    "catatan": "Bentuk kata bendanya adalah scrutiny (pemeriksaan super ketat)."
+  },
+  "serene": {
+    "arti": "Tenang tenteram / damai, hening, dan bebas dari hiruk-pikuk kebisingan",
+    "cara_baca": "suh-reen",
+    "penggunaan": [
+      "Waking up to the serene sound of ocean waves is the best relaxation. (Bangun tidur ditemani suara deburan ombak laut yang tenang tenteram adalah relaksasi terbaik.)"
+    ],
+    "catatan": "Bentuk kata bendanya adalah serenity (ketenangan batin)."
+  },
+  "shrewd": {
+    "arti": "Cerdik lihai / tajam nalurinya dalam melihat peluang dan karakter orang",
+    "cara_baca": "shrood",
+    "penggunaan": [
+      "The shrewd businessman bought the land before prices skyrocketed. (Pebisnis cerdik dan lihai itu membeli tanah sebelum harganya melambung tinggi.)"
+    ],
+    "catatan": "Pujian untuk kepintaran praktis di dunia bisnis dan politik."
+  },
+  "simultaneous": {
+    "arti": "Simultan / terjadi secara bersamaan pada waktu yang persis sama",
+    "cara_baca": "say-mul-tey-nee-us",
+    "penggunaan": [
+      "The movie was released with simultaneous broadcasts in thirty countries. (Film itu dirilis dengan penayangan serentak simultan di tiga puluh negara.)"
+    ],
+    "catatan": "Dalam komputasi: 'simultaneous connections' (koneksi serentak)."
+  },
+  "skeptical": {
+    "arti": "Skeptis / ragu-ragu dan tidak gampang percaya sebelum ada bukti nyata",
+    "cara_baca": "skep-tih-kul",
+    "penggunaan": [
+      "I am skeptical about any investment scheme that promises instant riches. (Gue skeptis dan ragu terhadap skema investasi apa pun yang menjanjikan kaya mendadak.)"
+    ],
+    "catatan": "Sikap kritis ilmiah yang sehat untuk menghindari penipuan."
+  },
+  "sophisticated": {
+    "arti": "Canggih berkelas / rumit berteknologi tinggi atau memiliki selera beradab tinggi",
+    "cara_baca": "suh-fis-tih-key-tid",
+    "penggunaan": [
+      "The new AI model uses sophisticated neural networks to understand context. (Model AI baru itu menggunakan jaringan saraf canggih untuk memahami konteks.)"
+    ],
+    "catatan": "Bisa untuk teknologi canggih atau orang berwawasan berkelas."
+  },
+  "spontaneous": {
+    "arti": "Spontan / dilakukan seketika tanpa perencanaan sebelumnya mengalir begitu saja",
+    "cara_baca": "spon-tey-nee-us",
+    "penggunaan": [
+      "We took a spontaneous weekend road trip to the mountains. (Kami melakukan perjalanan darat akhir pekan yang spontan ke pegunungan.)"
+    ],
+    "catatan": "Tindakan seru yang didorong oleh impuls mendadak."
+  },
+  "sporadic": {
+    "arti": "Sporadis / terjadi sesekali secara acak dan tidak teratur jarak waktunya",
+    "cara_baca": "spaw-rad-ik",
+    "penggunaan": [
+      "There were sporadic gunshots heard throughout the night. (Ada suara tembakan sporadis yang sesekali terdengar sepanjang malam.)"
+    ],
+    "catatan": "Lawan dari kata continuous (terus-menerus teratur)."
+  },
+  "squander": {
+    "arti": "Menghambur-hamburkan / menyia-nyiakan uang atau peluang emas dengan boros",
+    "cara_baca": "skwon-der",
+    "penggunaan": [
+      "He squandered his lottery winnings on luxury cars and gambling. (Dia menghambur-hamburkan uang kemenangan lotrenya untuk mobil mewah dan judi.)"
+    ],
+    "catatan": "Frasa emas: 'squander an opportunity' (menyia-nyiakan peluang emas)."
+  },
+  "stagnant": {
+    "arti": "Stagnan / macet mandek dan tidak ada aliran perkembangan atau kemajuan",
+    "cara_baca": "stag-nunt",
+    "penggunaan": [
+      "Without innovation, a company's revenue will quickly become stagnant. (Tanpa inovasi, pendapatan perusahaan akan cepat mandek dan stagnan.)"
+    ],
+    "catatan": "Bisa air tergenang (stagnant water) atau karir yang macet."
+  },
+  "stimulate": {
+    "arti": "Menstimulasi / merangsang pertumbuhan, ide kreatif, atau aktivitas fisik",
+    "cara_baca": "stim-yoo-leyt",
+    "penggunaan": [
+      "Drinking black coffee in the morning helps stimulate brain alertness. (Minum kopi hitam di pagi hari membantu merangsang kewaspadaan otak.)"
+    ],
+    "catatan": "Dalam ekonomi: 'stimulate the economy' (mendorong gairah ekonomi)."
+  },
+  "straightforward": {
+    "arti": "Lugas sederhana / mudah dipahami tanpa berbelit-belit dan jujur apa adanya",
+    "cara_baca": "streyt-fawr-werd",
+    "penggunaan": [
+      "The installation process is very straightforward; just follow the on-screen steps. (Proses instalasinya sangat lugas dan gampang; cukup ikuti langkah di layar.)"
+    ],
+    "catatan": "Bisa untuk panduan yang gampang atau orang yang jujur blak-blakan."
+  },
+  "strenuous": {
+    "arti": "Sangat melelahkan / butuh pengerahan tenaga fisik atau mental ekstra keras",
+    "cara_baca": "stren-yoo-us",
+    "penggunaan": [
+      "Hiking up the steep mountain was a strenuous physical workout. (Mendaki gunung yang curam itu adalah olahraga fisik yang sangat melelahkan.)"
+    ],
+    "catatan": "Aktivitas berat yang menguras keringat dan stamina."
+  },
+  "subtle": {
+    "arti": "Halus tersamar / tidak kentara mencolok namun memiliki efek terasa",
+    "cara_baca": "sat-ul",
+    "penggunaan": [
+      "There was a subtle change in his tone of voice that indicated hesitation. (Ada perubahan halus pada nada suaranya yang menandakan keragu-raguan.)"
+    ],
+    "catatan": "Huruf 'b' di tengah kata ini tidak dibaca (silent 'b')."
+  },
+  "sustainable": {
+    "arti": "Berkelanjutan / ramah lingkungan dan bisa dipertahankan jangka panjang tanpa merusak",
+    "cara_baca": "suh-stey-nuh-bul",
+    "penggunaan": [
+      "Renewable energy sources are essential for building a sustainable future. (Sumber energi terbarukan sangat penting untuk membangun masa depan yang berkelanjutan.)"
+    ],
+    "catatan": "Konsep dunia modern: 'sustainable development' (pembangunan berkelanjutan)."
+  },
+  "synergy": {
+    "arti": "Sinergi / kerja sama padu di mana hasil gabungan jauh lebih dahsyat daripada kerja sendiri",
+    "cara_baca": "sin-er-jee",
+    "penggunaan": [
+      "The merger created a powerful synergy between engineering and marketing. (Penggabungan perusahaan itu menciptakan sinergi dahsyat antara tim teknik dan pemasaran.)"
+    ],
+    "catatan": "Rumus sinergi: 1 + 1 = 3 (efek multiplikasi kerja tim)."
+  },
+  "tangible": {
+    "arti": "Nyata berwujud / bisa disentuh secara fisik dan jelas terbukti hasilnya",
+    "cara_baca": "tan-juh-bul",
+    "penggunaan": [
+      "We need to show tangible results to our investors this quarter. (Kita perlu menunjukkan hasil yang nyata berwujud kepada para investor kuartal ini.)"
+    ],
+    "catatan": "Lawan dari kata intangible (tak berwujud seperti hak cipta/brand)."
+  },
+  "tedious": {
+    "arti": "Menjemukan membosankan / pekerjaan panjang yang bikin lelah dan ngantuk",
+    "cara_baca": "tee-dee-us",
+    "penggunaan": [
+      "Manually entering data into thousands of spreadsheet rows is tedious work. (Memasukkan data manual ke ribuan baris spreadsheet adalah pekerjaan yang sangat menjemukan.)"
+    ],
+    "catatan": "Tugas rutin berulang-ulang yang butuh otomatisasi coding."
+  },
+  "tentative": {
+    "arti": "Tentatif sementara / belum pasti dan masih bisa berubah sewaktu-waktu",
+    "cara_baca": "ten-tuh-tiv",
+    "penggunaan": [
+      "We have set a tentative date for the product launch on October 15th. (Kami telah menetapkan tanggal tentatif sementara untuk peluncuran produk pada 15 Oktober.)"
+    ],
+    "catatan": "Sering dipakai dalam jadwal rapat atau rencana perjalanan."
+  },
+  "thrive": {
+    "arti": "Tumbuh subur makmur / berkembang pesat dan sangat sukses di lingkungannya",
+    "cara_baca": "thrayv",
+    "penggunaan": [
+      "Some tech companies thrive even during economic downturns. (Beberapa perusahaan teknologi justru tumbuh subur makmur bahkan di saat masa resesi ekonomi.)"
+    ],
+    "catatan": "Tingkat perkembangan di atas sekadar bertahan hidup (thrive > survive)."
+  },
+  "tolerate": {
+    "arti": "Mentoleransi / sanggup menahan atau memaklumi perbedaan dan perlakuan buruk",
+    "cara_baca": "tol-uh-reyt",
+    "penggunaan": [
+      "The school has zero tolerance for bullying. (Sekolah tidak mentoleransi sama sekali aksi perundungan/bullying.)"
+    ],
+    "catatan": "Bentuk kata bendanya adalah tolerance (toleransi)."
+  },
+  "tranquil": {
+    "arti": "Hening tenteram / damai, tenang, dan bebas dari segala kegaduhan",
+    "cara_baca": "tran-kwil",
+    "penggunaan": [
+      "The mountain lake was so tranquil that it reflected the clouds like a mirror. (Danau pegunungan itu sangat hening tenteram sampai-sampai memantulkan awan bagai cermin.)"
+    ],
+    "catatan": "Bentuk kata bendanya adalah tranquility (ketenangan abadi)."
+  },
+  "transparent": {
+    "arti": "Transparan / tembus pandang atau jujur terbuka tanpa rahasia yang disembunyikan",
+    "cara_baca": "trans-pair-unt",
+    "penggunaan": [
+      "Good governance requires a completely transparent financial system. (Tata kelola yang baik membutuhkan sistem keuangan yang sepenuhnya jujur dan transparan.)"
+    ],
+    "catatan": "Bisa untuk kaca bening atau keterbukaan informasi publik."
+  },
+  "tremendous": {
+    "arti": "Luar biasa dahsyat / sangat besar dalam jumlah, ukuran, atau pengaruhnya",
+    "cara_baca": "trih-men-dus",
+    "penggunaan": [
+      "The fundraising campaign received a tremendous amount of public support. (Kampanye penggalangan dana itu menerima dukungan publik dalam jumlah luar biasa dahsyat.)"
+    ],
+    "catatan": "Pujian untuk dampak besar atau volume yang sangat masif."
+  },
+  "trivial": {
+    "arti": "Remeh-temeh / sepele dan tidak begitu penting untuk diributkan",
+    "cara_baca": "triv-ee-ul",
+    "penggunaan": [
+      "Don't waste your precious energy arguing over trivial matters. (Jangan buang-buang energimu yang berharga untuk berdebat soal hal-hal remeh yang sepele.)"
+    ],
+    "catatan": "Lawan dari kata crucial (sangat krusial/penting)."
+  },
+  "turmoil": {
+    "arti": "Kekacauan hebat / huru-hara dan gejolak kebingungan yang berkecamuk",
+    "cara_baca": "ter-moyl",
+    "penggunaan": [
+      "The country was thrown into political turmoil after the sudden resignation. (Negara itu terjerumus ke dalam kekacauan politik hebat setelah pengunduran diri mendadak tersebut.)"
+    ],
+    "catatan": "Bisa untuk gejolak politik nasional atau kekacauan emosi batin (inner turmoil)."
+  },
+  "ultimate": {
+    "arti": "Pamungkas puncak / tujuan tertinggi atau versi terlengkap terakhir",
+    "cara_baca": "ul-tuh-mit",
+    "penggunaan": [
+      "Winning the World Cup is the ultimate dream of every professional soccer player. (Memenangkan Piala Dunia adalah mimpi pamungkas puncak bagi setiap pemain sepak bola profesional.)"
+    ],
+    "catatan": "Frasa umum: 'the ultimate goal / the ultimate guide'."
+  },
+  "unanimous": {
+    "arti": "Aklamasi bulat / disetujui bersama secara 100% tanpa ada yang menentang",
+    "cara_baca": "yoo-nan-uh-mus",
+    "penggunaan": [
+      "The committee reached a unanimous decision to approve the budget. (Komite mencapai keputusan bulat 100% aklamasi untuk menyetujui anggaran.)"
+    ],
+    "catatan": "Kesepakatan mutlak di mana semua peserta voting setuju."
+  },
+  "undermine": {
+    "arti": "Merongrong / melemahkan wibawa atau pondasi secara diam-diam",
+    "cara_baca": "an-der-mayn",
+    "penggunaan": [
+      "Spreading false rumors will only undermine team trust and morale. (Menyebarkan rumor palsu hanya akan merongrong rasa saling percaya dan moral tim.)"
+    ],
+    "catatan": "Tindakan licik menggembosi kekuatan dari dalam."
+  },
+  "unprecedented": {
+    "arti": "Belum pernah terjadi sebelumnya / rekor baru yang belum ada tandingannya dalam sejarah",
+    "cara_baca": "an-pres-ih-den-tid",
+    "penggunaan": [
+      "The sudden global lockdown was an unprecedented event in modern history. (Karantina serentak di seluruh dunia adalah peristiwa yang belum pernah terjadi sebelumnya dalam sejarah modern.)"
+    ],
+    "catatan": "Sangat sering muncul di berita global saat terjadi fenomena baru."
+  },
+  "unravel": {
+    "arti": "Terurai terkuak / mengurai benang kusut atau misteri yang rumit",
+    "cara_baca": "an-rav-ul",
+    "penggunaan": [
+      "Detectives worked tirelessly to unravel the mystery behind the disappearance. (Para detektif bekerja tanpa lelah untuk menguak misteri di balik kasus orang hilang itu.)"
+    ],
+    "catatan": "Bisa mengurai rajutan benang wol atau menguak teka-teki rumit."
+  },
+  "unveil": {
+    "arti": "Memperkenalkan ke publik / membuka tirai selubung produk atau inovasi baru",
+    "cara_baca": "an-veyl",
+    "penggunaan": [
+      "Apple will unveil its newest flagship smartphone next Tuesday. (Apple akan memperkenalkan smartphone unggulan terbarunya ke publik hari Selasa depan.)"
+    ],
+    "catatan": "Sangat populer dalam event peluncuran gadget dan karya seni."
+  },
+  "upgrade": {
+    "arti": "Meningkatkan versi / memperbarui kualitas ke tingkatan yang lebih canggih",
+    "cara_baca": "up-greyd",
+    "penggunaan": [
+      "I decided to upgrade my laptop's RAM to run heavy coding tools smoothly. (Gue memutuskan untuk meningkatkan RAM laptop agar bisa menjalankan aplikasi koding berat dengan lancar.)"
+    ],
+    "catatan": "Bisa upgrade perangkat keras, tiket pesawat, atau kualitas diri (self-upgrade)."
+  },
+  "uphold": {
+    "arti": "Menjunjung tinggi / menegakkan hukum, keadilan, dan janji suci",
+    "cara_baca": "up-hohld",
+    "penggunaan": [
+      "Judges take an oath to uphold justice without fear or favor. (Para hakim bersumpah untuk menjunjung tinggi keadilan tanpa rasa takut atau pilih kasih.)"
+    ],
+    "catatan": "Frasa klasik: 'uphold the law / uphold traditions'."
+  },
+  "utilize": {
+    "arti": "Memanfaatkan / mendayagunakan sarana yang ada secara maksimal",
+    "cara_baca": "yoo-tuh-layz",
+    "penggunaan": [
+      "We should utilize renewable solar power to reduce electricity costs. (Kita harus mendayagunakan tenaga surya terbarukan untuk menghemat biaya listrik.)"
+    ],
+    "catatan": "Bentuk formal dan lebih elegan dari kata 'use'."
+  },
+  "utter": {
+    "arti": "Mengucapkan sepatah kata / mutlak total tanpa keraguan",
+    "cara_baca": "ut-ter",
+    "penggunaan": [
+      "She stared in utter disbelief at the shocking news. (Dia terbelalak dalam rasa tidak percaya yang mutlak total atas berita mengejutkan itu.)"
+    ],
+    "catatan": "Frasa umum: 'utter nonsense' (omong kosong total) atau 'without uttering a word'."
+  },
+  "vacant": {
+    "arti": "Kosong belum berpenghuni / lowongan posisi yang belum terisi",
+    "cara_baca": "vey-kunt",
+    "penggunaan": [
+      "There is a vacant seat in the front row if you want to sit down. (Ada kursi kosong di barisan depan kalau kamu mau duduk.)"
+    ],
+    "catatan": "Bisa untuk kamar hotel kosong atau lowongan kerja (job vacancy)."
+  },
+  "vague": {
+    "arti": "Samar tidak jelas / penjelasan yang mengambang dan membingungkan",
+    "cara_baca": "veyg",
+    "penggunaan": [
+      "His instructions were too vague, so nobody knew what to do. (Instruksinya terlalu samar dan gak jelas, jadi gak ada yang tahu harus berbuat apa.)"
+    ],
+    "catatan": "Lawan dari kata clear dan specific (jelas dan spesifik)."
+  },
+  "valiant": {
+    "arti": "Gagah berani / ksatria pemberani yang berjuang menghadapi marabahaya",
+    "cara_baca": "val-yunt",
+    "penggunaan": [
+      "The soldiers made a valiant effort to defend the fortress. (Para prajurit melakukan perjuangan gagah berani untuk mempertahankan benteng.)"
+    ],
+    "catatan": "Pujian untuk keberanian heroik di medan laga atau masa kritis."
+  },
+  "validate": {
+    "arti": "Memvalidasi / menguji keabsahan atau mengakui kebenaran perasaan seseorang",
+    "cara_baca": "val-ih-deyt",
+    "penggunaan": [
+      "We need to validate our startup idea by talking to real potential customers. (Kita perlu memvalidasi ide startup kita dengan berbicara langsung ke calon pelanggan nyata.)"
+    ],
+    "catatan": "Dalam psikologi: 'validate feelings' (mengakui dan memahami perasaan pasangan)."
+  },
+  "vanish": {
+    "arti": "Lenyap menghilang / sirna seketika tanpa meninggalkan jejak",
+    "cara_baca": "van-ish",
+    "penggunaan": [
+      "The magician made the white rabbit vanish into thin air. (Pesulap itu membuat kelinci putih lenyap menghilang begitu saja ke udara.)"
+    ],
+    "catatan": "Frasa populer: 'vanish without a trace' (lenyap tanpa jejak)."
+  },
+  "vanquish": {
+    "arti": "Menaklukkan / mengalahkan musuh atau rasa takut sampai takluk total",
+    "cara_baca": "van-kwish",
+    "penggunaan": [
+      "The hero vanquished the fearsome dragon and saved the kingdom. (Sang pahlawan menaklukkan naga yang menakutkan itu dan menyelamatkan kerajaan.)"
+    ],
+    "catatan": "Kemenangan mutlak atas lawan dalam kisah epik."
+  },
+  "versatile": {
+    "arti": "Serbaguna / punya banyak talenta dan bisa menyesuaikan diri di berbagai bidang",
+    "cara_baca": "ver-suh-tayl",
+    "penggunaan": [
+      "Python is a versatile programming language used in web dev, data science, and AI. (Python adalah bahasa pemrograman serbaguna yang dipakai di web, data science, dan AI.)"
+    ],
+    "catatan": "Pujian untuk alat serbaguna atau orang bertalenta multitalenta."
+  },
+  "vibrant": {
+    "arti": "Penuh warna dan energi / hidup, semarak, dan berdenyut riang",
+    "cara_baca": "vay-brunt",
+    "penggunaan": [
+      "Tokyo is famous for its vibrant nightlife and colorful neon signs. (Tokyo terkenal dengan kehidupan malamnya yang semarak penuh warna dan lampu neon yang hidup.)"
+    ],
+    "catatan": "Bisa untuk warna yang menyala terang atau komunitas yang penuh energi."
+  },
+  "vicious": {
+    "arti": "Ganas kejam / lingkaran setan yang jahat dan merusak",
+    "cara_baca": "vish-us",
+    "penggunaan": [
+      "They got trapped in a vicious cycle of debt and poverty. (Mereka terjebak dalam lingkaran setan utang dan kemiskinan yang kejam.)"
+    ],
+    "catatan": "Frasa wajib: 'vicious cycle' (lingkaran setan yang susah diputus)."
+  },
+  "vigilant": {
+    "arti": "Waspada siaga / berjaga-jaga dengan mata terbuka lebar terhadap ancaman",
+    "cara_baca": "vij-uh-lunt",
+    "penggunaan": [
+      "Security guards must remain vigilant at all times during the night shift. (Petugas keamanan harus tetap waspada dan siaga setiap saat selama giliran jaga malam.)"
+    ],
+    "catatan": "Kesiapsiagaan penuh agar tidak kecolongan musuh atau bahaya."
+  },
+  "vindicate": {
+    "arti": "Memulihkan nama baik / terbukti tidak bersalah setelah sekian lama dituduh",
+    "cara_baca": "vin-dih-keyt",
+    "penggunaan": [
+      "New DNA evidence vindicated the man who was falsely imprisoned for ten years. (Bukti DNA baru memulihkan nama baik pria yang sempat dipenjara keliru selama sepuluh tahun.)"
+    ],
+    "catatan": "Kemenangan kebenaran atas fitnah keji."
+  },
+  "vital": {
+    "arti": "Sangat vital / mutlak penting bagi kelangsungan hidup",
+    "cara_baca": "vay-tul",
+    "penggunaan": [
+      "Drinking sufficient clean water is vital for human kidney function. (Minum air bersih yang cukup sangat vital bagi fungsi ginjal manusia.)"
+    ],
+    "catatan": "Istilah medis: 'vital signs' (tanda-tanda vital kehidupan seperti detak jantung)."
+  },
+  "vivid": {
+    "arti": "Sangat jelas hidup / ingatan atau mimpi yang saking jernihnya terasa nyata",
+    "cara_baca": "viv-id",
+    "penggunaan": [
+      "I still have a vivid memory of my first day at elementary school. (Gue masih punya ingatan yang sangat jelas dan hidup tentang hari pertama masuk SD.)"
+    ],
+    "catatan": "Bisa untuk warna cerah menyala (vivid colors) atau imajinasi tajam."
+  },
+  "volatile": {
+    "arti": "Fluktuatif labil / mudah meledak atau berubah drastis tanpa peringatan",
+    "cara_baca": "vol-uh-tayl",
+    "penggunaan": [
+      "Cryptocurrency markets are known to be highly volatile. (Pasar cryptocurrency dikenal sangat volatil dan mudah naik-turun tajam secara drastis.)"
+    ],
+    "catatan": "Dalam kimia (zat mudah menguap/terbakar), dalam pasar (harga labil)."
+  },
+  "vulnerable": {
+    "arti": "Rentan rapuh / mudah terluka dan gampang diserang secara fisik maupun emosional",
+    "cara_baca": "vul-ner-uh-bul",
+    "penggunaan": [
+      "Opening up about your feelings makes you feel vulnerable but builds deeper intimacy. (Membuka perasaanmu membuatmu merasa rentan, tapi itu membangun keintiman yang lebih dalam.)"
+    ],
+    "catatan": "Dalam cybersecurity: 'vulnerability' (celah keamanan sistem)."
+  },
+  "waive": {
+    "arti": "Membebaskan / mengesampingkan atau mencabut biaya/tuntutan secara sukarela",
+    "cara_baca": "weyv",
+    "penggunaan": [
+      "The university agreed to waive the application fee for low-income students. (Universitas setuju untuk membebaskan biaya pendaftaran bagi mahasiswa kurang mampu.)"
+    ],
+    "catatan": "Biasa dalam klausul kontrak: 'waiver' (surat pernyataan pelepasan hak)."
+  },
+  "wander": {
+    "arti": "Mengembara / jalan-jalan santai menjelajah tanpa arah tujuan pasti",
+    "cara_baca": "won-der",
+    "penggunaan": [
+      "We loved to wander through the narrow streets of the ancient city. (Kami suka mengembara jalan-jalan santai menelusuri gang-gang sempit kota kuno itu.)"
+    ],
+    "catatan": "Jangan tertukar dengan 'wonder' (bertanya-tanya heran)."
+  },
+  "weary": {
+    "arti": "Lelah letih / letih fisik dan batin karena perjalanan panjang atau beban hidup",
+    "cara_baca": "weer-ee",
+    "penggunaan": [
+      "The weary travelers finally arrived at a warm mountain inn. (Para pelancong yang letih lelah itu akhirnya tiba di penginapan pegunungan yang hangat.)"
+    ],
+    "catatan": "Keletihan mendalam setelah perjalanan atau perjuangan melelahkan."
+  },
+  "wholesome": {
+    "arti": "Menyehatkan hati / bernuansa positif, murni, dan membawa kebaikan moral",
+    "cara_baca": "hohl-sum",
+    "penggunaan": [
+      "Watching heartwarming family videos on social media is such wholesome content. (Menonton video kehangatan keluarga di media sosial adalah konten yang sangat menyehatkan hati.)"
+    ],
+    "catatan": "Slang internet untuk hal-hal manis, hangat, dan positif tanpa unsur toxic."
+  },
+  "widespread": {
+    "arti": "Meluas tersebar / menyebar ke area yang sangat luas di berbagai tempat",
+    "cara_baca": "wayd-spred",
+    "penggunaan": [
+      "The viral video gained widespread attention across international media. (Video viral itu mendapatkan perhatian yang meluas di berbagai media internasional.)"
+    ],
+    "catatan": "Dipakai untuk tren yang menyebar luas atau wabah penyakit."
+  },
+  "withdraw": {
+    "arti": "Menarik diri / menarik uang tunai dari ATM atau mundur dari perlombaan",
+    "cara_baca": "with-draw",
+    "penggunaan": [
+      "I need to find an ATM to withdraw some cash for the street market. (Gue perlu cari mesin ATM buat menarik uang tunai untuk belanja di pasar.)"
+    ],
+    "catatan": "Bisa tarik tunai saldo bank atau menarik pasukan militer."
+  },
+  "withhold": {
+    "arti": "Menahan / tidak memberikan informasi atau pembayaran yang seharusnya diserahkan",
+    "cara_baca": "with-hohld",
+    "penggunaan": [
+      "The suspect was accused of withholding critical information from the police. (Tersangka dituduh sengaja menahan informasi penting dari pihak kepolisian.)"
+    ],
+    "catatan": "Istilah perpajakan: 'withholding tax' (pajak penghasilan yang dipotong di awal)."
+  },
+  "worthwhile": {
+    "arti": "Sangat sepadan / berharga dan layak diperjuangkan meski butuh waktu dan pengorbanan",
+    "cara_baca": "werth-wayl",
+    "penggunaan": [
+      "Learning to code was difficult, but the high salary made it entirely worthwhile. (Belajar koding itu susah, tapi gaji tingginya bikin semua perjuangan itu sangat sepadan.)"
+    ],
+    "catatan": "Investasi waktu atau tenaga yang membuahkan hasil memuaskan."
+  },
+  "wretched": {
+    "arti": "Malang sengsara / sangat menderita dan memprihatinkan kondisinya",
+    "cara_baca": "rech-id",
+    "penggunaan": [
+      "The refugees lived in wretched conditions during the freezing winter. (Para pengungsi hidup dalam kondisi yang sangat malang sengsara selama musim dingin membeku.)"
+    ],
+    "catatan": "Kondisi penderitaan kemiskinan atau cuaca buruk yang sangat menyiksa."
+  },
+  "yearn": {
+    "arti": "Mendambakan rindu / rindu berat dan sangat mendambakan sesuatu dari lubuk hati",
+    "cara_baca": "yern",
+    "penggunaan": [
+      "After years of living abroad, he yearned for his mother's homecooked food. (Setelah bertahun-tahun hidup di perantauan, dia sangat mendambakan masakan rumah sang ibu.)"
+    ],
+    "catatan": "Bentuk kata bendanya adalah yearning (kerinduan mendalam)."
+  },
+  "yield": {
+    "arti": "Menghasilkan panen / mengalah memberi jalan kepada pengendara lain",
+    "cara_baca": "yeeld",
+    "penggunaan": [
+      "Organic farming techniques yielded a record-breaking harvest this season. (Teknik pertanian organik menghasilkan panen yang memecahkan rekor musim ini.)"
+    ],
+    "catatan": "Bisa hasil panen pertanian, imbal hasil investasi (dividend yield), atau rambu lalu lintas."
+  },
+  "youthful": {
+    "arti": "Awet muda / berjiwa muda dan memancarkan energi segar masa muda",
+    "cara_baca": "yooth-ful",
+    "penggunaan": [
+      "Eating healthy food and exercising regularly keeps your skin youthful. (Makan makanan sehat dan olahraga teratur membuat kulitmu tetap awet muda.)"
+    ],
+    "catatan": "Sifat orang tua yang tetap lincah dan berjiwa muda (youthful spirit)."
+  },
+  "yummy": {
+    "arti": "Lezat enak / sangat nikmat disantap lidah",
+    "cara_baca": "yam-ee",
+    "penggunaan": [
+      "This chocolate cake is absolutely yummy! (Kue cokelat ini benar-benar enak dan lezat banget!)"
+    ],
+    "catatan": "Kosakata santai informal saat menikmati makanan lezat."
+  },
+  "zeal": {
+    "arti": "Semangat membara / antusiasme menggebu-gebu demi suatu tujuan mulia",
+    "cara_baca": "zeel",
+    "penggunaan": [
+      "The young activists fought for ocean conservation with relentless zeal. (Aktivis muda itu berjuang demi pelestarian laut dengan semangat yang membara.)"
+    ],
+    "catatan": "Bentuk pelakunya adalah zealot (orang yang fanatik bersemangat)."
+  },
+  "zealous": {
+    "arti": "Sangat bersemangat / antusias gigih dan tekun memperjuangkan keyakinannya",
+    "cara_baca": "zel-us",
+    "penggunaan": [
+      "He was a zealous advocate for digital privacy and open-source software. (Dia adalah pembela yang sangat gigih dan bersemangat untuk privasi digital dan software open-source.)"
+    ],
+    "catatan": "Perhatikan ejaannya dibaca 'zel-us' (bukan 'zeel-us')."
+  },
+  "zenith": {
+    "arti": "Puncak kejayaan / titik tertinggi prestasi atau posisi matahari di langit",
+    "cara_baca": "zen-ith",
+    "penggunaan": [
+      "The Roman Empire reached the zenith of its power in the second century. (Kekaisaran Romawi mencapai puncak kejayaannya pada abad kedua.)"
+    ],
+    "catatan": "Lawan dari kata nadir (titik terendah / titik nadir kehancuran)."
+  },
+  "zest": {
+    "arti": "Gairah hidup / semangat ceria dan antusiasme menikmati setiap momen hidup",
+    "cara_baca": "zest",
+    "penggunaan": [
+      "She approached every single day with an infectious zest for life. (Dia menjalani setiap hari dengan gairah hidup yang ceria dan menular ke orang lain.)"
+    ],
+    "catatan": "Bisa berarti semangat hidup (zest for life) atau parutan kulit jeruk dalam memasak."
+  },
+  "zigzag": {
+    "arti": "Zig-zag / pola garis berliku-liku tajam ke kiri dan ke kanan",
+    "cara_baca": "zig-zag",
+    "penggunaan": [
+      "The hiking trail zigzagged up the steep cliff to make the climb safer. (Jalur pendakian itu dibuat berkelok zig-zag menaiki tebing curam agar pendakian lebih aman.)"
+    ],
+    "catatan": "Pola lintasan berbelok-belok tajam."
+  },
+  "zone": {
+    "arti": "Zona wilayah / kawasan khusus atau kondisi fokus maksimal",
+    "cara_baca": "zohn",
+    "penggunaan": [
+      "The athlete was in the zone and played the best match of his career. (Atlet itu sedang dalam kondisi fokus puncak / in the zone dan memainkan pertandingan terbaik dalam karirnya.)"
+    ],
+    "catatan": "Frasa psikologi: 'in the zone' (fokus mengalir tanpa distraksi / flow state)."
+  }
+}
