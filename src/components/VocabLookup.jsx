@@ -22,6 +22,7 @@ import {
   Share2,
 } from "lucide-react";
 import { lookupVocabulary, lookupWordBreakdown } from "../services/openrouter";
+import { generateWordBreakdownFallback } from "../services/freeTranslator";
 import { speakText, stopSpeech } from "../services/speech";
 import { saveVocabItem } from "../services/storage";
 import WordBreakdownGrid from "./WordBreakdownGrid";
@@ -445,11 +446,21 @@ export default function VocabLookup({ onHistoryUpdated }) {
 
     setIsLoadingBreakdown(true);
     try {
-      const breakdownData = await lookupWordBreakdown(activeText);
-      setWordBreakdown(breakdownData || []);
+      let breakdownData = await lookupWordBreakdown(activeText);
+      if (!breakdownData || breakdownData.length === 0) {
+        breakdownData = await generateWordBreakdownFallback(activeText);
+      }
+      setWordBreakdown(breakdownData && breakdownData.length > 0 ? breakdownData : []);
       setHasGeneratedBreakdown(true);
     } catch (err) {
-      console.error("Error generating breakdown:", err);
+      console.error("Error generating breakdown, trying fallback:", err);
+      try {
+        const fallback = await generateWordBreakdownFallback(activeText);
+        setWordBreakdown(fallback && fallback.length > 0 ? fallback : []);
+      } catch (fbErr) {
+        console.error("Fallback breakdown error:", fbErr);
+        setWordBreakdown([]);
+      }
       setHasGeneratedBreakdown(true);
     } finally {
       setIsLoadingBreakdown(false);

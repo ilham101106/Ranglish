@@ -629,14 +629,30 @@ export const lookupWordBreakdown = async (text) => {
 
     const match = cleaned.match(/\[[\s\S]*\]/);
     if (match) {
-      const parsed = JSON.parse(match[0]);
-      if (Array.isArray(parsed) && parsed.length > 0) {
-        return parsed
-          .map((item) => ({
-            phrase: String(item.phrase || item.word || "").trim(),
-            arti: String(item.arti || item.meaning || "").trim(),
-          }))
-          .filter((item) => item.phrase && item.arti);
+      try {
+        const parsed = JSON.parse(match[0]);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          const mapped = parsed
+            .map((item) => {
+              if (typeof item === "string") {
+                return { phrase: item.trim(), arti: "" };
+              }
+              const phrase = String(
+                item.phrase || item.word || item.chunk || item.unit || item.kata || item.text || item.en || item.english || ""
+              ).trim();
+              const arti = String(
+                item.arti || item.meaning || item.terjemahan || item.translation || item.makna || item.artinya || item.id || ""
+              ).trim();
+              return { phrase, arti: normalizePronounsToJaksel(arti) };
+            })
+            .filter((item) => item.phrase && item.arti);
+
+          if (mapped.length > 0) {
+            return mapped;
+          }
+        }
+      } catch (parseErr) {
+        console.warn("JSON parse error in breakdown, falling back:", parseErr.message);
       }
     }
 

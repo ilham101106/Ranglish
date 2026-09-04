@@ -170,12 +170,15 @@ export const getVocabHistory = () => {
 
 export const saveVocabItem = (item, fallbackText = '') => {
   try {
-    if (!item || !item.arti) return null;
+    if (!item) return null;
+    const rawArti = item.arti || item.focusPhraseMeaning || '';
+    if (!rawArti) return null;
     
+    const artiStr = typeof rawArti === 'string' ? rawArti : String(rawArti);
     // Quality gate: never save thinking process into history
     if (
-      item.arti.toLowerCase().includes('thinking process') ||
-      item.arti.toLowerCase().includes('analyze user input')
+      artiStr.toLowerCase().includes('thinking process') ||
+      artiStr.toLowerCase().includes('analyze user input')
     ) {
       return null;
     }
@@ -186,18 +189,22 @@ export const saveVocabItem = (item, fallbackText = '') => {
     // Strict rule: if sourceType === 'song', ensure focusPhrase is used as teks_asli and <= 5 words
     let cleanText = '';
     if (targetItem.sourceType === 'song' && targetItem.focusPhrase) {
-      const words = targetItem.focusPhrase.trim().split(/\s+/).filter(Boolean);
+      const words = String(targetItem.focusPhrase).trim().split(/\s+/).filter(Boolean);
       cleanText = words.slice(0, 5).join(' ');
     } else {
       const rawText = targetItem.teks_asli || targetItem.word || targetItem.query || targetItem.text || fallbackText || '';
-      if (!rawText || typeof rawText !== 'string' || !rawText.trim()) return null;
-      cleanText = rawText.trim();
+      if (!rawText) return null;
+      cleanText = String(rawText).trim();
     }
+    if (!cleanText) return null;
 
     const history = getVocabHistory();
-    const existingIndex = history.findIndex(
-      (h) => h && h.teks_asli && h.teks_asli.toLowerCase().trim() === cleanText.toLowerCase()
-    );
+    const cleanLower = cleanText.toLowerCase();
+    const existingIndex = history.findIndex((h) => {
+      if (!h) return false;
+      const hText = String(h.teks_asli || h.word || '').trim().toLowerCase();
+      return hText === cleanLower;
+    });
 
     const newItem = {
       id: targetItem.id || `vocab_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,

@@ -4,6 +4,7 @@
 
 import { normalizeToGaulSlang, isSongInput } from '../utils/textClassifier.js';
 import { generateSentencePhonetics } from '../utils/sentenceTranslator.js';
+import vocab1000 from '../data/vocab1000.json' with { type: 'json' };
 
 // Specific words/patterns to recognize as unrecognized/gibberish queries
 const UNRECOGNIZED_WORDS = new Set(['whirl-winds', 'plowed', 'asdfghjkl']);
@@ -716,41 +717,433 @@ export async function generateSongDualPayload(rawText, detectedSongInfo = null) 
   };
 }
 
+// ══════════════════════════════════════════════════════════════════════════════
+// COMPREHENSIVE LOCAL BREAKDOWN DICTIONARIES (GUARANTEED OFFLINE / INSTANT 0ms)
+// ══════════════════════════════════════════════════════════════════════════════
+const BREAKDOWN_KNOWN_PHRASES = {
+  "have no idea": "sama sekali gak paham / gak tau",
+  "no idea": "gak ada ide / sama sekali gak tau",
+  "i've been through": "udah pernah gw lewatin / alamin",
+  "been through": "pernah ngelewatin masa-masa sulit",
+  "you have": "lu punya",
+  "you got": "lu dapet / lu punya",
+  "piece of cake": "gampang banget / sepele",
+  "break a leg": "semoga sukses / beruntung!",
+  "better off": "lebih bahagia / lebih baik",
+  "better off without you": "lebih bahagia tanpa lu",
+  "without you": "tanpa lu",
+  "with you": "bareng lu",
+  "call it a day": "udahan dulu hari ini",
+  "couch potato": "orang yang mageran / rebahan melulu",
+  "fall in love": "jatuh cinta",
+  "figure out": "mencari tahu / memahami",
+  "give up": "menyerah",
+  "giving up": "menyerah",
+  "look forward to": "gak sabar nungguin",
+  "make sure": "memastikan",
+  "lost myself": "sempat lepas kendali / lupa diri",
+  "lose myself": "kehilangan kendali atas diri sendiri",
+  "no surprises": "tanpa kejutan buruk atau kepanikan",
+  "cut the crap": "stop omong kosong, langsung jujur aja",
+  "close call": "nyaris celaka / tipis banget selamatnya",
+  "thru these tears": "di balik derasnya air mata ini",
+  "through these tears": "di balik derasnya air mata ini",
+  "karma police": "polisi karma / hukum sebab-akibat",
+  "hang in there": "tetap bertahan dan semangat ya",
+  "bite the bullet": "terpaksa jalanin hal yang berat",
+  "so far so good": "sejauh ini masih aman terkendali",
+  "under the weather": "lagi kurang enak badan",
+  "on cloud nine": "senang dan bahagia luar biasa",
+  "spill the beans": "bocorin rahasia",
+  "once in a blue moon": "jarang banget terjadi",
+  "see eye to eye": "sependapat dan sefrekuensi",
+  "cost an arm and a leg": "mahal banget gila",
+  "hit the sack": "tidur atau istirahat",
+  "run out of": "kehabisan",
+  "put up with": "mentoleransi / sabar ngadepin",
+  "take care of": "merawat / ngurusin",
+  "calm down": "tenang dulu ya",
+  "cheer up": "semangat dong, jangan sedih",
+  "find out": "mencari tahu / menemukan",
+  "grow up": "tumbuh dewasa",
+  "hold on": "tunggu sebentar",
+  "wake up": "bangun tidur",
+  "come on": "ayolah",
+  "right now": "sekarang juga / saat ini",
+  "at all": "sama sekali",
+  "as well": "juga",
+  "in love": "jatuh cinta",
+  "in the end": "pada akhirnya",
+  "by the way": "ngomong-ngomong",
+  "of course": "tentu saja",
+  "each other": "satu sama lain",
+  "one another": "satu sama lain",
+  "a lot of": "banyak banget",
+  "lots of": "banyak banget",
+  "so much": "banyak banget",
+  "too much": "kebanyakan / berlebihan",
+  "kind of": "agak-agak / semacam",
+  "sort of": "semacam / rada-rada",
+};
+
+const BREAKDOWN_KNOWN_WORDS = {
+  i: "gw",
+  "i'm": "gw lagi / gw",
+  "i've": "gw udah",
+  "i'd": "gw bakal",
+  "i'll": "gw bakal",
+  you: "lu",
+  "you're": "lu",
+  "you've": "lu udah",
+  "you'll": "lu bakal",
+  we: "kita",
+  "we're": "kita",
+  "we've": "kita udah",
+  they: "mereka",
+  "they're": "mereka",
+  "they've": "mereka udah",
+  he: "dia (cowo)",
+  "he's": "dia",
+  she: "dia (cewe)",
+  "she's": "dia",
+  it: "itu",
+  "it's": "itu",
+  my: "punya gw",
+  your: "punya lu",
+  our: "punya kita",
+  their: "punya mereka",
+  his: "punya dia",
+  her: "punya dia",
+  me: "gw",
+  us: "kita",
+  them: "mereka",
+  a: "sebuah / suatu",
+  an: "sebuah / suatu",
+  the: "itu / sang",
+  all: "semua",
+  some: "beberapa",
+  any: "apa pun / ada",
+  every: "setiap",
+  each: "setiap / masing-masing",
+  more: "lebih banyak",
+  most: "paling banyak",
+  much: "banyak",
+  many: "banyak",
+  few: "sedikit",
+  little: "sedikit",
+  what: "apa / apa yang",
+  who: "siapa",
+  where: "di mana",
+  when: "kapan / pas",
+  why: "kenapa",
+  how: "gimana",
+  which: "yang mana",
+  that: "itu / bahwa",
+  this: "ini",
+  these: "ini semua",
+  those: "itu semua",
+  and: "dan",
+  but: "tapi",
+  or: "atau",
+  so: "jadi / banget",
+  if: "kalo / jika",
+  because: "karena",
+  although: "meskipun",
+  though: "padahal / tapi",
+  as: "sebagai / seperti",
+  than: "daripada",
+  have: "punya / memiliki",
+  has: "punya",
+  had: "punya / sempat",
+  having: "lagi punya",
+  do: "ngelakuin",
+  does: "ngelakuin",
+  did: "ngelakuin",
+  done: "udah selesai",
+  been: "udah pernah / jadi",
+  be: "menjadi",
+  is: "adalah / lagi",
+  are: "adalah / lagi",
+  am: "adalah / lagi",
+  was: "tadi / waktu itu",
+  were: "waktu itu",
+  can: "bisa",
+  could: "bisa",
+  will: "bakal",
+  would: "bakal",
+  should: "harusnya",
+  must: "harus",
+  might: "mungkin",
+  may: "boleh / mungkin",
+  know: "tahu / paham",
+  knew: "tahu (dulu)",
+  known: "diketahui",
+  think: "mikir / ngerasa",
+  thought: "pikiran / ngira",
+  feel: "ngerasa",
+  felt: "ngerasa (tadi)",
+  feeling: "perasaan",
+  see: "melihat / paham",
+  saw: "ngeliat",
+  seen: "dilihat",
+  look: "ngeliat / keliatan",
+  say: "ngomong / bilang",
+  said: "bilang",
+  tell: "ngasih tau",
+  told: "ngasih tau",
+  go: "pergi",
+  went: "pergi",
+  gone: "udah pergi",
+  come: "datang",
+  came: "datang",
+  take: "ngambil / butuh",
+  took: "ngambil",
+  make: "bikin",
+  made: "bikin / dibuat",
+  give: "ngasih",
+  gave: "ngasih",
+  get: "dapat / jadi",
+  got: "dapat / paham",
+  want: "pengen / mau",
+  wanted: "pengen",
+  need: "butuh",
+  needed: "butuh",
+  try: "nyoba",
+  tried: "udah nyoba",
+  help: "bantu",
+  love: "cinta / sayang",
+  loved: "disayang",
+  like: "suka / kayak",
+  liked: "suka",
+  hate: "benci",
+  hope: "berharap",
+  wish: "berharap / andai",
+  leave: "pergi / ninggalin",
+  left: "kiri / ninggalin",
+  keep: "menjaga / tetap",
+  stay: "tinggal / bertahan",
+  find: "menemukan",
+  found: "menemukan",
+  lose: "kehilangan / kalah",
+  lost: "hilang / lupa diri",
+  break: "rusak / istirahat",
+  broke: "patah / bokek",
+  broken: "hancur / rusak",
+  cry: "nangis",
+  smile: "senyum",
+  talk: "ngobrol",
+  speak: "bicara",
+  listen: "dengerin",
+  hear: "dengar",
+  heard: "dengar",
+  remember: "ingat",
+  forget: "lupa",
+  forgot: "lupa",
+  understand: "paham",
+  no: "tidak / gak ada",
+  not: "bukan / gak",
+  never: "gak pernah",
+  always: "selalu",
+  sometimes: "kadang-kadang",
+  often: "sering",
+  usually: "biasanya",
+  idea: "ide / bayangan",
+  through: "melalui / ngelewatin",
+  about: "tentang / kira-kira",
+  after: "setelah",
+  before: "sebelum",
+  with: "bersama / sama",
+  without: "tanpa",
+  from: "dari",
+  to: "ke / untuk",
+  for: "buat / untuk",
+  of: "dari",
+  in: "di dalam",
+  on: "di atas / nyala",
+  at: "di",
+  by: "oleh / lewat",
+  up: "ke atas / naik",
+  down: "ke bawah / turun",
+  out: "keluar",
+  over: "selesai / lewat",
+  under: "di bawah",
+  again: "lagi",
+  now: "sekarang",
+  then: "lalu / waktu itu",
+  here: "di sini",
+  there: "di sana",
+  too: "terlalu / juga",
+  very: "banget / sangat",
+  just: "cuma / baru aja",
+  only: "hanya / cuma",
+  even: "bahkan",
+  still: "masih",
+  already: "udah",
+  time: "waktu",
+  day: "hari",
+  night: "malam",
+  life: "hidup",
+  world: "dunia",
+  heart: "hati",
+  mind: "pikiran",
+  soul: "jiwa",
+  friend: "teman",
+  people: "orang-orang",
+  person: "orang",
+  thing: "hal / barang",
+  things: "hal-hal",
+  way: "cara / jalan",
+  good: "bagus / baik",
+  better: "lebih baik",
+  best: "terbaik",
+  bad: "buruk",
+  worse: "lebih buruk",
+  worst: "paling buruk",
+  hard: "susah / keras",
+  easy: "gampang",
+  real: "nyata",
+  true: "bener / jujur",
+  right: "bener / tepat",
+  wrong: "salah",
+  happy: "senang / bahagia",
+  sad: "sedih / galau",
+  cake: "kue",
+  piece: "potongan / bagian",
+  leg: "kaki",
+};
+
 /**
- * Fallback word/phrase breakdown using fetchLiveTranslation.
- * Groups 'to' with subsequent word into one meaningful unit.
+ * Fallback word/phrase breakdown using smart semantic chunker & local dictionaries.
+ * Groups idioms, prepositional units, and phrasal verbs together.
+ * Guarantees NEVER returning an empty array for any multi-word sentence!
  */
 export async function generateWordBreakdownFallback(text) {
   if (!text || typeof text !== "string") return [];
+  const clean = text.trim();
+  if (!clean) return [];
 
-  const rawWords = text.trim().split(/\s+/).filter(Boolean);
+  const rawWords = clean.split(/\s+/).filter(Boolean);
+  if (rawWords.length === 0) return [];
+
+  // Special case: single word
+  if (rawWords.length === 1) {
+    const rawWord = rawWords[0];
+    const cleanWord = rawWord.replace(/^[^\w']+|[^\w']+$/g, "").toLowerCase();
+    let arti =
+      BREAKDOWN_KNOWN_WORDS[cleanWord] ||
+      vocab1000[cleanWord]?.arti ||
+      cleanWord;
+    return [{ phrase: rawWord, arti: normalizePronounsToJaksel(arti) }];
+  }
+
+  // Multi-word semantic chunking
   const units = [];
+  let i = 0;
 
-  for (let i = 0; i < rawWords.length; i++) {
-    const current = rawWords[i];
-    const cleanCurrent = current.replace(/^[^\w']+|[^\w']+$/g, "");
-    if (cleanCurrent.toLowerCase() === "to" && i + 1 < rawWords.length) {
-      const nextWord = rawWords[i + 1];
-      units.push(`${current} ${nextWord}`);
-      i++; // skip next word
-    } else {
-      units.push(current);
+  while (i < rawWords.length) {
+    let matched = false;
+
+    // Try multi-word phrases (longest match from 4 words down to 2)
+    for (let len = Math.min(4, rawWords.length - i); len >= 2; len--) {
+      const slice = rawWords.slice(i, i + len);
+      const joinedClean = slice
+        .map((w) => w.replace(/^[^\w']+|[^\w']+$/g, "").toLowerCase())
+        .join(" ");
+
+      if (BREAKDOWN_KNOWN_PHRASES[joinedClean]) {
+        units.push({
+          phrase: slice.join(" "),
+          arti: BREAKDOWN_KNOWN_PHRASES[joinedClean],
+        });
+        i += len;
+        matched = true;
+        break;
+      }
+    }
+
+    if (!matched) {
+      const current = rawWords[i];
+      const cleanCurrent = current.replace(/^[^\w']+|[^\w']+$/g, "");
+
+      // Group 'to' or 'with' with subsequent word if available
+      if (
+        (cleanCurrent.toLowerCase() === "to" || cleanCurrent.toLowerCase() === "with") &&
+        i + 1 < rawWords.length
+      ) {
+        const nextWord = rawWords[i + 1];
+        const cleanNext = nextWord.replace(/^[^\w']+|[^\w']+$/g, "").toLowerCase();
+        const nextArti =
+          BREAKDOWN_KNOWN_WORDS[cleanNext] ||
+          vocab1000[cleanNext]?.arti ||
+          cleanNext;
+        const prefix = cleanCurrent.toLowerCase() === "to" ? "untuk / ke" : "sama / bareng";
+        units.push({
+          phrase: `${current} ${nextWord}`,
+          arti: `${prefix} ${nextArti}`,
+        });
+        i += 2;
+      } else {
+        const cleanWord = cleanCurrent.toLowerCase();
+        let arti =
+          BREAKDOWN_KNOWN_WORDS[cleanWord] ||
+          vocab1000[cleanWord]?.arti ||
+          "";
+
+        units.push({
+          phrase: current,
+          arti: arti,
+        });
+        i++;
+      }
     }
   }
 
+  // If an entire multi-word idiom was matched as a single unit (e.g. "piece of cake"),
+  // also add its component words so the user gets multiple rich 3D cards to flip
+  if (units.length === 1 && rawWords.length >= 2) {
+    const mainIdiom = units[0];
+    mainIdiom.arti = `${mainIdiom.arti} (Idiom / Ungkapan)`;
+    for (const w of rawWords) {
+      const cleanW = w.replace(/^[^\w']+|[^\w']+$/g, "").toLowerCase();
+      if (cleanW && cleanW !== mainIdiom.phrase.toLowerCase()) {
+        const wArti =
+          BREAKDOWN_KNOWN_WORDS[cleanW] ||
+          vocab1000[cleanW]?.arti ||
+          "";
+        units.push({
+          phrase: w,
+          arti: wArti,
+        });
+      }
+    }
+  }
+
+  // If any units are missing an Indonesian translation, try quick fetchLiveTranslation
   const results = await Promise.all(
-    units.map(async (phrase) => {
-      const cleanPhrase = phrase.replace(/^[^\w']+|[^\w']+$/g, "").trim();
-      let arti = await fetchLiveTranslation(cleanPhrase || phrase);
-      if (!arti || arti.trim().toLowerCase() === cleanPhrase.toLowerCase()) {
-        arti = cleanPhrase;
+    units.map(async (unit) => {
+      let arti = unit.arti;
+      if (!arti || arti.trim().length === 0) {
+        try {
+          const cleanP = unit.phrase.replace(/^[^\w']+|[^\w']+$/g, "").trim();
+          const live = await fetchLiveTranslation(cleanP || unit.phrase);
+          if (live && live.trim().toLowerCase() !== cleanP.toLowerCase()) {
+            arti = live;
+          }
+        } catch {
+          // ignore error
+        }
+      }
+      if (!arti || arti.trim().length === 0) {
+        arti = unit.phrase;
       }
       return {
-        phrase,
+        phrase: unit.phrase,
         arti: normalizePronounsToJaksel(arti),
       };
     })
   );
 
-  return results;
+  return results.length > 0
+    ? results
+    : rawWords.map((w) => ({ phrase: w, arti: w }));
 }
