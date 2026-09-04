@@ -1222,7 +1222,7 @@ export function generateSmartSentenceAnalysis(rawInput) {
         arti: meaning,
         cara_baca: phonetics,
         penggunaan: examples,
-        catatan: `💡 ${note}`,
+        catatan: note,
         maknaFilosofis: maknaFilosofis,
         confidenceLevel: 'high',
         isInstant: true,
@@ -1268,7 +1268,7 @@ export function generateSmartSentenceAnalysis(rawInput) {
         `Don't hesitate to ask: "${input}" (Jangan ragu buat nanya: "${translatedMeaning}?")`,
         `"Before we dive in, let me ask you: '${input}'" ("Sebelum kita mulai, coba gw nanya: '${translatedMeaning}?'")`
       ],
-      catatan: `💡 Tbh kalimat tanya ini asik banget dipake pas lagi nongkrong atau chat santai sama temen akrab. Gunakan intonasi naik di akhir kalimat biar terdengar luwes dan ramah!`,
+      catatan: `Tbh kalimat tanya ini asik banget dipake pas lagi nongkrong atau chat santai sama temen akrab. Gunakan intonasi naik di akhir kalimat biar terdengar luwes dan ramah!`,
       maknaFilosofis: `Pertanyaan santai seperti ini berfungsi sebagai 'ice breaker' yang efektif. Dalam psikologi sosial, bertanya hal sederhana menunjukkan perhatian hangat yang membuat lawan bicara merasa dihargai.`,
       confidenceLevel: 'medium',
       isInstant: true,
@@ -1279,7 +1279,11 @@ export function generateSmartSentenceAnalysis(rawInput) {
   // 4. Regular Statement or Phrase (High Confidence Only, Context-Aware Jaksel Tone)
   const isAngry = /angry|hate|annoyed|mad|pissed|toxic|benci|marah|kesel/i.test(lower) || /benci|marah|kesel/i.test(translatedMeaning);
   const isSad = /sad|cry|alone|lonely|hurt|tears|miss|sedih|nangis|kecewa|sepi/i.test(lower) || /sedih|nangis|kecewa/i.test(translatedMeaning);
-  const isRomantic = /love|sweet|crush|heart|darling|cinta|sayang|cantik/i.test(lower) || /cinta|sayang/i.test(translatedMeaning);
+  const isRomantic =
+    /love|sweet|crush|heart|hearts|darling|soul|souls|light|lights|shine|glow|cherish|adore|precious|my\s+world|mean\s+the\s+world|means\s+the\s+world|cinta|sayang|cantik|manis|romantis|jiwa|jiwaku|hatiku|kesayangan|belahan\s+jiwa/i.test(
+      lower
+    ) ||
+    /cinta|sayang|kasih|jiwa|hati|terang\s+dalam\s+jiwa/i.test(translatedMeaning);
 
   if (isAngry) {
     return {
@@ -1290,7 +1294,7 @@ export function generateSmartSentenceAnalysis(rawInput) {
         `"She stood her ground and said: '${input}'." ("Dia pasang batasan tegas dan bilang: '${translatedMeaning}'.")`,
         `"A: 'Are you still mad?' — B: 'Honestly, ${input}!' (A: 'Lu masih kesel?' — B: 'Jujur ya, ${translatedMeaning}!')"`
       ],
-      catatan: `💡 Nah ini nih ungkapan yang tegas dan to-the-point pas lu lagi ngerasa emosi atau kecewa. Cocok buat menetapkan boundaries yang jelas sama orang lain!`,
+      catatan: `Nah ini nih ungkapan yang tegas dan to-the-point pas lu lagi ngerasa emosi atau kecewa. Cocok buat menetapkan boundaries yang jelas sama orang lain!`,
       maknaFilosofis: `Secara psikologis, mengekspresikan rasa kesal secara verbal adalah bentuk pertahanan diri (self-advocacy). Lu berani mengungkapkan ketidaknyamanan lu daripada memendamnya sendirian.`,
       confidenceLevel: 'medium',
       isInstant: true,
@@ -1307,7 +1311,7 @@ export function generateSmartSentenceAnalysis(rawInput) {
         `"Whenever this song plays, '${input}' hits differently." ("Tiap kali lagu ini keputer, '${translatedMeaning}' rasanya ngena banget.")`,
         `"I tried to keep it inside, but '${input}'." ("Gw coba pendem sendiri, tapi nyatanya '${translatedMeaning}'.")`
       ],
-      catatan: `💡 Honestly frasa ini punya nuansa melancholic yang dalem banget. Relate banget sama situasi galau jam 2 pagi atau pas lu lagi overthinking di kamar sendirian.`,
+      catatan: `Honestly frasa ini punya nuansa melancholic yang dalem banget. Relate banget sama situasi galau jam 2 pagi atau pas lu lagi overthinking di kamar sendirian.`,
       maknaFilosofis: `Mengakui rasa sedih atau kehilangan adalah langkah pertama dari proses penyembuhan diri (healing). Validasi perasaan lu sendiri tanpa perlu merasa lemah.`,
       confidenceLevel: 'medium',
       isInstant: true,
@@ -1324,7 +1328,7 @@ export function generateSmartSentenceAnalysis(rawInput) {
         `"Every time I see you smile, '${input}'." ("Tiap kali gw liat lu senyum, rasanya '${translatedMeaning}'.")`,
         `"A: 'Why are you smiling?' — B: 'Because ${input}!' (A: 'Ngapain lu senyum-senyum?' — B: 'Soalnya ${translatedMeaning}!')"`
       ],
-      catatan: `💡 As you know, ungkapan kayak gini manis banget diucapin ke seseorang yang spesial. Luwes, tulus, dan gak terdengar kaku atau lebay!`,
+      catatan: `As you know, ungkapan kayak gini manis banget diucapin ke seseorang yang spesial. Luwes, tulus, dan gak terdengar kaku atau lebay!`,
       maknaFilosofis: `Keterbukaan emosional untuk memuji atau menyatakan rasa sayang adalah bentuk keberanian sosial. Ini membangun ikatan afeksi yang kuat dan menciptakan rasa aman dalam hubungan.`,
       confidenceLevel: 'medium',
       isInstant: true,
@@ -1341,7 +1345,7 @@ export function generateSmartSentenceAnalysis(rawInput) {
       `"In daily life, it's always good to remember: '${input}'." ("Di kehidupan sehari-hari, bagus banget buat selalu inget: '${translatedMeaning}'.")`,
       `"A: 'What's the takeaway here?' — B: 'Basically, ${input}.' (A: 'Jadi intinya gimana?' — B: 'Basically ya, ${translatedMeaning}.')"`
     ],
-    catatan: `💡 Tbh frasa ini tuh salah satu yang paling gampang nyangkut di kepala dan luwes banget dipake pas ngobrol santai atau chat-chatan sama temen sebaya!`,
+    catatan: `Tbh frasa ini tuh salah satu yang paling gampang nyangkut di kepala dan luwes banget dipake pas ngobrol santai atau chat-chatan sama temen sebaya!`,
     maknaFilosofis: `Komunikasi kasual yang efektif terletak pada kesederhanaan penyampaian. Menggunakan frasa yang lugas membuat obrolan terasa hangat, akrab, dan tanpa jarak sosial yang kaku.`,
     confidenceLevel: 'medium',
     isInstant: true,

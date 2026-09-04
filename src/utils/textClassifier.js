@@ -379,11 +379,15 @@ export function sanitizeResultPayload(data) {
   }
 
   if (sanitized.catatan) {
-    sanitized.catatan = normalizeToGaulSlang(sanitized.catatan);
+    sanitized.catatan = normalizeToGaulSlang(sanitized.catatan)
+      .replace(/^[\s💡✨🔥📌👉•\-]+/, "")
+      .trim();
   }
 
   if (sanitized.maknaFilosofis) {
-    sanitized.maknaFilosofis = normalizeToGaulSlang(sanitized.maknaFilosofis);
+    sanitized.maknaFilosofis = normalizeToGaulSlang(sanitized.maknaFilosofis)
+      .replace(/^[\s💡✨🔥📌👉•\-]+/, "")
+      .trim();
   }
 
   return sanitized;

@@ -91,6 +91,21 @@ Untuk mempermudah pelacakan, seluruh dokumentasi proyek dibagi secara rapi:
      * `src/services/storage.js` kini mengembalikan `apiKey: null` secara aman.
   4. **Refactoring `src/services/openrouter.js`:** Fungsi `makeFetchCall` dan `lookupWordBreakdown` kini memanggil endpoint relatif `/api/lookup` tanpa header `Authorization`.
   5. **Dukungan Pengujian Lokal (`vite.config.js`):** Menambahkan dev middleware di Vite sehingga pemanggilan `/api/lookup` saat `npm run dev` otomatis dieksekusi secara lokal menggunakan file `.env.local` yang terproteksi `.gitignore`.
+- [x] **FIX GABUNGAN: Prioritas AI vs Template Lokal + Tone Detection + Hapus Emoji:**
+  1. **Prioritas AI Sekuensial yang Tegas (AI-First Architecture):**
+     * **Pencarian Kamus Instan (0ms):** Kata/frasa yang sudah ada di database lokal kamus bawaan (`DICTIONARY`) langsung dikembalikan seketika tanpa latensi.
+     * **AI-First untuk Kosakata Baru:** Seluruh kata/frasa baru di luar kamus WAJIB mencoba pemanggilan AI OpenRouter via `/api/lookup` terlebih dahulu dengan batas waktu yang cukup (**7000ms** client / **9000ms** serverless proxy) sebelum ada fallback.
+     * **Jalur Fallback Bertingkat (Graceful Multi-Tier Fallback):** Hanya jika AI gagal (timeout/jaringan/error format), sistem secara sekuensial jatuh ke **Fallback 1** (`generateRichSentenceAnalysis` dengan live translation Google/MyMemory), dan jika live translation juga gagal, jatuh ke **Fallback 2** (`generateSmartSentenceAnalysis` template lokal murni).
+     * **Progressive Loading State:** Menghadirkan teks status progresif dinamis (*"Lagi menghubungkan ke AI tutor..."* $\rightarrow$ *"Lagi mikir jawaban terbaik & konteks gaulnya buat lu..."* $\rightarrow$ *"Hampir selesai, lagi merapikan nuansa obrolannya..."*) dengan spinner modern.
+     * **Logging Sementara:** Ditambahkan log konsol verifikasi transparan (`[Ranglish Engine] [AI-First]`, `[AI-Success]`, `[AI-Failed]`, `[Fallback-1]`, `[Fallback-2]`).
+  2. **Perbaikan Deteksi Tone Romantis (Template Fallback):**
+     * **Ekspansi Kata Kunci Romantis:** Menambahkan deteksi metafora puitis dan afeksi mencakup `soul`, `souls`, `light`, `lights`, `heart`, `hearts`, `shine`, `glow`, `mean the world`, `everything`, `cherish`, `adore`, `jiwa`, `jiwaku`, `hatiku`, `kesayangan`, `belahan jiwa`.
+     * **Kumpulan Template Romantis Murni:** Kalimat contoh berlatar suasana hangat dan intim berdua (di bawah lampu kota, senyum di meja, tatapan mata) dan **bebas 100% dari konteks kantor, rapat, kolega, atau coffee break**.
+     * **Self-Check Safeguard:** Perlindungan otomatis yang melarang keras kalimat bertema cinta/jiwa masuk ke template obrolan kantor, dengan tetap menjaga keutuhan nada marah/kecewa (*angry_breakup*) dan sedih (*sad_heartbroken*).
+  3. **Pembersihan Total Emoji & Ikon Card:**
+     * **Hapus Ikon Header JSX:** Menghapus komponen ikon `<Lightbulb />` pada header *Catatan Anak Rantau* dan `<Sparkles />` pada header *Makna & Psikologi Rasa*, menyisakan teks judul bersih dan elegan.
+     * **Hapus Emoji String:** Menghapus seluruh awalan `💡 ` dari variabel `note` dan `catatan` pada seluruh template generator.
+     * **Sanitasi Otomatis Regex:** Menambahkan filter `replace(/^[\s💡✨🔥📌👉•\-]+/, '')` pada `sanitizeResultPayload` agar tidak ada emoji/simbol yang bocor dari respons API atau cache.
 - [x] **FINAL FIX: Penataan WordBreakdownGrid ke Sidebar, Scroll Trigger Header & Visual Depth Card:**
   1. **Relokasi ke Kolom Sidebar Kanan (`col-side`):** Memindahkan `<WordBreakdownGrid>` keluar dari kolom konten utama (`col-main`) dan meletakkannya tepat di bawah card *"Catatan Anak Rantau"* di dalam kolom sidebar kanan. Memanfaatkan ruang kosong vertikal di sidebar secara proporsional.
   2. **Eliminasi Duplikasi DOM (Single Instance):** Memastikan hanya ada tepat 1 elemen `<WordBreakdownGrid>` di seluruh pohon DOM.

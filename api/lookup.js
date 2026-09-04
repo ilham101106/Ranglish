@@ -8,7 +8,7 @@ const requestLog = new Map();
 function checkRateLimit(ip) {
   const now = Date.now();
   const windowMs = 60 * 1000;
-  const maxAllowed = 10;
+  const maxAllowed = 20;
 
   const timestamps = requestLog.get(ip) || [];
   // Clean up entries older than 60 seconds
@@ -73,9 +73,9 @@ export default async function handler(req, res) {
     return res.status(500).json({ error: "Server belum dikonfigurasi" });
   }
 
-  // 5. Forward request to OpenRouter with 8000ms AbortController
+  // 5. Forward request to OpenRouter with 9000ms AbortController
   const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), 8000);
+  const timeoutId = setTimeout(() => controller.abort(), 9000);
 
   try {
     const origin =

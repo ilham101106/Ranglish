@@ -399,9 +399,9 @@ export function detectSentenceTone(text, translation) {
     return 'sad_heartbroken';
   }
 
-  // 3. Romantic / Love / Affection
+  // 3. Romantic / Love / Affection / Tender Soul & Light Metaphors
   if (
-    /\b(love|sweetheart|darling|forever|crush|kiss|hug|lips|beloved|fall\s+in\s+love|cinta|sayang|cantik|manis|romantis|baper|naksir|peluk|kekasih|pujaan)\b/i.test(
+    /\b(love|sweetheart|darling|forever|crush|kiss|hug|lips|beloved|fall\s+in\s+love|soul|souls|light|lights|heart|hearts|shine|shining|glow|glowing|cherish|adore|precious|my\s+world|mean\s+the\s+world|means\s+the\s+world|you\s+mean|in\s+my\s+soul|of\s+my\s+soul|light\s+in|lights\s+in|beautiful|sweetest|cinta|sayang|cantik|manis|romantis|baper|naksir|peluk|kekasih|pujaan|jiwa|jiwaku|hatiku|kesayangan|belahan\s+jiwa|terang\s+dalam\s+jiwa)\b/i.test(
       combined
     )
   ) {
@@ -469,7 +469,22 @@ export async function generateRichSentenceAnalysis(rawText) {
   }
 
   const isLyric = isSongInput(text);
-  const tone = detectSentenceTone(text, cleanTranslation);
+  let tone = detectSentenceTone(text, cleanTranslation);
+
+  // Self-check safeguard: Ensure romantic/intimate words never trigger general statement (office/colleagues)
+  const hasRomanticWords =
+    /\b(soul|souls|light|lights|heart|hearts|love|darling|sweet|cinta|sayang|jiwa|hatiku|belahan\s+jiwa|mean\s+the\s+world|my\s+world|shine|glow)\b/i.test(
+      text
+    ) ||
+    /\b(cinta|sayang|jiwa|hati|terang|belahan\s+jiwa)\b/i.test(cleanTranslation);
+
+  if (
+    tone !== 'angry_breakup' &&
+    tone !== 'sad_heartbroken' &&
+    hasRomanticWords
+  ) {
+    tone = 'romantic_love';
+  }
 
   // Grammatical structure detectors
   const isQuestion =
@@ -501,7 +516,7 @@ export async function generateRichSentenceAnalysis(rawText) {
       `"A: 'Are you gonna text them back?' — B: 'Hell no, ${text}!' (A: 'Lu bakal bales chat dia?' — B: 'Dih ogah banget, ${cleanTranslation}!')"`,
       `"It took months of overthinking to finally realize: '${text}.'" ("Butuh berbulan-bulan overthinking buat akhirnya sadar: '${cleanTranslation}.'")`,
     ];
-    note = `💡 Nah ini nih salah satu ekspresi yang paling tegas pas lu lagi ngerasa kecewa berat tapi udah di tahap 'enough is enough'. Tbh penggunaan kalimat ini nunjukin rasa percaya diri baru bahwa hidup lu bakal jauh lebih damai dan berkembang tanpa kehadiran orang toxic tersebut. Pernah gak sih ngerasa pengen bilang gini ke seseorang pas udah muak banget?`;
+    note = `Nah ini nih salah satu ekspresi yang paling tegas pas lu lagi ngerasa kecewa berat tapi udah di tahap 'enough is enough'. Tbh penggunaan kalimat ini nunjukin rasa percaya diri baru bahwa hidup lu bakal jauh lebih damai dan berkembang tanpa kehadiran orang toxic tersebut. Pernah gak sih ngerasa pengen bilang gini ke seseorang pas udah muak banget?`;
     maknaFilosofis = `Tbh dari kacamata psikologi hubungan, kalimat ini melukiskan fase 'the turning point' — titik balik pas seseorang akhirnya berhenti denial dan mulai reclaim harga dirinya. Marah di sini bukan sekadar emosi destruktif, tapi bentuk self-defense mechanism yang sehat buat masang boundary tegas. Which is valid banget sih, karena kadang lu emang butuh rasa kesel itu buat bener-bener berani mutus toxic cycle dan melangkah maju tanpa noleh ke belakang lagi.`;
   } else if (tone === 'sad_heartbroken') {
     // 🌧️ SAD / HEARTBROKEN / GRIEF CONTEXT
@@ -511,17 +526,17 @@ export async function generateRichSentenceAnalysis(rawText) {
       `"Whenever our favorite song plays on shuffle, ${text}." ("Tiap kali lagu favorit kita keputer acak, rasanya ${cleanTranslation}.")`,
       `"A: 'Are you doing okay?' — B: 'Honestly, ${text}.' (A: 'Lu baik-baik aja kan?' — B: 'Sejujurnya, ${cleanTranslation}.')"`
     ];
-    note = `💡 Waduh, kalimat ini tuh dalem banget maknanya — literally bikin baper sih kalo denger ini pas lagi galau sendirian di kamar. Tbh jangan dipendem terus ya, which is kenapa ngeluarin isi hati lewat kata-kata kayak gini bisa bikin perasaan lu jadi jauh lebih lega. Relate banget gak nih sama playlist jam 2 pagi lu?`;
+    note = `Waduh, kalimat ini tuh dalem banget maknanya — literally bikin baper sih kalo denger ini pas lagi galau sendirian di kamar. Tbh jangan dipendem terus ya, which is kenapa ngeluarin isi hati lewat kata-kata kayak gini bisa bikin perasaan lu jadi jauh lebih lega. Relate banget gak nih sama playlist jam 2 pagi lu?`;
     maknaFilosofis = `Honestly, kalimat ini punya vibrasi melancholic yang dalem banget — tipe kata yang biasanya muncul pas fase grief atau jam-jam overthinking malam hari. Secara psikologis, ngakuin rasa sedih kayak gini tuh bentuk emotional release (katarsis) yang krusial banget. Which is kenapa dengerin kalimat ini rasanya kayak ada yang ngertiin perasaan hampa lu tanpa lu harus capek-capek jelasin panjang lebar ke orang lain.`;
   } else if (tone === 'romantic_love') {
     // 💖 ROMANTIC / LOVE / SWEET CONTEXT
     examples = [
-      `"I don't usually get this cheesy, but honestly ${text}." ("Gw biasanya gak se-cringe ini, tapi beneran deh ${cleanTranslation}.")`,
+      `"I don't usually get this emotional, but honestly ${text}." ("Gw biasanya gak se-emosional ini, tapi beneran deh ${cleanTranslation}.")`,
       `"Every time you smile across the table, ${text}." ("Tiap kali lu senyum di seberang meja, rasanya ${cleanTranslation}.")`,
-      `"A: 'Why are you staring at me like that?' — B: 'Because ${text}!' (A: 'Kenapa lu ngeliatin gw kayak gitu?' — B: 'Soalnya ${cleanTranslation}!')"`,
-      `"Under the city skyline lights, he whispered: '${text}.'" ("Di bawah gemerlap lampu kota, dia berbisik: '${cleanTranslation}.'")`
+      `"Under the city skyline lights, he looked into her eyes and whispered: '${text}.'" ("Di bawah gemerlap lampu kota, dia natap matanya dan berbisik: '${cleanTranslation}.'")`,
+      `"A: 'Why do you care so much?' — B: 'Because ${text}!' (A: 'Kenapa lu segitu pedulinya?' — B: 'Soalnya ${cleanTranslation}!')"`
     ];
-    note = `💡 Nah ini nih salah satu kalimat yang literally paling manis dan tulus buat diucapin ke gebetan atau pasangan! As you know, ungkapan kayak gini tuh bikin lawan bicara ngerasa bener-bener dihargai dan dispesialkan. Cocok banget dipake pas lagi momen hangat berdua biar suasananya makin melting wkwk.`;
+    note = `Nah ini nih salah satu kalimat yang literally paling manis dan tulus buat diucapin ke gebetan atau pasangan! As you know, ungkapan kayak gini tuh bikin lawan bicara ngerasa bener-bener dihargai dan dispesialkan. Cocok banget dipake pas lagi momen hangat berdua biar suasananya makin melting wkwk.`;
     maknaFilosofis = `As you know, ini adalah bentuk ekspresi afeksi tulus yang berani nunjukin vulnerability (kerentanan batin). Di zaman di mana banyak orang gengsi ngakuin rasa sayangnya, berani berucap sehangat ini tuh literally bikin hati luluh. So basically, ini bukan cuma sekadar gombalan kasual, tapi ada rasa aman (secure attachment) dan komitmen tulus yang pengen dibagi bareng pasangan.`;
   } else if (isLyric) {
     // 🎵 LYRIC CONTEXT
@@ -530,7 +545,7 @@ export async function generateRichSentenceAnalysis(rawText) {
       `"I wrote down that meaningful line in my notes: '${text}'" ("Gw nyatet bait yang penuh makna dari lirik itu: '${cleanTranslation}'")`,
       `"The acoustic rendition highlights '${text}' so beautifully." ("Versi akustiknya bikin penggalan '${cleanTranslation}' kedengeran makin dalam dan menyentuh.")`,
     ];
-    note = `💡 Kutipan ini punya rasa puitis ala lirik lagu indie. Penekanannya ada pada ekspresi rasa dan estetika bahasa. Di obrolan santai, lu bisa pakai penggalan frasa intinya buat melukiskan perasaan jujur ke temen dekat tanpa terkesan kaku!`;
+    note = `Kutipan ini punya rasa puitis ala lirik lagu indie. Penekanannya ada pada ekspresi rasa dan estetika bahasa. Di obrolan santai, lu bisa pakai penggalan frasa intinya buat melukiskan perasaan jujur ke temen dekat tanpa terkesan kaku!`;
     maknaFilosofis = `Lirik musik sering kali menangkap emosi-emosi samar yang sulit dirumuskan oleh percakapan biasa. Melalui metafora dan ritme, kalimat ini menghubungkan pengalaman batin pribadi dengan perasaan universal manusia.`;
   } else if (isQuestion) {
     // ❓ CASUAL QUESTION CONTEXT
@@ -539,7 +554,7 @@ export async function generateRichSentenceAnalysis(rawText) {
       `"Before making any rushed move, let me ask you: '${text}'" ("Sebelum kita buru-buru ambil langkah, coba gw tanya ke lu: '${cleanTranslation}'")`,
       `"A: '${text}' — B: 'Honestly, I haven't even thought that far yet!' (A: '${cleanTranslation}' — B: 'Jujur, gw bahkan belum mikir sejauh itu!')"`
     ];
-    note = `💡 Tbh kalimat tanya ini luwes banget dipake pas lagi nongkrong atau chat santai sama temen akrab. Bikin obrolan dua arah jadi lebih hidup tanpa terkesan menginterogasi — which is why native speaker sering banget pake pola ini!`;
+    note = `Tbh kalimat tanya ini luwes banget dipake pas lagi nongkrong atau chat santai sama temen akrab. Bikin obrolan dua arah jadi lebih hidup tanpa terkesan menginterogasi — which is why native speaker sering banget pake pola ini!`;
     maknaFilosofis = `Secara psikologis, mengajukan pertanyaan santai yang terbuka mencerminkan rasa ingin tahu yang sehat dan ketiadaan penghakiman (non-judgmental space). Ini membuka jembatan empati yang membuat orang lain merasa aman untuk bercerita.`;
   } else if (isActionOrImperative) {
     // ⚡ ACTION / IMPERATIVE CONTEXT
@@ -548,7 +563,7 @@ export async function generateRichSentenceAnalysis(rawText) {
       `"Whenever things get overwhelming, don't hesitate to ${text}." ("Tiap kali situasi mulai berasa berat, jangan sungkan buat ${cleanTranslation}.")`,
       `"Before walking out the door, she turned around and said: '${text}.'" ("Sebelum melangkah keluar pintu, dia noleh dan bilang: '${cleanTranslation}.'")`
     ];
-    note = `💡 Ungkapan ini sifatnya hangat dan suportif banget pas diucapin ke temen deket yang lagi butuh sandaran. So basically, ini cara yang manis buat nunjukin kalau lu peduli dan siap ada buat mereka kapan pun dibutuhkan!`;
+    note = `Ungkapan ini sifatnya hangat dan suportif banget pas diucapin ke temen deket yang lagi butuh sandaran. So basically, ini cara yang manis buat nunjukin kalau lu peduli dan siap ada buat mereka kapan pun dibutuhkan!`;
     maknaFilosofis = `Ajakan hangat dan tindakan nyata adalah wujud kepedulian yang paling konkret. Ketika kata-kata formal terasa dingin, kalimat aksi yang tulus mampu memberikan rasa tenang dan kehangatan seketika.`;
   } else {
     // ☕ GENERAL STATEMENT CONTEXT
@@ -557,7 +572,7 @@ export async function generateRichSentenceAnalysis(rawText) {
       `"Looking at the whole situation objectively, it's clear that ${text}." ("Melihat situasinya secara objektif, kelihatan jelas kalo ${cleanTranslation}.")`,
       `"A: 'What's your main takeaway here?' — B: 'Basically, ${text}.' (A: 'Poin penting lu apa?' — B: 'Basically ya, ${cleanTranslation}.')"`
     ];
-    note = `💡 Tbh kalimat ini tuh salah satu yang paling gampang nyangkut di kepala dan luwes banget dipake pas ngobrol santai sehari-hari. Which is kenapa native speaker sering pake buat nyampein pemikiran secara to-the-point tapi tetep santai!`;
+    note = `Tbh kalimat ini tuh salah satu yang paling gampang nyangkut di kepala dan luwes banget dipake pas ngobrol santai sehari-hari. Which is kenapa native speaker sering pake buat nyampein pemikiran secara to-the-point tapi tetep santai!`;
     maknaFilosofis = `Real talk, kejelasan dalam berbicara adalah bentuk rasa hormat pada waktu dan energi orang lain. Menyampaikan fakta atau argumen dengan lugas tanpa berbelit-belit menciptakan relasi komunikasi yang sehat dan saling percaya.`;
   }
 

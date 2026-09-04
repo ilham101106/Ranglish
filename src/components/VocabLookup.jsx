@@ -178,6 +178,29 @@ export default function VocabLookup({ onHistoryUpdated }) {
   const [hasGeneratedBreakdown, setHasGeneratedBreakdown] = useState(false);
   const searchContainerRef = useRef(null);
   const wordBreakdownRef = useRef(null);
+  const [loadingProgressMessage, setLoadingProgressMessage] = useState(
+    "Lagi menghubungkan ke AI tutor...",
+  );
+
+  useEffect(() => {
+    if (!isLoading) return;
+    setLoadingProgressMessage("Lagi menghubungkan ke AI tutor...");
+    const timer1 = setTimeout(() => {
+      setLoadingProgressMessage(
+        "Lagi mikir jawaban terbaik & konteks gaulnya buat lu...",
+      );
+    }, 1800);
+    const timer2 = setTimeout(() => {
+      setLoadingProgressMessage(
+        "Hampir selesai, lagi merapikan nuansa obrolannya...",
+      );
+    }, 4200);
+
+    return () => {
+      clearTimeout(timer1);
+      clearTimeout(timer2);
+    };
+  }, [isLoading]);
 
   useEffect(() => {
     setBankStats(getVocabBankStats());
@@ -746,18 +769,26 @@ export default function VocabLookup({ onHistoryUpdated }) {
         </div>
       </div>
 
-      {/* Skeleton Loading State */}
+      {/* Skeleton Loading State with Progressive Status */}
       {isLoading && (
-        <div className="p-6 sm:p-8 rounded-[22px] theme-bg-card border theme-border animate-pulse space-y-4 theme-card-shadow">
-          <div className="flex items-center gap-3">
-            <div className="h-8 w-36 theme-bg-subtle rounded-lg"></div>
-            <div className="h-6 w-20 theme-bg-subtle rounded-full"></div>
+        <div className="p-6 sm:p-8 rounded-[22px] theme-bg-card border theme-border space-y-5 theme-card-shadow">
+          <div className="flex items-center gap-2.5 px-3.5 py-2 rounded-xl theme-bg-subtle border theme-border w-fit">
+            <div className="w-3.5 h-3.5 rounded-full border-2 border-[#5842f5] border-t-transparent animate-spin shrink-0"></div>
+            <span className="text-xs sm:text-[13px] font-bold text-[#5842f5] dark:text-[#c7d2fe]">
+              {loadingProgressMessage}
+            </span>
           </div>
-          <div className="h-5 w-32 theme-bg-subtle rounded"></div>
-          <div className="h-14 w-full theme-bg-subtle rounded-xl"></div>
-          <div className="space-y-3 pt-2">
-            <div className="h-16 w-full theme-bg-subtle rounded-xl"></div>
-            <div className="h-16 w-full theme-bg-subtle rounded-xl"></div>
+          <div className="animate-pulse space-y-4 pt-1">
+            <div className="flex items-center gap-3">
+              <div className="h-8 w-36 theme-bg-subtle rounded-lg"></div>
+              <div className="h-6 w-20 theme-bg-subtle rounded-full"></div>
+            </div>
+            <div className="h-5 w-32 theme-bg-subtle rounded"></div>
+            <div className="h-14 w-full theme-bg-subtle rounded-xl"></div>
+            <div className="space-y-3 pt-2">
+              <div className="h-16 w-full theme-bg-subtle rounded-xl"></div>
+              <div className="h-16 w-full theme-bg-subtle rounded-xl"></div>
+            </div>
           </div>
         </div>
       )}
@@ -1076,7 +1107,6 @@ export default function VocabLookup({ onHistoryUpdated }) {
                 {result.catatan && (
                   <div className="tip-box p-5 sm:p-6 space-y-2.5 relative overflow-hidden">
                     <div className="flex items-center gap-2 text-[13px] font-extrabold">
-                      <Lightbulb className="w-4 h-4 shrink-0 text-amber-500" />
                       <span>Catatan Anak Rantau</span>
                     </div>
                     <p className="text-xs sm:text-[13px] leading-[1.65] font-normal">
@@ -1105,7 +1135,6 @@ export default function VocabLookup({ onHistoryUpdated }) {
                 {result.maknaFilosofis && (
                   <div className="p-5 sm:p-6 rounded-[22px] theme-bg-card border theme-border theme-card-shadow space-y-2.5 relative overflow-hidden">
                     <div className="flex items-center gap-2 text-[13px] font-extrabold text-[#5842f5] dark:text-[#c7d2fe]">
-                      <Sparkles className="w-4 h-4 shrink-0 text-[#5842f5]" />
                       <span>Makna & Psikologi Rasa</span>
                     </div>
                     <p className="text-xs sm:text-[13px] leading-[1.65] font-normal theme-text-main">

@@ -5,6 +5,7 @@ import {
   generateRichSentenceAnalysis,
   generateSongDualPayload,
 } from "./freeTranslator";
+import { generateSmartSentenceAnalysis } from "../utils/sentenceTranslator";
 import { sanitizeResultPayload, isSongInput } from "../utils/textClassifier";
 
 const SYSTEM_PROMPT_VOCAB = `Kamu adalah AI tutor bahasa Inggris di aplikasi "Ranglish".
@@ -65,7 +66,7 @@ Kembalikan satu blok JSON valid:
   "catatan": "penjelasan nuansa/tips konteks pemakaian sehari-hari ala anak rantau & Gen Z"
 }`;
 
-const makeFetchCall = async (_apiKey, model, text, timeoutMs = 5000) => {
+const makeFetchCall = async (_apiKey, model, text, timeoutMs = 7000) => {
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
 
@@ -497,37 +498,69 @@ export const lookupVocabulary = async (text) => {
   const instantData = getInstantAnalysis(clean);
   const isBuiltIn = instantData && !instantData.isGenerated;
 
-  // Query OpenRouter LLM via serverless proxy /api/lookup:
+  // If already in built-in dictionary, return immediately (0ms latency)
+  if (isBuiltIn) {
+    console.log(`[Ranglish Engine] Found in built-in dictionary: "${clean}" (0ms)`);
+    return sanitizeResultPayload({
+      ...instantData,
+      success: true,
+      isMock: false,
+    });
+  }
+
+  // Not in built-in dictionary: Follow STRICT sequential priority:
+  // STEP 1: Always try AI first via /api/lookup with 7000ms timeout
   const activeModel = model || "openrouter/free";
   let rawContent = null;
+  let aiErrorReason = null;
+
+  console.log(
+    `[Ranglish Engine] [AI-First] Calling AI model (${activeModel}) for: "${clean}" (Timeout 7000ms)...`,
+  );
 
   try {
-    // ⚡ 5s timeout for OpenRouter queue
-    rawContent = await makeFetchCall(null, activeModel, clean, 5000);
+    rawContent = await makeFetchCall(null, activeModel, clean, 7000);
+    console.log(
+      `[Ranglish Engine] [AI-Success] AI successfully responded for: "${clean}"`,
+    );
   } catch (err1) {
+    aiErrorReason = err1.message || String(err1);
     console.warn(
-      `Primary model (${activeModel}) error or timeout (5s):`,
-      err1.message,
+      `[Ranglish Engine] [AI-Failed] AI lookup failed for "${clean}". Reason: ${aiErrorReason}`,
     );
   }
 
-  let cleanedData = extractCleanResponse(rawContent, clean);
+  let cleanedData = rawContent ? extractCleanResponse(rawContent, clean) : null;
 
-  // If AI response was empty, slow/timed out, or invalid, fall back smoothly:
+  // STEP 2: Only if AI failed or returned invalid response -> Fallback 1 to live translation
   if (!cleanedData) {
-    if (isSong) {
-      cleanedData = await generateSongDualPayload(clean);
-    } else if (isBuiltIn) {
-      cleanedData = instantData;
-    } else if (wordCount === 1) {
-      const dictData = await fetchFreeDictionaryData(clean);
-      cleanedData = dictData || (instantData && !instantData.isGenerated ? instantData : null);
-      if (!cleanedData) {
+    console.log(
+      `[Ranglish Engine] [Fallback-1] Triggering live translation fallback for: "${clean}" (AI Reason: ${aiErrorReason || "invalid JSON"})...`,
+    );
+    try {
+      if (isSong) {
+        cleanedData = await generateSongDualPayload(clean);
+      } else if (wordCount === 1) {
+        const dictData = await fetchFreeDictionaryData(clean);
+        cleanedData =
+          dictData || (await generateRichSentenceAnalysis(clean));
+      } else {
         cleanedData = await generateRichSentenceAnalysis(clean);
       }
-    } else {
-      cleanedData = (instantData && !instantData.isGenerated ? instantData : null) || (await generateRichSentenceAnalysis(clean));
+    } catch (err2) {
+      console.warn(
+        `[Ranglish Engine] [Fallback-1 Failed] Live translation failed for "${clean}":`,
+        err2.message,
+      );
     }
+  }
+
+  // STEP 3: Only if live translation ALSO failed or returned no arti -> Fallback 2 to pure local template
+  if (!cleanedData || !cleanedData.arti) {
+    console.log(
+      `[Ranglish Engine] [Fallback-2] Falling back to pure local smart sentence generator for: "${clean}"...`,
+    );
+    cleanedData = generateSmartSentenceAnalysis(clean);
   }
 
   return sanitizeResultPayload({
