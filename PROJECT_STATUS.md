@@ -30,7 +30,34 @@ Untuk mempermudah pelacakan, seluruh dokumentasi proyek dibagi secara rapi:
 
 ## 📝 Log Riwayat Pembaruan (Changelog Pengerjaan)
 
-### 🚀 Update Terakhir (4 September 2026) — Milestone "Contextual Generator, Quality Standards & Proxy Server":
+### 🚀 Update Terakhir (4 September 2026) — Milestone "Overhaul Kualitas, Akurasi, Fonetik Lidah Indonesia & Gaya Temen Ngobrol":
+- [x] **Standarisasi Gaya Bahasa "Temen Ngobrol / Anak Jaksel" (Wajib di Seluruh Output):**
+  1. **Konsistensi Total Kata Ganti (*Pronoun*):** 100% konsisten menggunakan `gw` (orang pertama) dan `lu` (orang kedua). Menghapus tuntas seluruh bentuk kaku `aku`, `kamu`, `saya`, `anda`, dan bentuk posesif/gabungan `-mu` (`tanpamu` $\rightarrow$ `tanpa lu`, `denganmu` $\rightarrow$ `sama lu`, `untukmu` $\rightarrow$ `buat lu`, `cintamu` $\rightarrow$ `cinta lu`, `hatimu` $\rightarrow$ `hati lu`, dsb.).
+  2. **Selingan Bahasa Inggris Natural (*Jaksel Vibe*):** Menyisipkan istilah bahasa Inggris wajar minimal 1–2 kali di setiap narasi penjelasan dengan bank variasi pembuka (*tbh,*, *honestly,*, *so basically,*, *which is,*, *as you know,*, *real talk,*), penegas (*which makes sense karena...*, *and that's valid banget*), dan penutup (*so yeah, that's the vibe*, *which is relatable banget buat anak rantau*).
+  3. **Tone Energik, Hangat & Empatik:** Menghilangkan nada definisi kamus yang kaku; menyajikan penjelasan 2–4 kalimat yang hidup, ada nyawa, menyertakan pertanyaan retoris, dan terasa seperti ngobrol santai bersama sahabat.
+- [x] **Akurasi Kontekstual & Validasi Kata Tidak Dikenali (`src/services/freeTranslator.js`):**
+  1. **Deteksi Nada Emosional (Tone Detector):** Mengklasifikasikan kalimat ke dalam 4 spektrum emosi (*angry_breakup*, *sad_heartbroken*, *romantic_love*, *casual_chill*) berdasarkan kata kunci teks asli dan terjemahan.
+  2. **Contoh Kalimat Sesuai Emosi (Multi-Situation Templates):** Contoh kalimat dibuat selaras dengan nada emosionalnya (misal: kalimat putus/marah berlatar belakang konfrontasi, batasan diri, dan berhenti denial; kalimat galau jam 2 pagi berlatar nostalgia hujan; bukan template lirik lagu statis).
+  3. **Field Baru `maknaFilosofis` (Insight Emosional/Psikologis):** Menguraikan makna psikologis di balik kalimat (seperti fenomena *the turning point*, *catharsis*, *secure attachment*, atau *self-defense mechanism*) dengan gaya santai berwawasan.
+  4. **Ekspansi Field `arti` untuk Kalimat Panjang:** Untuk kalimat $> 5$ kata, terjemahan inti dilengkapi 1–2 kalimat penjelas nuansa komunikatif.
+  5. **Validasi Kata Tidak Dikenali (B2):** Respon jujur dan ramah dengan `isUnrecognized: true` dan `penggunaan: []` jika kata tidak dikenal/gagal diterjemahkan (seperti `whirl-winds` atau `plowed`), tanpa memaksakan contoh kalimat template palsu.
+  6. **Level Kepercayaan (`confidenceLevel`):** Melacak tingkat akurasi `'high' | 'medium' | 'low'` berdasarkan keselarasan multi-engine.
+- [x] **Ekspansi & Unifikasi Sistem Fonetik Lidah Indonesia (`src/utils/sentenceTranslator.js` & `src/services/instantEngine.js`):**
+  1. **Ekspansi `PHONETIC_DICT` ke 720+ Entri:** Mencakup 100% kosakata `VOCAB_MAP` dan seluruh kata umum `DICTIONARY`.
+  2. **Prinsip Ramah Lidah Indonesia:**
+     * Vokal pendek "a" dalam suku kata tertutup/tegang dieja mendekati bunyi "e" (`angry` $\rightarrow$ `eng-gri`, `cat` $\rightarrow$ `ket`, `bad` $\rightarrow$ `bed`, `happy` $\rightarrow$ `hep-pi`, `sad` $\rightarrow$ `sed`).
+     * Bunyi "r" akhir aksen Amerika tetap jelas (`better` $\rightarrow$ `bet-ter`, `never` $\rightarrow$ `nev-er`, `water` $\rightarrow$ `wah-ter`).
+     * Vokal panjang "ee" tetap "ee".
+     * Tanda hubung `-` konsisten memisahkan suku kata.
+  3. **Penyatuan Single Source of Truth:** Menghapus duplikasi fonetik lama di `instantEngine.js` dan mendelegasikannya langsung ke generator terpadu di `sentenceTranslator.js`.
+  4. **Jaminan Anti-Kosong:** Setiap kata dalam kalimat dijamin menghasilkan pelafalan yang terbaca, dengan fallback kata asli jika tidak ditemukan pola khusus.
+- [x] **Penyempurnaan Fallback `generateSmartSentenceAnalysis` (C1 Requirement):**
+  * Menghitung rasio cakupan kata di `VOCAB_MAP`. Jika rasio $< 35\%$ atau kata tunggal tidak dikenal, fungsi secara cerdas mengembalikan `null` agar diteruskan ke validasi B2 di `freeTranslator.js`. Tidak ada lagi kata asing yang terjebak template *"I really mean it when I say..."*.
+- [x] **Integrasi UI Kartu Makna Filosofis (`src/components/VocabLookup.jsx`):**
+  * Menghadirkan kartu visual elegan *"Makna & Psikologi Rasa"* di sidebar dengan ikon `Sparkles` bertema glowing indigo/violet.
+  * Memperbaiki teks subtitle hero menjadi konsisten *"riwayat lu"*.
+
+### 🚀 Update Sebelumnya (4 September 2026) — Milestone "Contextual Generator, Quality Standards & Proxy Server":
 - [x] **Implementasi 4 Standar Kualitas & Nilai Edukasi (`src/services/freeTranslator.js`):**
   1. **Standar 1 (Verifikasi Silang & Prioritas Idiom):**
      * Fungsi `fetchDualTranslationDetails` mengambil hasil dari Google Translate GTX dan MyMemory secara paralel untuk verifikasi konsistensi makna.

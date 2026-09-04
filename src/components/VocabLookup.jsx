@@ -598,7 +598,7 @@ export default function VocabLookup({ onHistoryUpdated }) {
         </form>
 
         <p className="text-[12px] theme-text-muted mt-2 ml-2 font-medium">
-          Setiap kata baru otomatis dipelajari &amp; disimpan ke riwayat kamu.
+          Setiap kata baru otomatis dipelajari &amp; disimpan ke riwayat lu.
         </p>
 
         {/* Autocomplete Suggestions Dropdown */}
@@ -1072,6 +1072,19 @@ export default function VocabLookup({ onHistoryUpdated }) {
                     </div>
                     <p className="text-xs sm:text-[13px] leading-[1.65] font-normal">
                       {result.catatan}
+                    </p>
+                  </div>
+                )}
+
+                {/* Makna & Psikologi Rasa (maknaFilosofis) */}
+                {result.maknaFilosofis && (
+                  <div className="p-5 sm:p-6 rounded-[22px] theme-bg-card border theme-border theme-card-shadow space-y-2.5 relative overflow-hidden">
+                    <div className="flex items-center gap-2 text-[13px] font-extrabold text-[#5842f5] dark:text-[#c7d2fe]">
+                      <Sparkles className="w-4 h-4 shrink-0 text-[#5842f5]" />
+                      <span>Makna & Psikologi Rasa</span>
+                    </div>
+                    <p className="text-xs sm:text-[13px] leading-[1.65] font-normal theme-text-main">
+                      {result.maknaFilosofis}
                     </p>
                   </div>
                 )}

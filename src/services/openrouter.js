@@ -521,9 +521,12 @@ export const lookupVocabulary = async (text) => {
       cleanedData = instantData;
     } else if (wordCount === 1) {
       const dictData = await fetchFreeDictionaryData(clean);
-      cleanedData = dictData || instantData;
+      cleanedData = dictData || (instantData && !instantData.isGenerated ? instantData : null);
+      if (!cleanedData) {
+        cleanedData = await generateRichSentenceAnalysis(clean);
+      }
     } else {
-      cleanedData = await generateRichSentenceAnalysis(clean);
+      cleanedData = (instantData && !instantData.isGenerated ? instantData : null) || (await generateRichSentenceAnalysis(clean));
     }
   }
 

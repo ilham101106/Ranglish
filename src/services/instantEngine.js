@@ -1,9 +1,9 @@
 // Instant NLP Linguistic Engine for Ranglish (Gaya Santai Anak Rantau & Gen Z)
 // Database Kosakata Super Masif & Komprehensif (1,250+ Entri Unik Paling Sering Dicari & Digunakan)
 
-import { getLearnedVocabBank, saveLearnedVocabToBank } from './storage';
-import vocab1000 from '../data/vocab1000.json';
-import { generateSmartSentenceAnalysis } from '../utils/sentenceTranslator';
+import { getLearnedVocabBank, saveLearnedVocabToBank } from './storage.js';
+import vocab1000 from '../data/vocab1000.json' with { type: 'json' };
+import { generateSmartSentenceAnalysis, generatePhonetics as getUnifiedPhonetics, generateSentencePhonetics } from '../utils/sentenceTranslator.js';
 
 export const DICTIONARY = {
   // =========================================================================
@@ -2896,30 +2896,9 @@ export const DICTIONARY = {
   }
 };
 
-// Generates approximate phonetic pronunciation rules for any arbitrary English word
+// Generates approximate phonetic pronunciation rules (Unified with sentenceTranslator)
 export function generatePhonetics(word) {
-  if (!word) return '';
-  const clean = word.toLowerCase().trim();
-
-
-  let phonetic = clean
-    .replace(/tion\b/g, 'shun')
-    .replace(/sion\b/g, 'zhun')
-    .replace(/ough/g, 'aw')
-    .replace(/ight/g, 'ayt')
-    .replace(/ph/g, 'f')
-    .replace(/kn/g, 'n')
-    .replace(/wr/g, 'r')
-    .replace(/ee/g, 'ee')
-    .replace(/oo/g, 'oo')
-    .replace(/th/g, 'th')
-    .replace(/wh/g, 'w')
-    .replace(/ck/g, 'k')
-    .replace(/age\b/g, 'ij')
-    .replace(/ous\b/g, 'us')
-    .replace(/ture\b/g, 'cher');
-
-  return phonetic;
+  return getUnifiedPhonetics(word);
 }
 
 // Levenshtein distance algorithm for detecting typos
@@ -3020,8 +2999,10 @@ export function getInstantAnalysis(inputText) {
   }
 
   // 4. Smart conversational generator for unknown words/phrases
+  const smartAnalysis = generateSmartSentenceAnalysis(text);
+  if (!smartAnalysis) return null;
   return {
-    ...generateSmartSentenceAnalysis(text),
+    ...smartAnalysis,
     isGenerated: true
   };
 }
