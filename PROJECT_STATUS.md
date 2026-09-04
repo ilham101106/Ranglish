@@ -91,12 +91,21 @@ Untuk mempermudah pelacakan, seluruh dokumentasi proyek dibagi secara rapi:
      * `src/services/storage.js` kini mengembalikan `apiKey: null` secara aman.
   4. **Refactoring `src/services/openrouter.js`:** Fungsi `makeFetchCall` dan `lookupWordBreakdown` kini memanggil endpoint relatif `/api/lookup` tanpa header `Authorization`.
   5. **Dukungan Pengujian Lokal (`vite.config.js`):** Menambahkan dev middleware di Vite sehingga pemanggilan `/api/lookup` saat `npm run dev` otomatis dieksekusi secara lokal menggunakan file `.env.local` yang terproteksi `.gitignore`.
+- [x] **FINAL FIX: Penataan WordBreakdownGrid ke Sidebar, Scroll Trigger Header & Visual Depth Card:**
+  1. **Relokasi ke Kolom Sidebar Kanan (`col-side`):** Memindahkan `<WordBreakdownGrid>` keluar dari kolom konten utama (`col-main`) dan meletakkannya tepat di bawah card *"Catatan Anak Rantau"* di dalam kolom sidebar kanan. Memanfaatkan ruang kosong vertikal di sidebar secara proporsional.
+  2. **Eliminasi Duplikasi DOM (Single Instance):** Memastikan hanya ada tepat 1 elemen `<WordBreakdownGrid>` di seluruh pohon DOM.
+  3. **Integrasi Scroll Trigger Tombol "Bedah Kata" Header:** Tombol shortcut "Bedah Kata" di header kartu hasil pencarian dipertahankan dan dihubungkan ke `wordBreakdownRef`. Jika breakdown belum di-generate, tombol otomatis memanggil AI/fallback terlebih dahulu lalu smooth scroll ke card di sidebar dengan highlight ring pulse. Jika sudah di-generate, langsung smooth scroll tanpa memanggil ulang AI.
+  4. **Penataan Layout Grid 2 Kolom Kompak (`grid-cols-2`, `h-24`):** Mengoptimalkan ukuran kartu flip 3D di `src/components/WordBreakdownGrid.jsx` agar pas dan rapi dalam kolom sidebar yang lebih sempit (~340px) tanpa ada overflow horizontal.
+  5. **Peningkatan Visual Depth (Elevasi Berlapis):**
+     * **Card "Catatan Anak Rantau" (`.tip-box`):** Menambahkan bayangan berlapis bertema amber (`rgba(245, 158, 11, 0.16)`), inset highlight tipis di bagian atas (`inset 0 1px 0 rgba(255,255,255,0.12)`), dan transisi halus 300ms saat hover.
+     * **Card "Arti Per Kata / Frasa":** Menambahkan bayangan berlapis bertema indigo (`rgba(88, 66, 245, 0.16)`), inset highlight tipis, dan border glow yang serasi dan konsisten.
+  6. **Reset State Sempurna:** Pencarian kata baru otomatis me-reset breakdown ke kondisi awal belum di-generate secara bersih.
+  7. **Responsivitas Mobile (390px):** Di layar sempit smartphone, seluruh card tersusun rapi secara vertikal dalam satu kolom tanpa overflow.
 - [x] **Fitur Baru "Arti Per Kata / Frasa" (Interactive 3D Flip Cards):**
   1. **Komponen Flip Card 3D (`src/components/WordBreakdownGrid.jsx`):** Menghadirkan antarmuka kartu bolak-balik bergaya 3D interaktif (*English unit* di depan $\leftrightarrow$ *Arti santai Indonesia* di belakang).
   2. **AI Semantic Unit Breakdown (`lookupWordBreakdown`):** AI tutor OpenRouter membedah kalimat berdasarkan unit makna (frasa idiom, compound nouns, phrasal verbs, kontraksi kata) bukan pecahan kata mentah harfiah.
   3. **Mesin Cadangan Cepat (`generateWordBreakdownFallback`):** Algoritma fallback cerdas jika server AI sedang lambat, mengelompokkan unit kata dan menerjemahkan seketika via Google Translate GTX.
-  4. **Layout Responsif Seimbang & Ergonomis:** Ditempatkan di kolom utama sebelah kiri tepat di bawah Contoh Penggunaan dengan grid responsif (`grid-cols-2 sm:grid-cols-3 lg:grid-cols-4`, tinggi `h-28`), menciptakan keseimbangan visual simetris dengan kolom kanan.
-  5. **Tombol Pintar "Bedah Kata ↓" (Quick Jump):** Tombol shortcut di header kartu hasil pencarian yang secara instan melakukan *smooth scroll* ke modul bedah kata, memberikan efek highlight ring pulse, dan otomatis memicu pemanggilan kartu.
+  4. **Tombol Pintar "Bedah Kata ↓" (Quick Jump):** Tombol shortcut di header kartu hasil pencarian yang secara instan melakukan *smooth scroll* ke modul bedah kata, memberikan efek highlight ring pulse, dan otomatis memicu pemanggilan kartu.
 - [x] **Arsitektur Dual-Payload Lirik Lagu & Kepatuhan Hak Cipta:**
   1. **Pemisahan Output `displayContent` vs `savedContent`:** Teks terjemahan lengkap hanya tampil sementara di layar pencarian pengguna, sedangkan data yang disimpan permanen ke riwayat dan `localStorage` dipangkas ketat hanya $\le 5$ kata (`focusPhrase` inti) + kalimat contoh buatan sendiri + tautan streaming (Spotify, YouTube, Genius).
   2. **Penggantian Total Preset `SONG_LYRICS` Orisinal:** Seluruh kutipan lagu berhak cipta (Taylor Swift, Radiohead, LANY, dll.) telah diganti dengan 24 kalimat puitis orisinal bertema galau, romantis, dan nostalgia yang 100% bebas dari klaim hak cipta.

@@ -177,6 +177,7 @@ export default function VocabLookup({ onHistoryUpdated }) {
   const [isLoadingBreakdown, setIsLoadingBreakdown] = useState(false);
   const [hasGeneratedBreakdown, setHasGeneratedBreakdown] = useState(false);
   const searchContainerRef = useRef(null);
+  const wordBreakdownRef = useRef(null);
 
   useEffect(() => {
     setBankStats(getVocabBankStats());
@@ -433,16 +434,34 @@ export default function VocabLookup({ onHistoryUpdated }) {
   };
 
   const handleScrollToBreakdown = () => {
-    const el = document.getElementById("word-breakdown-section");
-    if (el) {
-      el.scrollIntoView({ behavior: "smooth", block: "center" });
-      el.classList.add("ring-2", "ring-[#5842f5]", "ring-offset-2");
-      setTimeout(() => {
-        el.classList.remove("ring-2", "ring-[#5842f5]", "ring-offset-2");
-      }, 1500);
-    }
+    const triggerScroll = () => {
+      if (wordBreakdownRef.current) {
+        wordBreakdownRef.current.scrollIntoView({
+          behavior: "smooth",
+          block: "center",
+        });
+        wordBreakdownRef.current.classList.add(
+          "ring-2",
+          "ring-[#5842f5]",
+          "ring-offset-2",
+          "rounded-[22px]"
+        );
+        setTimeout(() => {
+          wordBreakdownRef.current?.classList.remove(
+            "ring-2",
+            "ring-[#5842f5]",
+            "ring-offset-2",
+            "rounded-[22px]"
+          );
+        }, 1500);
+      }
+    };
+
     if (!hasGeneratedBreakdown && !isLoadingBreakdown) {
       handleGenerateBreakdown();
+      setTimeout(triggerScroll, 150);
+    } else {
+      triggerScroll();
     }
   };
 
@@ -961,16 +980,6 @@ export default function VocabLookup({ onHistoryUpdated }) {
                     </div>
                   )}
                 </div>
-
-                {/* Arti Per Kata/Frasa (Flip Cards) - Only if activeText > 1 word */}
-                {activeText.trim().split(/\s+/).filter(Boolean).length > 1 && (
-                  <WordBreakdownGrid
-                    breakdown={wordBreakdown}
-                    isLoading={isLoadingBreakdown}
-                    onGenerate={handleGenerateBreakdown}
-                    hasGenerated={hasGeneratedBreakdown}
-                  />
-                )}
               </div>
 
               {/* Sidebar Column (Right) */}
@@ -1065,7 +1074,7 @@ export default function VocabLookup({ onHistoryUpdated }) {
 
                 {/* Tips & Nuances (Ala Anak Rantau) */}
                 {result.catatan && (
-                  <div className="tip-box p-5 sm:p-6 space-y-2.5 shadow-md relative overflow-hidden">
+                  <div className="tip-box p-5 sm:p-6 space-y-2.5 relative overflow-hidden">
                     <div className="flex items-center gap-2 text-[13px] font-extrabold">
                       <Lightbulb className="w-4 h-4 shrink-0 text-amber-500" />
                       <span>Catatan Anak Rantau</span>
@@ -1073,6 +1082,22 @@ export default function VocabLookup({ onHistoryUpdated }) {
                     <p className="text-xs sm:text-[13px] leading-[1.65] font-normal">
                       {result.catatan}
                     </p>
+                  </div>
+                )}
+
+                {/* WordBreakdownGrid - Posisi di Sidebar */}
+                {activeText.trim().split(/\s+/).filter(Boolean).length > 1 && (
+                  <div
+                    ref={wordBreakdownRef}
+                    id="word-breakdown-wrapper"
+                    className="w-full transition-all duration-300"
+                  >
+                    <WordBreakdownGrid
+                      breakdown={wordBreakdown}
+                      isLoading={isLoadingBreakdown}
+                      onGenerate={handleGenerateBreakdown}
+                      hasGenerated={hasGeneratedBreakdown}
+                    />
                   </div>
                 )}
 
