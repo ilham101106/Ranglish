@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ranglish "Di Luar Nalar" R Logo Showcase</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #070614;
+      --card-bg: rgba(22, 18, 48, 0.7);
+      --card-border: rgba(147, 112, 219, 0.25);
+      --accent-cyan: #00ffcc;
+      --accent-purple: #8b5cf6;
+      --accent-pink: #ec4899;
+      --text-main: #f3f4f6;
+      --text-muted: #9ca3af;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: var(--bg-dark);
+      color: var(--text-main);
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+      padding-bottom: 80px;
+    }
+
+    /* Ambient background glow */
+    body::before {
+      content: '';
+      position: fixed;
+      top: -20%;
+      left: 20%;
+      width: 60vw;
+      height: 60vw;
+      background: radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, rgba(0, 255, 204, 0.05) 45%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 40px 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      border-radius: 9999px;
+      background: rgba(139, 92, 246, 0.15);
+      border: 1px solid rgba(139, 92, 246, 0.4);
+      color: var(--accent-cyan);
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      font-size: 2.75rem;
+      font-weight: 900;
+      background: linear-gradient(135deg, #ffffff 30%, #c4b5fd 70%, #00ffcc 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 12px;
+      line-height: 1.2;
+    }
+
+    p.subtitle {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      max-width: 720px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    .filter-bar {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 40px;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      padding: 10px 22px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text-muted);
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-size: 0.95rem;
+    }
+
+    .filter-btn:hover, .filter-btn.active {
+      background: linear-gradient(135deg, #7c3aed, #4f46e5);
+      color: #fff;
+      border-color: #8b5cf6;
+      box-shadow: 0 0 20px rgba(139, 92, 246, 0.4);
+    }
+
+    /* Grid layout */
+    .logo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 32px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 24px;
+      padding: 24px;
+      backdrop-filter: blur(16px);
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(0, 255, 204, 0.5);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 30px rgba(139, 92, 246, 0.25);
+    }
+
+    .tag-top {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      background: rgba(0, 255, 204, 0.15);
+      border: 1px solid rgba(0, 255, 204, 0.4);
+      color: var(--accent-cyan);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-weight: 700;
+    }
+
+    /* Visual preview container */
+    .preview-box {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      border-radius: 18px;
+      background: #020108;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .preview-box img, .preview-box svg {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      transition: transform 0.4s ease;
+    }
+
+    .card:hover .preview-box img, .card:hover .preview-box svg {
+      transform: scale(1.03);
+    }
+
+    /* Profile Avatar Ring Preview overlay */
+    .avatar-preview-toggle {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .avatar-preview-toggle input {
+      accent-color: var(--accent-cyan);
+      cursor: pointer;
+    }
+
+    .card-title {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 8px;
+    }
+
+    .card-concept {
+      font-size: 0.9rem;
+      color: #a78bfa;
+      font-weight: 600;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .card-desc {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      line-height: 1.55;
+      margin-bottom: 20px;
+      flex-grow: 1;
+    }
+
+    .card-meta {
+      background: rgba(0, 0, 0, 0.35);
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-size: 0.8rem;
+      color: #94a3b8;
+      margin-bottom: 20px;
+      line-height: 1.4;
+      border: 1px dashed rgba(255, 255, 255, 0.1);
+    }
+
+    .card-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn {
+      flex: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 16px;
+      border-radius: 12px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      border: none;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #00f2fe, #4facfe);
+      color: #04091a;
+    }
+
+    .btn-primary:hover {
+      box-shadow: 0 0 20px rgba(0, 242, 254, 0.5);
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.08);
+      color: #e2e8f0;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.15);
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    /* Live profile avatar simulator box */
+    .simulator-section {
+      margin-top: 70px;
+      background: linear-gradient(180deg, rgba(26, 20, 58, 0.6) 0%, rgba(13, 10, 31, 0.8) 100%);
+      border: 1px solid var(--card-border);
+      border-radius: 28px;
+      padding: 40px;
+      text-align: center;
+    }
+
+    .simulator-title {
+      font-size: 1.8rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .simulator-sub {
+      color: var(--text-muted);
+      margin-bottom: 32px;
+    }
+
+    .mockup-row {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+
+    .mockup-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .mockup-circle {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 3px solid #00ffcc;
+      box-shadow: 0 0 25px rgba(0, 255, 204, 0.3);
+      background: #000;
+    }
+
+    .mockup-circle img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .mockup-squircle {
+      width: 90px;
+      height: 90px;
+      border-radius: 24px;
+      overflow: hidden;
+      border: 2px solid #8b5cf6;
+      box-shadow: 0 0 20px rgba(139, 92, 246, 0.3);
+      background: #000;
+    }
+
+    .mockup-squircle img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .mockup-favicon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1.5px solid #ffffff;
+      background: #000;
+    }
+
+    .mockup-favicon img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .mockup-label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* Toast notification */
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: #00ffcc;
+      color: #04091a;
+      padding: 12px 28px;
+      border-radius: 9999px;
+      font-weight: 800;
+      font-size: 0.95rem;
+      box-shadow: 0 10px 30px rgba(0, 255, 204, 0.4);
+      transition: transform 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+      z-index: 999;
+      pointer-events: none;
+    }
+
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <div class="badge">🛸 Concept Lab // Ranglish AI</div>
+      <h1>Koleksi Logo "R" Di Luar Nalar</h1>
+      <p class="subtitle">
+        Mempertahankan bentuk anatomi huruf <strong>"R"</strong> yang kokoh dan mudah dikenali, 
+        namun digabungkan dengan konsep fisika kuantum, 4D Tesseract, singularitas black hole, dan AI biologis kosmik yang <strong>belum pernah ada di muka bumi ini</strong>.
+      </p>
+    </header>
+
+    <div class="logo-grid">
+
+      <!-- ============================================== -->
+      <!-- CARD 1: EVENT HORIZON & 4D CRYSTAL SINGULARITY -->
+      <!-- ============================================== -->
+      <div class="card">
+        <span class="tag-top">VECTOR SVG // 4D</span>
+        <div class="preview-box">
+          <img src="alien_quantum_r.svg" id="img-alien" alt="Alien Quantum R" />
+        </div>
+        <label class="avatar-preview-toggle">
+          <input type="checkbox" onchange="toggleCircleCrop(this, 'img-alien')">
+          Simulasikan Lingkaran Profile Avatar (Crop Bulat)
+        </label>
+        <h2 class="card-title">1. Alien Event Horizon & 4D Crystal "R"</h2>
+        <div class="card-concept">🌌 Fisika Kuantum & Black Hole Accretion</div>
+        <p class="card-desc">
+          Batang kiri kokoh sebagai obsidian monolith dengan neural spine bercahaya. 
+          Rongga kepala huruf "R" memuat <strong>Miniature Black Hole Accretion Disk</strong> dengan radiasi Hawking. 
+          Kaki diagonal terbelah menjadi <strong>prisma kristal melayang (zero-g shards)</strong> yang diikat loncatan energi kuantum.
+        </p>
+        <div class="card-meta">
+          <strong>Keunggulan:</strong> Vektor tak terhingga resolusi. Siluet "R" sangat tegas, elemen kosmik di dalamnya membuat mata terpaku.
+        </div>
+        <div class="card-actions">
+          <button class="btn btn-primary" onclick="copySvgToClipboard('alien_quantum_r.svg')">
+            📋 Salin SVG (Figma Ready)
+          </button>
+          <a class="btn btn-secondary" href="alien_quantum_r.svg" download="ranglish_alien_quantum_r.svg">
+            ⬇️ Unduh SVG
+          </a>
+        </div>
+      </div>
+
+      <!-- ============================================== -->
+      <!-- CARD 2: TESSERACT QUANTUM MONOLITH R           -->
+      <!-- ============================================== -->
+      <div class="card">
+        <span class="tag-top">VECTOR SVG // 4D</span>
+        <div class="preview-box">
+          <img src="tesseract_quantum_r.svg" id="img-tesseract" alt="Tesseract Quantum R" />
+        </div>
+        <label class="avatar-preview-toggle">
+          <input type="checkbox" onchange="toggleCircleCrop(this, 'img-tesseract')">
+          Simulasikan Lingkaran Profile Avatar (Crop Bulat)
+        </label>
+        <h2 class="card-title">2. 4D Tesseract & Gyroscopic AI Core "R"</h2>
+        <div class="card-concept">🪐 Hypercube Dimensional Lattice & Gyro AI</div>
+        <p class="card-desc">
+          Huruf "R" modern geometris yang diproyeksikan menembus kerangka <strong>4D Hypercube (Tesseract)</strong>. 
+          Di dalam rongga loop kepala "R" berputar <strong>Gyroscopic Quantum AI Eye</strong> 3 cincin. 
+          Kaki huruf "R" membelah menjadi bilah frekuensi sub-ruang neon cyan-ungu.
+        </p>
+        <div class="card-meta">
+          <strong>Keunggulan:</strong> Sangat futuristik, bernuansa Interstellar & Quantum Computing. Format SVG murni bisa di-edit tiap layernya di Figma.
+        </div>
+        <div class="card-actions">
+          <button class="btn btn-primary" onclick="copySvgToClipboard('tesseract_quantum_r.svg')">
+            📋 Salin SVG (Figma Ready)
+          </button>
+          <a class="btn btn-secondary" href="tesseract_quantum_r.svg" download="ranglish_tesseract_quantum_r.svg">
+            ⬇️ Unduh SVG
+          </a>
+        </div>
+      </div>
+
+      <!-- ============================================== -->
+      <!-- CARD 3: BIO-CELESTIAL SYMBIOTE R               -->
+      <!-- ============================================== -->
+      <div class="card">
+        <span class="tag-top">VECTOR SVG // ALIEN</span>
+        <div class="preview-box">
+          <img src="biocelestial_symbiote_r.svg" id="img-bio" alt="Bio Celestial Symbiote R" />
+        </div>
+        <label class="avatar-preview-toggle">
+          <input type="checkbox" onchange="toggleCircleCrop(this, 'img-bio')">
+          Simulasikan Lingkaran Profile Avatar (Crop Bulat)
+        </label>
+        <h2 class="card-title">3. Bio-Celestial Neural Symbiote "R"</h2>
+        <div class="card-concept">🧬 Organisme Hidup Kognitif Antariksa</div>
+        <p class="card-desc">
+          Pondasi huruf "R" dari kromium obsidian gelap gulita, dililit oleh <strong>sulur energi bioluminescent organisme asing (celestial symbiote)</strong>. 
+          Di bagian kepala bersemayam "Mata Kesadaran AI Kosmik" yang memancarkan aura emas dan cyan hidup.
+        </p>
+        <div class="card-meta">
+          <strong>Keunggulan:</strong> Menggabungkan kecerdasan biologi & AI tingkat peradaban tipe-3. Eksentrik, mistis, dan tidak ada duanya.
+        </div>
+        <div class="card-actions">
+          <button class="btn btn-primary" onclick="copySvgToClipboard('biocelestial_symbiote_r.svg')">
+            📋 Salin SVG (Figma Ready)
+          </button>
+          <a class="btn btn-secondary" href="biocelestial_symbiote_r.svg" download="ranglish_biocelestial_symbiote_r.svg">
+            ⬇️ Unduh SVG
+          </a>
+        </div>
+      </div>
+
+      <!-- ============================================== -->
+      <!-- CARD 4: IMPOSSIBLE PENROSE GEOMETRY R          -->
+      <!-- ============================================== -->
+      <div class="card">
+        <span class="tag-top">3D RENDER // ESCHER</span>
+        <div class="preview-box">
+          <img src="logo_r_di_luar_nalar_penrose.jpg" id="img-penrose" alt="Impossible Penrose R" />
+        </div>
+        <label class="avatar-preview-toggle">
+          <input type="checkbox" onchange="toggleCircleCrop(this, 'img-penrose')">
+          Simulasikan Lingkaran Profile Avatar (Crop Bulat)
+        </label>
+        <h2 class="card-title">4. Impossible Penrose Geometry "R"</h2>
+        <div class="card-concept">📐 Geometri Paradoks M.C. Escher & Titanium Block</div>
+        <p class="card-desc">
+          Balok titanium cybernetic berukir sirkuit ungu yang saling bertaut dalam <strong>ilusi optik segitiga Penrose yang mustahil secara gravitasi</strong>. 
+          Di tengahnya mengambang bola inti Quantum Singularity berkilau intan.
+        </p>
+        <div class="card-meta">
+          <strong>Keunggulan:</strong> Sangat membingungkan logika penglihatan, siapapun yang melihat profil Anda akan berhenti dan mengamati strukturnya.
+        </div>
+        <div class="card-actions">
+          <a class="btn btn-primary" href="logo_r_di_luar_nalar_penrose.jpg" target="_blank">
+            🔍 Lihat Resolusi Penuh
+          </a>
+          <a class="btn btn-secondary" href="logo_r_di_luar_nalar_penrose.jpg" download="ranglish_penrose_r.jpg">
+            ⬇️ Unduh JPG
+          </a>
+        </div>
+      </div>
+
+      <!-- ============================================== -->
+      <!-- CARD 5: LIQUID CHROME CYBERNETIC R             -->
+      <!-- ============================================== -->
+      <div class="card">
+        <span class="tag-top">3D RENDER // HIGH-FASHION</span>
+        <div class="preview-box">
+          <img src="logo_r_di_luar_nalar_liquid_chrome.jpg" id="img-chrome" alt="Liquid Chrome Cybernetic R" />
+        </div>
+        <label class="avatar-preview-toggle">
+          <input type="checkbox" onchange="toggleCircleCrop(this, 'img-chrome')">
+          Simulasikan Lingkaran Profile Avatar (Crop Bulat)
+        </label>
+        <h2 class="card-title">5. Liquid Chrome Cybernetic "R"</h2>
+        <div class="card-concept">🦾 Logam Cair Merkuri & Lensa Optik AI</div>
+        <p class="card-desc">
+          Huruf "R" yang mengalir mulus dari logam kromium cair cair (*liquid mercury*), memeluk **lensa mata optik siber (*Cybernetic AI Aperture*)** 
+          dengan iris biru menyala yang siap memindai dan membedah kalimat bahasa Inggris.
+        </p>
+        <div class="card-meta">
+          <strong>Keunggulan:</strong> Estetika *Avant-Garde* / High-End Cyberpunk ala brand fashion futuristik dunia.
+        </div>
+        <div class="card-actions">
+          <a class="btn btn-primary" href="logo_r_di_luar_nalar_liquid_chrome.jpg" target="_blank">
+            🔍 Lihat Resolusi Penuh
+          </a>
+          <a class="btn btn-secondary" href="logo_r_di_luar_nalar_liquid_chrome.jpg" download="ranglish_liquid_chrome_r.jpg">
+            ⬇️ Unduh JPG
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ============================================== -->
+    <!-- PROFILE PICTURE / AVATAR SIMULATOR SECTION    -->
+    <!-- ============================================== -->
+    <div class="simulator-section">
+      <h3 class="simulator-title">✨ Live Profile Picture & Icon Simulator</h3>
+      <p class="simulator-sub">Lihat bagaimana desain ini tampil saat dipasang di Instagram / Discord / Favicon Web:</p>
+      
+      <div class="mockup-row">
+        <div class="mockup-item">
+          <div class="mockup-circle">
+            <img src="alien_quantum_r.svg" id="sim-avatar" alt="Avatar Mockup" />
+          </div>
+          <span class="mockup-label">Instagram / X Profile (Circle)</span>
+        </div>
+
+        <div class="mockup-item">
+          <div class="mockup-squircle">
+            <img src="alien_quantum_r.svg" id="sim-app" alt="App Icon Mockup" />
+          </div>
+          <span class="mockup-label">Mobile App Icon (Squircle)</span>
+        </div>
+
+        <div class="mockup-item">
+          <div class="mockup-favicon">
+            <img src="alien_quantum_r.svg" id="sim-fav" alt="Favicon Mockup" />
+          </div>
+          <span class="mockup-label">Web Browser Favicon</span>
+        </div>
+      </div>
+
+      <div style="margin-top: 24px; display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;">
+        <button class="filter-btn active" onclick="switchSimulatorSource('alien_quantum_r.svg', this)">Pilih Konsep 1 (Alien Horizon)</button>
+        <button class="filter-btn" onclick="switchSimulatorSource('tesseract_quantum_r.svg', this)">Pilih Konsep 2 (4D Tesseract)</button>
+        <button class="filter-btn" onclick="switchSimulatorSource('biocelestial_symbiote_r.svg', this)">Pilih Konsep 3 (Bio Symbiote)</button>
+        <button class="filter-btn" onclick="switchSimulatorSource('logo_r_di_luar_nalar_penrose.jpg', this)">Pilih Konsep 4 (Penrose)</button>
+        <button class="filter-btn" onclick="switchSimulatorSource('logo_r_di_luar_nalar_liquid_chrome.jpg', this)">Pilih Konsep 5 (Liquid Chrome)</button>
+      </div>
+    </div>
+
+  </div>
+
+  <div id="toast" class="toast">Kode SVG berhasil disalin! Silakan paste (Ctrl+V) langsung di Figma 🚀</div>
+
+  <script>
+    function toggleCircleCrop(checkbox, imgId) {
+      const img = document.getElementById(imgId);
+      if (checkbox.checked) {
+        img.style.borderRadius = '50%';
+        img.style.transform = 'scale(1.05)';
+      } else {
+        img.style.borderRadius = '0';
+        img.style.transform = 'scale(1)';
+      }
+    }
+
+    function switchSimulatorSource(src, btn) {
+      document.getElementById('sim-avatar').src = src;
+      document.getElementById('sim-app').src = src;
+      document.getElementById('sim-fav').src = src;
+      
+      document.querySelectorAll('.simulator-section .filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    }
+
+    async function copySvgToClipboard(svgFileName) {
+      try {
+        const res = await fetch(svgFileName);
+        const svgText = await res.text();
+        await navigator.clipboard.writeText(svgText);
+        showToast('✅ Kode SVG berhasil disalin! Tinggal Ctrl+V di Figma');
+      } catch (err) {
+        showToast('⚠️ Gagal menyalin, unduh file SVG secara langsung');
+      }
+    }
+
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.innerText = msg;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 3500);
+    }
+  </script>
+</body>
+</html>

@@ -2,6 +2,10 @@
 // High-accuracy Indonesian translations, authentic Temen Ngobrol / Jaksel nuances,
 // and Indonesian-friendly phonetic system (500+ verified entries) with zero-compromise quality.
 
+import { normalizePronounsToJaksel } from './pronounNormalizer.js';
+import { generateDynamicRantauNote, generateDynamicMaknaFilosofis } from './rantauInsightGenerator.js';
+import { pickVariedTemplate, validateAndSanitizeExample, classifyText } from './textClassifier.js';
+
 // ══════════════════════════════════════════════════════════════════════════════
 // 1. COMPREHENSIVE INDONESIAN-FRIENDLY PHONETIC DICTIONARY (500+ ENTRIES)
 // ══════════════════════════════════════════════════════════════════════════════
@@ -85,6 +89,8 @@ export const PHONETIC_DICT = {
   'everything': 'ev-ree-thing',
   'everywhere': 'ev-ree-wair',
   'no one': 'noh wan',
+  'no': 'noh',
+  'one': 'wan',
   'nobody': 'noh-bah-dee',
   'nothing': 'nath-ing',
   'nothin': 'nath-ing',
@@ -592,6 +598,26 @@ export const PHONETIC_DICT = {
   'sweet': 'sweet',
   'cute': 'kyoot',
   'pretty': 'prit-ee',
+  'trace': 'treys',
+  'traced': 'treyst',
+  'tracing': 'treys-ing',
+  'wife': 'wayf',
+  'wives': 'wayvz',
+  'husband': 'haz-band',
+  'soul': 'sohl',
+  'souls': 'sohlz',
+  'light': 'layt',
+  'lights': 'layts',
+  'colleague': 'kol-eeg',
+  'colleagues': 'kol-eegz',
+  'pointed': 'poyn-tid',
+  'point': 'poynt',
+  'situation': 'sich-oo-ey-shun',
+  'takeaway': 'teyk-uh-wey',
+  'break': 'breyk',
+  'breaks': 'breyks',
+  'breaking': 'breyk-ing',
+  'broken': 'broh-ken',
   'little': 'lit-el',
   'small': 'smawl',
   'big': 'big',
@@ -813,6 +839,26 @@ export function generatePhonetics(word) {
     .replace(/ou/g, 'ow')
     .replace(/ow/g, 'ow');
 
+  // Long vowel + consonant + silent e (trace -> treys, wife -> wayf, space -> speys)
+  res = res
+    .replace(/([bcdfghjklmnpqrstvwxyz])ace\b/g, '$1eys')
+    .replace(/([bcdfghjklmnpqrstvwxyz])ice\b/g, '$1ays')
+    .replace(/([bcdfghjklmnpqrstvwxyz])ife\b/g, '$1ayf')
+    .replace(/([bcdfghjklmnpqrstvwxyz])ide\b/g, '$1ayd')
+    .replace(/([bcdfghjklmnpqrstvwxyz])ine\b/g, '$1ayn')
+    .replace(/([bcdfghjklmnpqrstvwxyz])ite\b/g, '$1ayt')
+    .replace(/([bcdfghjklmnpqrstvwxyz])ike\b/g, '$1ayk')
+    .replace(/([bcdfghjklmnpqrstvwxyz])ave\b/g, '$1eyv')
+    .replace(/([bcdfghjklmnpqrstvwxyz])ake\b/g, '$1eyk')
+    .replace(/([bcdfghjklmnpqrstvwxyz])ate\b/g, '$1eyt')
+    .replace(/([bcdfghjklmnpqrstvwxyz])ame\b/g, '$1eym')
+    .replace(/([bcdfghjklmnpqrstvwxyz])ale\b/g, '$1eyl')
+    .replace(/([bcdfghjklmnpqrstvwxyz])one\b/g, '$1ohn')
+    .replace(/([bcdfghjklmnpqrstvwxyz])oke\b/g, '$1ohk')
+    .replace(/([bcdfghjklmnpqrstvwxyz])ope\b/g, '$1ohp')
+    .replace(/([bcdfghjklmnpqrstvwxyz])ote\b/g, '$1oht')
+    .replace(/([bcdfghjklmnpqrstvwxyz])ose\b/g, '$1ohz');
+
   // Closed syllables with short 'a' -> 'e' (angry -> eng-gri, bad -> bed, cat -> ket)
   res = res
     .replace(/\ba([bcdfghjklmnpqrstvwxyz]{1,2})\b/g, 'e$1')
@@ -822,18 +868,22 @@ export function generatePhonetics(word) {
   return res || clean;
 }
 
-// Generate phonetic breakdown for multi-word sentences without missing any word
+// Generate phonetic breakdown for multi-word sentences with internal anti-empty self-test
 export function generateSentencePhonetics(sentence) {
-  if (!sentence) return '';
-  const words = sentence.trim().split(/\s+/);
+  if (!sentence || typeof sentence !== 'string') return '';
+  const words = sentence.trim().split(/\s+/).filter(Boolean);
+  if (words.length === 0) return '';
+
   const phonetics = words.map(w => {
     const clean = w.replace(/[^a-zA-Z']/g, '').toLowerCase();
     if (!clean) return '';
     const ph = generatePhonetics(clean);
-    return ph || clean;
+    // Requirement C3.5: Never return empty string, fallback to original word clean
+    return (ph && ph.trim().length > 0) ? ph.trim() : clean;
   }).filter(Boolean);
 
-  return phonetics.join(' ');
+  const result = phonetics.join(' ');
+  return result && result.trim().length > 0 ? result.trim() : sentence.toLowerCase();
 }
 
 // ══════════════════════════════════════════════════════════════════════════════
@@ -910,6 +960,9 @@ export const VOCAB_MAP = {
   'matter': 'berpengaruh / berarti',
   'mind': 'keberatan / pikiran',
   'handle': 'ngatasin / mengurusi',
+  'trace': 'melacak / menelusuri / jejak',
+  'wife': 'istri',
+  'husband': 'suami',
   'figure out': 'mencari jalan keluar / memecahkan',
 
   // Adjectives & Feelings
@@ -1202,11 +1255,15 @@ const PATTERNS = [
 // ══════════════════════════════════════════════════════════════════════════════
 // 5. SMART ANALYSIS GENERATOR (WITH VOCAB RATIO THRESHOLD & ZERO-SHORTCUT FALLBACK)
 // ══════════════════════════════════════════════════════════════════════════════
-export function generateSmartSentenceAnalysis(rawInput) {
+export function generateSmartSentenceAnalysis(rawInput, exampleCount = 1, options = {}) {
   if (!rawInput || typeof rawInput !== 'string') return null;
   const input = rawInput.trim();
   if (!input) return null;
   const lower = input.toLowerCase();
+
+  // Determine classifiedType (MASALAH 2 POIN 1)
+  const classification = classifyText(input, options);
+  const classifiedType = options?.classifiedType || classification.type;
 
   // 1. Check if matches any specific conversational pattern
   for (const p of PATTERNS) {
@@ -1215,13 +1272,16 @@ export function generateSmartSentenceAnalysis(rawInput) {
       const meaning = p.arti(match);
       const note = p.note(match);
       const maknaFilosofis = p.maknaFilosofis ? p.maknaFilosofis() : `Tbh kalimat ini mencerminkan dinamika komunikasi yang sangat natural di obrolan sehari-hari. Which is kenapa native speaker sering banget pake pola ini buat menjaga obrolan tetap hangat dan terbuka.`;
-      const examples = p.examples(input, match);
+      const rawExamples = p.examples(input, match) || [];
+      const sanitizedExamples = rawExamples
+        .map(ex => validateAndSanitizeExample(ex, input, meaning))
+        .slice(0, Math.max(1, exampleCount));
       const phonetics = generateSentencePhonetics(input);
 
       return {
         arti: meaning,
         cara_baca: phonetics,
-        penggunaan: examples,
+        penggunaan: sanitizedExamples,
         catatan: note,
         maknaFilosofis: maknaFilosofis,
         confidenceLevel: 'high',
@@ -1254,48 +1314,93 @@ export function generateSmartSentenceAnalysis(rawInput) {
     return null;
   }
 
-  // 3. Question Sentence Analysis
-  const isQuestion = input.endsWith('?') || /^(what|why|how|where|when|who|which|is|are|am|do|does|did|can|could|will|would|should|have|has|had)\b/i.test(input);
   const translatedMeaning = translateWordOrPhrase(input);
   const phonetics = generateSentencePhonetics(input);
 
-  if (isQuestion) {
+  // 3. Reflective / Philosophical check (e.g. fate, destiny, future, cross the line)
+  const isReflective =
+    /\b(fate|destiny|future|behind|cross(\s+the)?\s+line|hides|unknown|horizon|abyss|purpose|meaning|journey|path|choices?|fear|courage|hesitate|wonder|reflection|whisper|silence|darkness|universe|takdir|nasib|masa\s+depan|melewati\s+batas|merenung|filosofis)\b/i.test(
+      lower
+    ) || /\b(takdir|nasib|masa\s+depan|melewati\s+batas|merenung|filosofis)\b/i.test(translatedMeaning);
+
+  if (isReflective && classifiedType !== 'movie' && classifiedType !== 'song') {
+    const reflectivePool = [
+      `"Reflecting quietly on what lies ahead, she whispered: '${input}'" ("Merenung tenang soal apa yang menanti di depan, dia berbisik: '${translatedMeaning}'")`,
+      `"Standing before an unknown journey, you can say: '${input}'" ("Berdiri di hadapan perjalanan yang belum pasti, lu bisa bilang: '${translatedMeaning}'")`,
+      `"In moments of deep personal reflection: '${input}'" ("Di momen perenungan diri yang mendalam: '${translatedMeaning}'")`,
+      `"Contemplating the upcoming turn of events, I murmured: '${input}'" ("Merenungkan arah masa depan yang bakal terjadi, gw bergumam: '${translatedMeaning}'")`,
+      `"When pondering the path ahead, she said: '${input}'" ("Pas lagi mikirin jalan di depan, dia bilang: '${translatedMeaning}'")`,
+      `"Looking into the distance with a quiet heart: '${input}'" ("Menatap ke kejauhan dengan hati yang tenang: '${translatedMeaning}'")`,
+    ];
+    const picked = pickVariedTemplate('smart_reflective_pool', reflectivePool);
+    const validated = validateAndSanitizeExample(picked, input, translatedMeaning);
+
     return {
-      arti: `Pertanyaan santai: "${translatedMeaning}?"`,
+      arti: translatedMeaning,
       cara_baca: phonetics,
-      penggunaan: [
-        `"Hey, ${input}" she asked with a smile. ("Hei, ${translatedMeaning}?" tanyanya sambil tersenyum.)`,
-        `Don't hesitate to ask: "${input}" (Jangan ragu buat nanya: "${translatedMeaning}?")`,
-        `"Before we dive in, let me ask you: '${input}'" ("Sebelum kita mulai, coba gw nanya: '${translatedMeaning}?'")`
-      ],
-      catatan: `Tbh kalimat tanya ini asik banget dipake pas lagi nongkrong atau chat santai sama temen akrab. Gunakan intonasi naik di akhir kalimat biar terdengar luwes dan ramah!`,
-      maknaFilosofis: `Pertanyaan santai seperti ini berfungsi sebagai 'ice breaker' yang efektif. Dalam psikologi sosial, bertanya hal sederhana menunjukkan perhatian hangat yang membuat lawan bicara merasa dihargai.`,
+      penggunaan: [validated].slice(0, Math.max(1, exampleCount)),
+      catatan: generateDynamicRantauNote(input, translatedMeaning, 'reflective_philosophical', words.length),
+      maknaFilosofis: generateDynamicMaknaFilosofis(input, translatedMeaning, 'reflective_philosophical', words.length),
       confidenceLevel: 'medium',
       isInstant: true,
       success: true
     };
   }
 
-  // 4. Regular Statement or Phrase (High Confidence Only, Context-Aware Jaksel Tone)
+  // 4. Question Sentence Analysis (6 variations, clean & grounded)
+  const isQuestion = input.endsWith('?') || /^(what|why|how|where|when|who|which|is|are|am|do|does|did|can|could|will|would|should|have|has|had)\b/i.test(input);
+
+  if (isQuestion) {
+    const questionPool = [
+      `"Pausing for a second, she asked genuinely: '${input}'" ("Sempat terdiam sejenak, dia bertanya dengan tulus: '${translatedMeaning}'")`,
+      `"Curious about what was happening, he asked: '${input}'" ("Penasaran sama apa yang lagi terjadi, dia nanya: '${translatedMeaning}'")`,
+      `"A straightforward question you can naturally ask: '${input}'" ("Pertanyaan lugas yang bisa lu lontarkan secara alami: '${translatedMeaning}'")`,
+      `"To clarify the situation without awkwardness, just ask: '${input}'" ("Biar situasinya jelas tanpa canggung, tinggal tanya: '${translatedMeaning}'")`,
+      `"She turned around and wondered aloud: '${input}'" ("Dia noleh dan bertanya-tanya penasaran: '${translatedMeaning}'")`,
+      `"In honest conversation, you might ask: '${input}'" ("Di obrolan yang jujur, lu bisa nanya: '${translatedMeaning}'")`,
+    ];
+    const picked = pickVariedTemplate('smart_question_pool', questionPool);
+    const validated = validateAndSanitizeExample(picked, input, translatedMeaning);
+
+    return {
+      arti: translatedMeaning,
+      cara_baca: phonetics,
+      penggunaan: [validated].slice(0, Math.max(1, exampleCount)),
+      catatan: generateDynamicRantauNote(input, translatedMeaning, 'casual_chill', words.length),
+      maknaFilosofis: generateDynamicMaknaFilosofis(input, translatedMeaning, 'casual_chill', words.length),
+      confidenceLevel: 'medium',
+      isInstant: true,
+      success: true
+    };
+  }
+
+  // 5. Regular Statement or Phrase (High Confidence Only, Context-Aware Jaksel Tone)
   const isAngry = /angry|hate|annoyed|mad|pissed|toxic|benci|marah|kesel/i.test(lower) || /benci|marah|kesel/i.test(translatedMeaning);
   const isSad = /sad|cry|alone|lonely|hurt|tears|miss|sedih|nangis|kecewa|sepi/i.test(lower) || /sedih|nangis|kecewa/i.test(translatedMeaning);
   const isRomantic =
-    /love|sweet|crush|heart|hearts|darling|soul|souls|light|lights|shine|glow|cherish|adore|precious|my\s+world|mean\s+the\s+world|means\s+the\s+world|cinta|sayang|cantik|manis|romantis|jiwa|jiwaku|hatiku|kesayangan|belahan\s+jiwa/i.test(
+    /love|sweet|crush|heart|hearts|darling|soul|souls|cherish|adore|precious|my\s+world|mean\s+the\s+world|means\s+the\s+world|cinta|sayang|cantik|manis|romantis|jiwa|jiwaku|hatiku|kesayangan|belahan\s+jiwa/i.test(
       lower
     ) ||
-    /cinta|sayang|kasih|jiwa|hati|terang\s+dalam\s+jiwa/i.test(translatedMeaning);
+    /cinta|sayang|kasih|jiwa|hati/i.test(translatedMeaning);
 
   if (isAngry) {
+    const angryPool = [
+      `"After thinking it through, I stood my ground and said: '${input}'" ("Abis mikir panjang, gw pasang batasan tegas dan bilang: '${translatedMeaning}'")`,
+      `"Looking him right in the eye, she declared: '${input}'" ("Natap langsung ke matanya, dia tegas bilang: '${translatedMeaning}'")`,
+      `"Setting a clear boundary once and for all: '${input}'" ("Masang batasan jelas biar beres: '${translatedMeaning}'")`,
+      `"Tired of being taken for granted, he blurted out: '${input}'" ("Udah capek disepelein terus, dia langsung ngomong: '${translatedMeaning}'")`,
+      `"I refuse to tolerate this any longer: '${input}'" ("Gw nolak buat mentoleransi ini lebih lama lagi: '${translatedMeaning}'")`,
+      `"Enough is enough, so I made it clear: '${input}'" ("Cukup ya cukup, jadi gw pertegas: '${translatedMeaning}'")`,
+    ];
+    const picked = pickVariedTemplate('smart_angry_pool', angryPool);
+    const validated = validateAndSanitizeExample(picked, input, translatedMeaning);
+
     return {
-      arti: `Makna emosional: "${translatedMeaning}"`,
+      arti: translatedMeaning,
       cara_baca: phonetics,
-      penggunaan: [
-        `"After all the drama, I just wanna say '${input}'." ("Abis semua drama yang kejadian, gw cuma mau bilang '${translatedMeaning}'.")`,
-        `"She stood her ground and said: '${input}'." ("Dia pasang batasan tegas dan bilang: '${translatedMeaning}'.")`,
-        `"A: 'Are you still mad?' — B: 'Honestly, ${input}!' (A: 'Lu masih kesel?' — B: 'Jujur ya, ${translatedMeaning}!')"`
-      ],
-      catatan: `Nah ini nih ungkapan yang tegas dan to-the-point pas lu lagi ngerasa emosi atau kecewa. Cocok buat menetapkan boundaries yang jelas sama orang lain!`,
-      maknaFilosofis: `Secara psikologis, mengekspresikan rasa kesal secara verbal adalah bentuk pertahanan diri (self-advocacy). Lu berani mengungkapkan ketidaknyamanan lu daripada memendamnya sendirian.`,
+      penggunaan: [validated].slice(0, Math.max(1, exampleCount)),
+      catatan: generateDynamicRantauNote(input, translatedMeaning, 'angry_breakup', words.length),
+      maknaFilosofis: generateDynamicMaknaFilosofis(input, translatedMeaning, 'angry_breakup', words.length),
       confidenceLevel: 'medium',
       isInstant: true,
       success: true
@@ -1303,16 +1408,23 @@ export function generateSmartSentenceAnalysis(rawInput) {
   }
 
   if (isSad) {
+    const sadPool = [
+      `"Late at night when everything goes quiet, you might feel: '${input}'" ("Pas larut malam saat suasana hening, lu mungkin ngerasa: '${translatedMeaning}'")`,
+      `"Holding back a heavy sigh, she admitted: '${input}'" ("Nahan napas berat, dia ngaku: '${translatedMeaning}'")`,
+      `"Whenever old memories resurface, all I can say is: '${input}'" ("Tiap kali memori lama muncul lagi, yang bisa gw bilang cuma: '${translatedMeaning}'")`,
+      `"Sitting alone with overwhelming thoughts: '${input}'" ("Duduk sendirian dengan pikiran berkecamuk: '${translatedMeaning}'")`,
+      `"It hurts to admit it, but honestly: '${input}'" ("Sakit emang buat ngakuinnya, tapi sejujurnya: '${translatedMeaning}'")`,
+      `"In a moment of vulnerability, he confessed: '${input}'" ("Di momen batin lagi rapuh, dia ngaku: '${translatedMeaning}'")`,
+    ];
+    const picked = pickVariedTemplate('smart_sad_pool', sadPool);
+    const validated = validateAndSanitizeExample(picked, input, translatedMeaning);
+
     return {
-      arti: `Makna mendalam: "${translatedMeaning}"`,
+      arti: translatedMeaning,
       cara_baca: phonetics,
-      penggunaan: [
-        `"It was 2 AM when I realized: '${input}'." ("Pas jam 2 pagi gw baru bener-bener sadar: '${translatedMeaning}'.")`,
-        `"Whenever this song plays, '${input}' hits differently." ("Tiap kali lagu ini keputer, '${translatedMeaning}' rasanya ngena banget.")`,
-        `"I tried to keep it inside, but '${input}'." ("Gw coba pendem sendiri, tapi nyatanya '${translatedMeaning}'.")`
-      ],
-      catatan: `Honestly frasa ini punya nuansa melancholic yang dalem banget. Relate banget sama situasi galau jam 2 pagi atau pas lu lagi overthinking di kamar sendirian.`,
-      maknaFilosofis: `Mengakui rasa sedih atau kehilangan adalah langkah pertama dari proses penyembuhan diri (healing). Validasi perasaan lu sendiri tanpa perlu merasa lemah.`,
+      penggunaan: [validated].slice(0, Math.max(1, exampleCount)),
+      catatan: generateDynamicRantauNote(input, translatedMeaning, 'sad_heartbroken', words.length),
+      maknaFilosofis: generateDynamicMaknaFilosofis(input, translatedMeaning, 'sad_heartbroken', words.length),
       confidenceLevel: 'medium',
       isInstant: true,
       success: true
@@ -1320,33 +1432,92 @@ export function generateSmartSentenceAnalysis(rawInput) {
   }
 
   if (isRomantic) {
+    const romanticPool = [
+      `"I don't say sweet things often, but honestly: '${input}'" ("Gw gak sering ngomong manis, tapi beneran deh: '${translatedMeaning}'")`,
+      `"Every time I look into your eyes, I think: '${input}'" ("Tiap kali gw natap mata lu, gw mikir: '${translatedMeaning}'")`,
+      `"Holding hands quietly under the evening sky: '${input}'" ("Genggaman tangan tenang di bawah langit sore: '${translatedMeaning}'")`,
+      `"A genuine reminder of how much you mean to me: '${input}'" ("Pengingat tulus soal betapa berartinya lu buat gw: '${translatedMeaning}'")`,
+      `"Softly sharing what has been on my heart: '${input}'" ("Dengan lembut ngungkapin apa yang ada di hati gw: '${translatedMeaning}'")`,
+      `"No grand gestures needed, just simple honesty: '${input}'" ("Gak butuh gaya-gayaan berlebihan, cukup kejujuran sederhana: '${translatedMeaning}'")`,
+    ];
+    const picked = pickVariedTemplate('smart_romantic_pool', romanticPool);
+    const validated = validateAndSanitizeExample(picked, input, translatedMeaning);
+
     return {
-      arti: `Makna hangat: "${translatedMeaning}"`,
+      arti: translatedMeaning,
       cara_baca: phonetics,
-      penggunaan: [
-        `"I don't say this often, but '${input}'." ("Gw gak sering ngomong gini, tapi beneran deh '${translatedMeaning}'.")`,
-        `"Every time I see you smile, '${input}'." ("Tiap kali gw liat lu senyum, rasanya '${translatedMeaning}'.")`,
-        `"A: 'Why are you smiling?' — B: 'Because ${input}!' (A: 'Ngapain lu senyum-senyum?' — B: 'Soalnya ${translatedMeaning}!')"`
-      ],
-      catatan: `As you know, ungkapan kayak gini manis banget diucapin ke seseorang yang spesial. Luwes, tulus, dan gak terdengar kaku atau lebay!`,
-      maknaFilosofis: `Keterbukaan emosional untuk memuji atau menyatakan rasa sayang adalah bentuk keberanian sosial. Ini membangun ikatan afeksi yang kuat dan menciptakan rasa aman dalam hubungan.`,
+      penggunaan: [validated].slice(0, Math.max(1, exampleCount)),
+      catatan: generateDynamicRantauNote(input, translatedMeaning, 'romantic_love', words.length),
+      maknaFilosofis: generateDynamicMaknaFilosofis(input, translatedMeaning, 'romantic_love', words.length),
       confidenceLevel: 'medium',
       isInstant: true,
       success: true
     };
   }
 
-  // Casual general statement
+  // Casual general statement (situational dialogues, never meta-tutorials)
+  const isSingleWord = words.length === 1;
+  const isCorrelative = /^the\s+(more|less|sooner|harder|longer|better|greater)\b/i.test(input);
+  const isFirstPerson = /^(i|we|my|our)\b/i.test(input) || /\b(i'm|i've|i'd|i\s+feel|i\s+think)\b/i.test(input);
+  const isSecondPerson = /^(you|your)\b/i.test(input) || /\b(you're|you've|you'd)\b/i.test(input);
+
+  let generalPool = [];
+  if (isSingleWord) {
+    generalPool = [
+      `"Let's make sure to focus on '${input}' before moving to the next stage." ("Yuk pastiin kita fokus ke '${translatedMeaning}' sebelum lanjut ke tahap berikutnya.")`,
+      `"He emphasized '${input}' during our discussion today." ("Dia negasin kata '${input}' pas obrolan kita tadi.")`,
+      `"Understanding '${input}' in its proper context saves a lot of confusion." ("Paham konteks '${input}' yang bener nyelametin lu dari salah paham.")`,
+      `"A handy term to know: '${input}'." ("Istilah praktis buat dipahami: '${input}'.")`,
+      `"In daily communication, native speakers use '${input}' quite often." ("Di komunikasi sehari-hari, penutur asli cukup sering pake '${input}'.")`,
+      `"Keep '${input}' in mind whenever this issue comes up." ("Inget baik-baik kata '${input}' tiap kali isu ini muncul.")`,
+    ];
+  } else if (isCorrelative) {
+    generalPool = [
+      `"The truth is, ${input}, the more complicated things get." ("Kenyataannya, ${translatedMeaning}, situasinya malah makin rumit.")`,
+      `"I realized that ${input}, the harder it becomes to find any real clue." ("Gw sadar kalau ${translatedMeaning}, makin susah buat nemu petunjuk jelas.")`,
+      `"It felt like chasing shadows; ${input}, the less sense any of this makes." ("Rasanya kayak ngejar bayangan; ${translatedMeaning}, makin gak masuk akal semua ini.")`,
+      `"She told me that ${input}, the further away the truth seems." ("Dia bilang ke gw kalau ${translatedMeaning}, kebenarannya malah kelihatan makin jauh.")`,
+      `"No matter how fast we move, ${input}, the more exhausted we feel." ("Secepet apapun kita jalan, ${translatedMeaning}, rasanya malah makin capek.")`,
+      `"It became obvious that ${input}, the more tension grew between them." ("Makin jelas kalau ${translatedMeaning}, tensi di antara mereka malah makin kerasa.")`,
+    ];
+  } else if (isFirstPerson) {
+    generalPool = [
+      `"Honestly, ${input}, and that's why I need to take a step back." ("Jujur aja, ${translatedMeaning}, dan itu alasannya gw perlu ambil jeda sejenak.")`,
+      `"I had to admit that ${input}, even though it wasn't easy to say out loud." ("Gw harus ngakuin kalau ${translatedMeaning}, meskipun gak gampang buat diucapin.")`,
+      `"During our discussion, she paused when I said: '${input}.'" ("Pas obrolan kita, dia sempat terdiam waktu gw bilang: '${translatedMeaning}.'")`,
+      `"To be completely real with you, ${input}." ("Biar bener-bener jujur sama lu ya, ${translatedMeaning}.")`,
+      `"Sitting there in silence, all I could think was: '${input}.'" ("Duduk diam di sana, yang ada di pikiran gw cuma: '${translatedMeaning}.'")`,
+      `"I wanted to make sure everyone understood that ${input}." ("Gw pengen pastiin semua orang paham kalau ${translatedMeaning}.")`,
+    ];
+  } else if (isSecondPerson) {
+    generalPool = [
+      `"You can't just expect everything to be fine when ${input}." ("Lu gak bisa cuma ngarepin semuanya baik-baik aja pas ${translatedMeaning}.")`,
+      `"I noticed that ${input}, so I wanted to check in on you." ("Gw ngeh kalau ${translatedMeaning}, makanya gw pengen nanyain kabar lu.")`,
+      `"Before making any hasty decisions, remember that ${input}." ("Sebelum ambil keputusan gegabah, inget kalau ${translatedMeaning}.")`,
+      `"She looked at you and said: '${input},' which changed the whole mood." ("Dia natap lu dan bilang: '${translatedMeaning},' yang langsung ngubah suasana.")`,
+      `"It's important to realize that ${input} before it's too late." ("Penting buat sadar kalau ${translatedMeaning} sebelum semuanya terlambat.")`,
+      `"They all agreed that ${input} was the main issue here." ("Mereka semua sepakat kalau ${translatedMeaning} emang jadi isu utamanya.")`,
+    ];
+  } else {
+    generalPool = [
+      `"In situations like this, remember that ${input}." ("Di situasi kayak gini, inget kalau ${translatedMeaning}.")`,
+      `"The conversation shifted when someone mentioned: '${input}.'" ("Arah obrolan langsung berubah pas ada yang nyeletuk: '${translatedMeaning}.'")`,
+      `"It's pretty clear that ${input} under these circumstances." ("Cukup jelas kalau ${translatedMeaning} di kondisi kayak gini.")`,
+      `"She smiled gently and said: '${input}.'" ("Dia senyum tipis terus bilang: '${translatedMeaning}.'")`,
+      `"Everyone in the room agreed that ${input}." ("Semua orang di ruangan itu setuju kalau ${translatedMeaning}.")`,
+      `"Looking back at what happened, ${input} makes total sense now." ("Kalo diinget lagi apa yang kejadian, ${translatedMeaning} sekarang masuk akal banget.")`,
+    ];
+  }
+
+  const picked = pickVariedTemplate('smart_general_pool', generalPool);
+  const validated = validateAndSanitizeExample(picked, input, translatedMeaning);
+
   return {
-    arti: `Makna santai: "${translatedMeaning}"`,
+    arti: translatedMeaning,
     cara_baca: phonetics,
-    penggunaan: [
-      `"During our hangout, my friend said: '${input}'." ("Pas lagi nongkrong santai, temen gw bilang: '${translatedMeaning}'.")`,
-      `"In daily life, it's always good to remember: '${input}'." ("Di kehidupan sehari-hari, bagus banget buat selalu inget: '${translatedMeaning}'.")`,
-      `"A: 'What's the takeaway here?' — B: 'Basically, ${input}.' (A: 'Jadi intinya gimana?' — B: 'Basically ya, ${translatedMeaning}.')"`
-    ],
-    catatan: `Tbh frasa ini tuh salah satu yang paling gampang nyangkut di kepala dan luwes banget dipake pas ngobrol santai atau chat-chatan sama temen sebaya!`,
-    maknaFilosofis: `Komunikasi kasual yang efektif terletak pada kesederhanaan penyampaian. Menggunakan frasa yang lugas membuat obrolan terasa hangat, akrab, dan tanpa jarak sosial yang kaku.`,
+    penggunaan: [validated].slice(0, Math.max(1, exampleCount)),
+    catatan: generateDynamicRantauNote(input, translatedMeaning, 'casual_chill', words.length),
+    maknaFilosofis: generateDynamicMaknaFilosofis(input, translatedMeaning, 'casual_chill', words.length),
     confidenceLevel: 'medium',
     isInstant: true,
     success: true

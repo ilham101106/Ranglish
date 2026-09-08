@@ -10,6 +10,8 @@ import {
   Bookmark,
   Lightbulb,
   RefreshCw,
+  RotateCw,
+  RotateCcw,
   X,
   FileText,
   Zap,
@@ -19,18 +21,30 @@ import {
   Gauge,
   ArrowRight,
   ArrowDown,
+  ArrowUpRight,
   Share2,
+  Film,
+  Music,
+  Smartphone,
+  MessageSquare,
 } from "lucide-react";
-import { lookupVocabulary, lookupWordBreakdown } from "../services/openrouter";
+import {
+  lookupVocabulary,
+  lookupWordBreakdown,
+  regenerateSingleExample,
+} from "../services/openrouter";
 import { generateWordBreakdownFallback } from "../services/freeTranslator";
 import { speakText, stopSpeech } from "../services/speech";
 import { saveVocabItem } from "../services/storage";
-import WordBreakdownGrid from "./WordBreakdownGrid";
+import WordBreakdownDrawer from "./WordBreakdownDrawer";
+import RantauInsightFlipCard from "./RantauInsightFlipCard";
+import CategoryIcon from "./CategoryIcon";
 import {
   DICTIONARY,
   registerNewLearnedWord,
   getVocabBankStats,
   syncLearnedVocabBank,
+  getInstantAnalysis,
 } from "../services/instantEngine";
 import { classifyText, sanitizeResultPayload } from "../utils/textClassifier";
 
@@ -155,7 +169,22 @@ export default function VocabLookup({ onHistoryUpdated }) {
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved) {
         const parsed = JSON.parse(saved);
-        if (parsed && parsed.result) return parsed.result;
+        if (parsed && parsed.result) {
+          const res = parsed.result;
+          const isStale =
+            (res.catatan &&
+              (res.catatan.includes("Bikin obrolan dua arah") ||
+                res.catatan.includes("luwes banget dipake pas lagi nongkrong") ||
+                res.catatan.includes("obrolan dua arah jadi lebih hidup"))) ||
+            (Array.isArray(res.penggunaan) &&
+              res.penggunaan.some((ex) => /coffee catchup/i.test(ex)));
+
+          if (isStale) {
+            localStorage.removeItem(STORAGE_KEY);
+            return null;
+          }
+          return res;
+        }
       }
     } catch (e) {
       console.warn("Error reading result from localStorage:", e);
@@ -177,6 +206,8 @@ export default function VocabLookup({ onHistoryUpdated }) {
   const [wordBreakdown, setWordBreakdown] = useState([]);
   const [isLoadingBreakdown, setIsLoadingBreakdown] = useState(false);
   const [hasGeneratedBreakdown, setHasGeneratedBreakdown] = useState(false);
+  const [isBreakdownDrawerOpen, setIsBreakdownDrawerOpen] = useState(false);
+  const [isRegeneratingExample, setIsRegeneratingExample] = useState(false);
   const searchContainerRef = useRef(null);
   const wordBreakdownRef = useRef(null);
   const [loadingProgressMessage, setLoadingProgressMessage] = useState(
@@ -284,7 +315,7 @@ export default function VocabLookup({ onHistoryUpdated }) {
     }
   };
 
-  const handleLookup = async (overrideWord = null) => {
+  const handleLookup = async (overrideWord = null, options = {}) => {
     const target = overrideWord || inputText;
     if (!target.trim()) return;
 
@@ -300,18 +331,17 @@ export default function VocabLookup({ onHistoryUpdated }) {
     setPlayingExampleIndex(null);
 
     try {
-      const raw = await lookupVocabulary(target.trim());
+      const cleanTarget = target.trim();
+      const raw = await lookupVocabulary(cleanTarget, options);
       const unwrap = raw?.data || raw;
       const data = sanitizeResultPayload(unwrap);
-
-      const cleanTarget = target.trim();
 
       if (data && data.displayContent && data.savedContent) {
         // 🎵 Dual-payload for song lyrics:
         saveVocabItem(data.savedContent, cleanTarget);
         setResult(data.displayContent);
       } else if (!data || !data.arti) {
-        const fallback = sanitizeResultPayload(getInstantAnalysis(cleanTarget));
+        const fallback = sanitizeResultPayload(getInstantAnalysis(cleanTarget, options));
         const itemToSave = { ...fallback, teks_asli: fallback.teks_asli || cleanTarget };
         saveVocabItem(itemToSave, cleanTarget);
         setResult(itemToSave);
@@ -331,7 +361,7 @@ export default function VocabLookup({ onHistoryUpdated }) {
     } catch (err) {
       console.error("Lookup error:", err);
       const cleanTarget = target.trim();
-      const fallback = sanitizeResultPayload(getInstantAnalysis(cleanTarget));
+      const fallback = sanitizeResultPayload(getInstantAnalysis(cleanTarget, options));
       const itemToSave = { ...fallback, teks_asli: fallback.teks_asli || cleanTarget };
       saveVocabItem(itemToSave, cleanTarget);
       setResult(itemToSave);
@@ -350,19 +380,24 @@ export default function VocabLookup({ onHistoryUpdated }) {
     const activeText =
       result?.correctedWord ||
       result?.kata_terkoreksi ||
+      result?.word ||
+      result?.focusPhrase ||
+      result?.teks_asli ||
       searchedWord ||
       inputText.trim();
 
     if (!activeText) return;
 
-    const rate = audioSpeed === "slow" ? 0.72 : 0.95;
+    const rate = audioSpeed === "slow" ? 0.75 : 1.0;
+
+    setIsAudioPlaying(true);
 
     speakText(activeText, {
       rate,
+      onStart: () => setIsAudioPlaying(true),
       onEnd: () => setIsAudioPlaying(false),
       onError: () => setIsAudioPlaying(false),
     });
-    setIsAudioPlaying(true);
   };
 
   const handleSpeedChange = (newSpeed) => {
@@ -371,17 +406,21 @@ export default function VocabLookup({ onHistoryUpdated }) {
       const activeText =
         result?.correctedWord ||
         result?.kata_terkoreksi ||
+        result?.word ||
+        result?.focusPhrase ||
+        result?.teks_asli ||
         searchedWord ||
         inputText.trim();
       if (activeText) {
         stopSpeech();
-        const rate = newSpeed === "slow" ? 0.72 : 0.95;
+        const rate = newSpeed === "slow" ? 0.75 : 1.0;
+        setIsAudioPlaying(true);
         speakText(activeText, {
           rate,
+          onStart: () => setIsAudioPlaying(true),
           onEnd: () => setIsAudioPlaying(false),
           onError: () => setIsAudioPlaying(false),
         });
-        setIsAudioPlaying(true);
       }
     }
   };
@@ -397,10 +436,14 @@ export default function VocabLookup({ onHistoryUpdated }) {
     setIsAudioPlaying(false);
     setPlayingExampleIndex(idx);
 
-    const rate = audioSpeed === "slow" ? 0.72 : 0.95;
+    // Only speak the pure English portion (exclude Indonesian translation inside parentheses)
+    const pureEnText = sentenceText.replace(/\s*\([^)]*\).*$/, "").trim();
 
-    speakText(sentenceText, {
+    const rate = audioSpeed === "slow" ? 0.75 : 1.0;
+
+    speakText(pureEnText || sentenceText, {
       rate,
+      onStart: () => setPlayingExampleIndex(idx),
       onEnd: () => setPlayingExampleIndex(null),
       onError: () => setPlayingExampleIndex(null),
     });
@@ -467,35 +510,10 @@ export default function VocabLookup({ onHistoryUpdated }) {
     }
   };
 
-  const handleScrollToBreakdown = () => {
-    const triggerScroll = () => {
-      if (wordBreakdownRef.current) {
-        wordBreakdownRef.current.scrollIntoView({
-          behavior: "smooth",
-          block: "center",
-        });
-        wordBreakdownRef.current.classList.add(
-          "ring-2",
-          "ring-[#5842f5]",
-          "ring-offset-2",
-          "rounded-[22px]"
-        );
-        setTimeout(() => {
-          wordBreakdownRef.current?.classList.remove(
-            "ring-2",
-            "ring-[#5842f5]",
-            "ring-offset-2",
-            "rounded-[22px]"
-          );
-        }, 1500);
-      }
-    };
-
+  const handleOpenBreakdownDrawer = () => {
+    setIsBreakdownDrawerOpen(true);
     if (!hasGeneratedBreakdown && !isLoadingBreakdown) {
       handleGenerateBreakdown();
-      setTimeout(triggerScroll, 150);
-    } else {
-      triggerScroll();
     }
   };
 
@@ -508,14 +526,56 @@ export default function VocabLookup({ onHistoryUpdated }) {
     ];
     const pick = allOptions[Math.floor(Math.random() * allOptions.length)];
     setInputText(pick);
-    handleLookup(pick);
+    const options = SONG_LYRICS.includes(pick)
+      ? { isFromSongChip: true }
+      : MOVIE_DIALOGUES.includes(pick)
+      ? { isFromMovieChip: true }
+      : {};
+    handleLookup(pick, options);
   };
 
   const handleRandomCategory = (categoryArray) => {
     const pick =
       categoryArray[Math.floor(Math.random() * categoryArray.length)];
     setInputText(pick);
-    handleLookup(pick);
+    const options =
+      categoryArray === SONG_LYRICS
+        ? { isFromSongChip: true }
+        : categoryArray === MOVIE_DIALOGUES
+        ? { isFromMovieChip: true }
+        : {};
+    handleLookup(pick, options);
+  };
+
+  const handleRegenerateExample = () => {
+    if (!result || isRegeneratingExample) return;
+    setIsRegeneratingExample(true);
+    try {
+      const activeText =
+        result.correctedWord ||
+        result.kata_terkoreksi ||
+        searchedWord ||
+        inputText.trim();
+      const classification = classifyText(activeText);
+      const newEx = regenerateSingleExample(activeText, result, classification.type);
+      if (newEx) {
+        setResult((prev) => {
+          if (!prev) return prev;
+          const updated = {
+            ...prev,
+            penggunaan: [newEx],
+          };
+          saveVocabItem(updated, activeText);
+          return updated;
+        });
+      }
+    } catch (err) {
+      console.warn("Failed to regenerate example:", err);
+    } finally {
+      setTimeout(() => {
+        setIsRegeneratingExample(false);
+      }, 350);
+    }
   };
 
   // Helper to parse English and Indonesian lines in examples
@@ -678,16 +738,18 @@ export default function VocabLookup({ onHistoryUpdated }) {
               >
                 <div className="flex items-center gap-2.5 flex-1 min-w-0 pr-3">
                   <span
-                    className={`text-[9.5px] font-extrabold px-2 py-0.5 rounded-md border ${item.classification.color} shrink-0`}
+                    className={`text-[9.5px] font-extrabold px-2 py-0.5 rounded-md border ${item.classification.color} shrink-0 flex items-center gap-1`}
                   >
-                    {item.classification.icon} {item.classification.label}
+                    <CategoryIcon type={item.classification.type} className="w-2.5 h-2.5 shrink-0" />
+                    <span>{item.classification.label}</span>
                   </span>
                   <span className="font-bold text-sm theme-text-main group-hover:text-[#5842f5] transition truncate">
                     {item.word}
                   </span>
                   {item.cara_baca && (
-                    <span className="text-[11px] theme-text-faint hidden sm:inline truncate">
-                      🗣️ {item.cara_baca}
+                    <span className="text-[11px] theme-text-faint hidden sm:inline-flex items-center gap-1 truncate">
+                      <Volume2 className="w-3 h-3 text-[#5842f5] shrink-0" />
+                      <span>{item.cara_baca}</span>
                     </span>
                   )}
                 </div>
@@ -707,7 +769,8 @@ export default function VocabLookup({ onHistoryUpdated }) {
       <div className="space-y-2 pt-1">
         <div className="flex items-center gap-2">
           <span className="text-[11px] font-extrabold tracking-wider text-[#5842f5] uppercase flex items-center gap-1.5">
-            <span>💡</span> LAGI BINGUNG MAU CARI APA? KLIK CONTOH SIAP PAKE NIH:
+            <Lightbulb className="w-3.5 h-3.5 text-[#5842f5]" />
+            <span>LAGI BINGUNG MAU CARI APA? KLIK CONTOH SIAP PAKE NIH:</span>
           </span>
           <span className="text-[9.5px] font-extrabold px-2 py-0.5 rounded-md bg-[#5842f5]/15 text-[#5842f5] border border-[#5842f5]/30">
             Contoh Cepat
@@ -722,8 +785,8 @@ export default function VocabLookup({ onHistoryUpdated }) {
             className="text-xs sm:text-[12.5px] font-extrabold px-3.5 py-1.5 rounded-full bg-gradient-to-r from-amber-500/15 to-violet-500/15 hover:from-amber-500/25 hover:to-violet-500/25 border border-amber-500/40 text-amber-700 dark:text-amber-300 transition-all duration-150 flex items-center gap-1.5 shadow-2xs hover:scale-[1.03] active:scale-[0.97]"
             title="Pilih kata / dialog acak dari Bank Kosakata"
           >
-            <Shuffle className="w-3.5 h-3.5" />
-            <span>🎲 Acak Kata Keren</span>
+            <Shuffle className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
+            <span>Acak Kata Keren</span>
           </button>
 
           {/* Chip 2 */}
@@ -733,10 +796,9 @@ export default function VocabLookup({ onHistoryUpdated }) {
             title="Pilih kutipan dialog film / serial keren secara acak"
             className="text-xs sm:text-[12.5px] font-bold px-3.5 py-1.5 rounded-full theme-bg-card hover:theme-bg-subtle border theme-border hover:border-[#5842f5] theme-text-muted hover:theme-text-main transition-all duration-150 flex items-center gap-1.5 shadow-2xs hover:scale-[1.02] active:scale-[0.98] group"
           >
-            <span>🎬 Dialog Film Keren</span>
-            <span className="text-[10px] theme-text-faint group-hover:text-[#5842f5] transition-colors">
-              ↗
-            </span>
+            <Film className="w-3.5 h-3.5 text-amber-500" />
+            <span>Dialog Film Keren</span>
+            <ArrowUpRight className="w-3.5 h-3.5 stroke-[2.5] theme-text-faint group-hover:text-[#5842f5] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
           </button>
 
           {/* Chip 3 */}
@@ -746,10 +808,9 @@ export default function VocabLookup({ onHistoryUpdated }) {
             title="Pilih kutipan lirik lagu favorit, romantis, & bermakna secara acak"
             className="text-xs sm:text-[12.5px] font-bold px-3.5 py-1.5 rounded-full theme-bg-card hover:theme-bg-subtle border theme-border hover:border-[#5842f5] theme-text-muted hover:theme-text-main transition-all duration-150 flex items-center gap-1.5 shadow-2xs hover:scale-[1.02] active:scale-[0.98] group"
           >
-            <span>🎵 Lirik Lagu Favorit</span>
-            <span className="text-[10px] theme-text-faint group-hover:text-[#5842f5] transition-colors">
-              ↗
-            </span>
+            <Music className="w-3.5 h-3.5 text-pink-500" />
+            <span>Lirik Lagu Favorit</span>
+            <ArrowUpRight className="w-3.5 h-3.5 stroke-[2.5] theme-text-faint group-hover:text-[#5842f5] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
           </button>
 
           {/* Chip 4 */}
@@ -759,10 +820,9 @@ export default function VocabLookup({ onHistoryUpdated }) {
             title="Pilih slang gaul viral medsos & TikTok"
             className="text-xs sm:text-[12.5px] font-bold px-3.5 py-1.5 rounded-full theme-bg-card hover:theme-bg-subtle border theme-border hover:border-[#5842f5] theme-text-muted hover:theme-text-main transition-all duration-150 flex items-center gap-1.5 shadow-2xs hover:scale-[1.02] active:scale-[0.98] group"
           >
-            <span>📱 Slang Sosmed FYP</span>
-            <span className="text-[10px] theme-text-faint group-hover:text-[#5842f5] transition-colors">
-              ↗
-            </span>
+            <Smartphone className="w-3.5 h-3.5 text-violet-500" />
+            <span>Slang Sosmed FYP</span>
+            <ArrowUpRight className="w-3.5 h-3.5 stroke-[2.5] theme-text-faint group-hover:text-[#5842f5] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
           </button>
 
           {/* Chip 5 */}
@@ -772,10 +832,9 @@ export default function VocabLookup({ onHistoryUpdated }) {
             title="Pilih frasa percakapan & idiom harian"
             className="text-xs sm:text-[12.5px] font-bold px-3.5 py-1.5 rounded-full theme-bg-card hover:theme-bg-subtle border theme-border hover:border-[#5842f5] theme-text-muted hover:theme-text-main transition-all duration-150 flex items-center gap-1.5 shadow-2xs hover:scale-[1.02] active:scale-[0.98] group"
           >
-            <span>💬 Frasa Sehari-hari</span>
-            <span className="text-[10px] theme-text-faint group-hover:text-[#5842f5] transition-colors">
-              ↗
-            </span>
+            <MessageSquare className="w-3.5 h-3.5 text-emerald-500" />
+            <span>Frasa Sehari-hari</span>
+            <ArrowUpRight className="w-3.5 h-3.5 stroke-[2.5] theme-text-faint group-hover:text-[#5842f5] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
           </button>
         </div>
       </div>
@@ -817,17 +876,17 @@ export default function VocabLookup({ onHistoryUpdated }) {
           const classification = classifyText(activeText);
 
           return (
-            <div className="grid grid-cols-1 lg:grid-cols-[1fr_340px] gap-7 items-start animate-slide-up">
+            <div className="grid grid-cols-1 lg:grid-cols-[1fr_340px] gap-7 items-stretch animate-slide-up">
               {/* Main Column (Left) */}
-              <div className="col-main space-y-6">
-                <div className="theme-bg-card border theme-border rounded-[22px] p-6 sm:p-8 space-y-6 theme-card-shadow relative">
+              <div className="col-main flex flex-col h-full space-y-6">
+                <div className="theme-bg-card border theme-border rounded-[22px] p-6 sm:p-8 space-y-6 theme-card-shadow relative flex-1 flex flex-col">
                   {/* Header Row: Classification Type Badge & Status */}
                   <div className="flex items-center justify-between gap-2.5 flex-wrap">
                     <div className="flex items-center gap-2 flex-wrap">
                       <span
                         className={`text-[11px] font-extrabold px-3 py-1 rounded-full border ${classification.color} flex items-center gap-1.5 shadow-2xs`}
                       >
-                        <span>{classification.icon}</span>
+                        <CategoryIcon type={classification.type} className="w-3.5 h-3.5 shrink-0" />
                         <span>{classification.label}</span>
                       </span>
                       <span className="text-xs theme-text-muted font-bold">
@@ -839,13 +898,15 @@ export default function VocabLookup({ onHistoryUpdated }) {
                       {activeText.trim().split(/\s+/).filter(Boolean).length > 1 && (
                         <button
                           type="button"
-                          onClick={handleScrollToBreakdown}
-                          className="text-xs font-bold px-3 py-1.5 rounded-xl bg-[#5842f5]/15 hover:bg-[#5842f5]/25 border border-[#5842f5]/30 text-[#5842f5] dark:text-[#c7d2fe] transition flex items-center gap-1.5 shadow-2xs hover:scale-[1.02] active:scale-95 group"
-                          title="Lompat & bedah arti kata per kata di bawah"
+                          onClick={handleOpenBreakdownDrawer}
+                          className="text-xs font-bold px-3 py-1.5 rounded-xl bg-[#5842f5]/15 hover:bg-[#5842f5]/25 border border-[#5842f5]/30 text-[#5842f5] dark:text-[#c7d2fe] transition flex items-center gap-2 shadow-2xs hover:scale-[1.02] active:scale-95 group cursor-pointer"
+                          title="Buka panel bedah kata per unit makna di samping"
                         >
                           <Sparkles className="w-3.5 h-3.5 text-[#5842f5] group-hover:rotate-12 transition-transform" />
                           <span>Bedah Kata</span>
-                          <ArrowDown className="w-3.5 h-3.5 text-[#5842f5] group-hover:translate-y-0.5 transition-transform" />
+                          <span className="bg-[#5842f5]/25 text-[#5842f5] dark:text-[#c7d2fe] p-1 rounded-md flex items-center justify-center group-hover:bg-[#5842f5]/40 transition-colors shadow-2xs border border-[#5842f5]/35">
+                            <ArrowRight className="w-3.5 h-3.5 stroke-[3] group-hover:translate-x-0.5 transition-transform" />
+                          </span>
                         </button>
                       )}
 
@@ -915,15 +976,16 @@ export default function VocabLookup({ onHistoryUpdated }) {
 
                     {result.cara_baca && (
                       <div className="inline-block">
-                        <span className="text-xs sm:text-[13px] text-[#4338ca] dark:text-[#c9c2ff] bg-[#5842f5]/10 border border-[#5842f5]/25 px-3 py-1 rounded-full font-medium">
-                          🗣️ {result.cara_baca}
+                        <span className="text-xs sm:text-[13px] text-[#4338ca] dark:text-[#c9c2ff] bg-[#5842f5]/10 border border-[#5842f5]/25 px-3 py-1 rounded-full font-medium inline-flex items-center gap-1.5">
+                          <Volume2 className="w-3.5 h-3.5 text-[#5842f5] shrink-0" />
+                          <span>{result.cara_baca}</span>
                         </span>
                       </div>
                     )}
 
                     {result.focusPhrase && (
                       <div className="text-xs bg-emerald-500/10 border border-emerald-500/25 text-emerald-700 dark:text-emerald-300 px-3.5 py-2 rounded-xl flex items-center gap-2 font-medium">
-                        <span>💾</span>
+                        <Bookmark className="w-3.5 h-3.5 shrink-0" />
                         <span>
                           <strong>Disimpan ke Riwayat:</strong> Frasa kunci{" "}
                           <span className="font-bold underline">"{result.focusPhrase}"</span> (maks. 5 kata) agar mudah dihafal.
@@ -936,7 +998,7 @@ export default function VocabLookup({ onHistoryUpdated }) {
                   <div className="space-y-2 pt-1 border-t theme-border-subtle">
                     <div className="text-[11px] font-extrabold tracking-wider theme-text-muted uppercase flex items-center gap-1.5">
                       <BookOpen className="w-4 h-4 text-[#5842f5]" />
-                      <span>📖 ARTI BAHASA INDONESIA</span>
+                      <span>ARTI BAHASA INDONESIA</span>
                     </div>
                     <p className="text-sm sm:text-base leading-[1.7] theme-text-main font-medium whitespace-pre-line">
                       {result.fullTranslation || result.arti}
@@ -946,9 +1008,25 @@ export default function VocabLookup({ onHistoryUpdated }) {
                   {/* STRICT SECTION 2: CONTOH PENGGUNAAN (CONTEXT) */}
                   {result.penggunaan && result.penggunaan.length > 0 && (
                     <div className="space-y-3 pt-2 border-t theme-border-subtle">
-                      <div className="text-[11px] font-extrabold tracking-wider theme-text-muted uppercase flex items-center gap-1.5">
-                        <FileText className="w-4 h-4 text-amber-500" />
-                        <span>📄 CONTOH PENGGUNAAN (CONTEXT)</span>
+                      <div className="flex items-center justify-between gap-2 flex-wrap">
+                        <div className="text-[11px] font-extrabold tracking-wider theme-text-muted uppercase flex items-center gap-1.5">
+                          <FileText className="w-4 h-4 text-amber-500" />
+                          <span>CONTOH PENGGUNAAN (CONTEXT)</span>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={handleRegenerateExample}
+                          disabled={isRegeneratingExample}
+                          className="text-[11px] font-bold px-2.5 py-1 rounded-lg theme-bg-subtle hover:theme-bg-card border theme-border hover:border-amber-500/50 text-amber-700 dark:text-amber-300 transition-all flex items-center gap-1.5 shadow-2xs hover:scale-[1.02] active:scale-95 disabled:opacity-50"
+                          title="Generate variasi contoh penggunaan lain yang tetap nempel ke konteks"
+                        >
+                          <RefreshCw
+                            className={`w-3 h-3 text-amber-500 ${
+                              isRegeneratingExample ? "animate-spin" : ""
+                            }`}
+                          />
+                          <span>Kurang Pas? Coba Lagi</span>
+                        </button>
                       </div>
 
                       <div className="flex flex-col gap-3">
@@ -1025,34 +1103,67 @@ export default function VocabLookup({ onHistoryUpdated }) {
               </div>
 
               {/* Sidebar Column (Right) */}
-              <div className="col-side flex flex-col gap-4 lg:sticky lg:top-8">
-                {/* Audio Pronunciation Card */}
-                <div className="theme-bg-card border theme-border rounded-[22px] p-5 theme-card-shadow space-y-4">
-                  <div>
-                    <h3 className="text-sm font-extrabold theme-text-main">
-                      Dengarkan Pelafalan
-                    </h3>
-                    <p className="text-[11.5px] theme-text-muted font-medium mt-0.5">
-                      Audio pelafalan aksen native US
-                    </p>
+              <div className="col-side flex flex-col gap-4 h-full">
+                {/* Audio Pronunciation Card - Minimalist & Slim */}
+                <div className="theme-bg-card border theme-border rounded-[18px] p-3.5 theme-card-shadow space-y-2.5 shrink-0">
+                  <div className="flex items-center justify-between gap-2">
+                    <div className="flex items-center gap-1.5 min-w-0">
+                      <Volume2 className="w-4 h-4 text-[#5842f5] shrink-0" />
+                      <span className="text-xs font-extrabold theme-text-main truncate">
+                        Pelafalan Native US
+                      </span>
+                    </div>
+
+                    {/* Speed Selector (Minimalist Pill) */}
+                    <div className="flex items-center p-0.5 rounded-lg border theme-border theme-bg-subtle shrink-0">
+                      <button
+                        type="button"
+                        onClick={() => handleSpeedChange("normal")}
+                        title="Kecepatan normal 1.0x"
+                        aria-label="Kecepatan 1.0x Normal"
+                        className={`flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-bold transition ${
+                          audioSpeed === "normal"
+                            ? "bg-[#5842f5] text-white shadow-2xs font-extrabold"
+                            : "theme-text-muted hover:theme-text-main"
+                        }`}
+                      >
+                        <Zap className="w-3 h-3" />
+                        <span>1.0x</span>
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => handleSpeedChange("slow")}
+                        title="Kecepatan lambat 0.75x"
+                        aria-label="Kecepatan 0.75x Slow"
+                        className={`flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-bold transition ${
+                          audioSpeed === "slow"
+                            ? "bg-amber-500 text-white shadow-2xs font-extrabold"
+                            : "theme-text-muted hover:theme-text-main"
+                        }`}
+                      >
+                        <Hourglass className="w-3 h-3" />
+                        <span>0.75x</span>
+                      </button>
+                    </div>
                   </div>
 
-                  {/* Hero Play Button */}
+                  {/* Slim Action Play Button */}
                   <button
                     type="button"
                     onClick={handleSpeech}
-                    className={`w-full flex items-center justify-center gap-2.5 p-3.5 rounded-xl text-[13.5px] font-extrabold transition duration-150 shadow-md ${
+                    className={`w-full flex items-center justify-center gap-2 py-2 px-3 rounded-xl text-xs font-extrabold transition duration-150 shadow-2xs active:scale-[0.98] ${
                       isAudioPlaying
-                        ? "bg-amber-500 text-white shadow-amber-500/25"
-                        : "bg-[#5842f5] hover:bg-[#4338ca] text-white shadow-indigo-500/20 active:scale-[0.98]"
+                        ? "bg-amber-500 text-white shadow-amber-500/20"
+                        : "bg-[#5842f5] hover:bg-[#4338ca] text-white shadow-indigo-500/15"
                     }`}
                     title="Dengarkan pengucapan kata/lirik utama"
                   >
                     {isAudioPlaying ? (
                       <>
-                        <VolumeX className="w-4 h-4 animate-bounce" />
+                        <VolumeX className="w-3.5 h-3.5 animate-bounce" />
                         <span>Sedang Memutar...</span>
-                        <div className="flex items-end gap-0.5 h-3.5 ml-1">
+                        <div className="flex items-end gap-0.5 h-3 ml-1">
                           <span
                             className="w-0.5 bg-white rounded-full animate-sound-wave"
                             style={{ animationDelay: "0ms" }}
@@ -1069,94 +1180,43 @@ export default function VocabLookup({ onHistoryUpdated }) {
                       </>
                     ) : (
                       <>
-                        <Volume2 className="w-4 h-4" />
+                        <Volume2 className="w-3.5 h-3.5" />
                         <span>Dengarkan Pelafalan</span>
                       </>
                     )}
                   </button>
-
-                  {/* Side-by-Side Speed Selector in One Pill */}
-                  <div className="pt-2 border-t theme-border-subtle flex items-center justify-between">
-                    <span className="text-[11px] font-bold theme-text-muted uppercase">
-                      Kecepatan:
-                    </span>
-                    <div className="flex items-center p-0.5 rounded-full border theme-border theme-bg-subtle shadow-2xs">
-                      {/* Normal Speed Button */}
-                      <button
-                        type="button"
-                        onClick={() => handleSpeedChange("normal")}
-                        aria-label="Kecepatan 1.0x Normal"
-                        className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition ${
-                          audioSpeed === "normal"
-                            ? "bg-[#5842f5] text-white shadow-sm font-extrabold"
-                            : "theme-text-muted hover:theme-text-main"
-                        }`}
-                      >
-                        <Zap className="w-3.5 h-3.5" />
-                        <span>1.0x Normal</span>
-                      </button>
-
-                      {/* Slow Speed Button */}
-                      <button
-                        type="button"
-                        onClick={() => handleSpeedChange("slow")}
-                        aria-label="Kecepatan 0.75x Slow"
-                        className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition ${
-                          audioSpeed === "slow"
-                            ? "bg-amber-500 text-white shadow-sm font-extrabold"
-                            : "theme-text-muted hover:theme-text-main"
-                        }`}
-                      >
-                        <Hourglass className="w-3.5 h-3.5" />
-                        <span>0.75x Slow</span>
-                      </button>
-                    </div>
-                  </div>
                 </div>
 
-                {/* Tips & Nuances (Ala Anak Rantau) */}
-                {result.catatan && (
-                  <div className="tip-box p-5 sm:p-6 space-y-2.5 relative overflow-hidden">
-                    <div className="flex items-center gap-2 text-[13px] font-extrabold">
-                      <span>Catatan Anak Rantau</span>
-                    </div>
-                    <p className="text-xs sm:text-[13px] leading-[1.65] font-normal">
-                      {result.catatan}
-                    </p>
-                  </div>
-                )}
-
-                {/* WordBreakdownGrid - Posisi di Sidebar */}
-                {activeText.trim().split(/\s+/).filter(Boolean).length > 1 && (
-                  <div
-                    ref={wordBreakdownRef}
-                    id="word-breakdown-wrapper"
-                    className="w-full transition-all duration-300"
-                  >
-                    <WordBreakdownGrid
-                      breakdown={wordBreakdown}
-                      isLoading={isLoadingBreakdown}
-                      onGenerate={handleGenerateBreakdown}
-                      hasGenerated={hasGeneratedBreakdown}
+                {/* COMBINED 3D FLIP CARD: Catatan Anak Rantau & Makna Psikologi Rasa */}
+                {(result.catatan || result.maknaFilosofis) && (
+                  <div className="flex-1 flex flex-col min-h-0">
+                    <RantauInsightFlipCard
+                      tips={result.catatan}
+                      maknaFilosofis={result.maknaFilosofis}
+                      isSong={result.classification?.type === "song" || !!result.detectedSong}
+                      isMovie={result.classification?.type === "movie" || !!result.detectedMovie}
                     />
-                  </div>
-                )}
-
-                {/* Makna & Psikologi Rasa (maknaFilosofis) */}
-                {result.maknaFilosofis && (
-                  <div className="p-5 sm:p-6 rounded-[22px] theme-bg-card border theme-border theme-card-shadow space-y-2.5 relative overflow-hidden">
-                    <div className="flex items-center gap-2 text-[13px] font-extrabold text-[#5842f5] dark:text-[#c7d2fe]">
-                      <span>Makna & Psikologi Rasa</span>
-                    </div>
-                    <p className="text-xs sm:text-[13px] leading-[1.65] font-normal theme-text-main">
-                      {result.maknaFilosofis}
-                    </p>
                   </div>
                 )}
               </div>
             </div>
           );
         })()}
+
+      {/* Slide-over Drawer: Arti Per Kata / Frasa */}
+      <WordBreakdownDrawer
+        isOpen={isBreakdownDrawerOpen}
+        onClose={() => setIsBreakdownDrawerOpen(false)}
+        sentence={
+          result?.correctedWord ||
+          result?.kata_terkoreksi ||
+          searchedWord ||
+          inputText.trim()
+        }
+        breakdown={wordBreakdown}
+        isLoading={isLoadingBreakdown}
+        onRegenerate={handleGenerateBreakdown}
+      />
     </div>
   );
 }

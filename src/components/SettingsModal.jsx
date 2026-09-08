@@ -176,11 +176,15 @@ export default function SettingsModal({ isOpen, onClose, onSaveSuccess }) {
                     />
                     <span>{model.name}</span>
                   </div>
-                  {model.id.includes('free') && (
+                  {model.id.includes('gemini') ? (
+                    <span className="px-1.5 py-0.5 rounded text-[10px] bg-indigo-500/20 text-indigo-600 dark:text-indigo-400 font-extrabold border border-indigo-500/30">
+                      PRIMARY
+                    </span>
+                  ) : model.id.includes('free') ? (
                     <span className="px-1.5 py-0.5 rounded text-[10px] bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 font-extrabold border border-emerald-500/30">
                       FREE
                     </span>
-                  )}
+                  ) : null}
                 </label>
               ))}
             </div>

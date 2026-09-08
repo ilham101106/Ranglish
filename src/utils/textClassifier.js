@@ -7,7 +7,7 @@
  * - 'song': Kutipan Lirik Lagu (Song Lyrics)
  */
 
-export function classifyText(text) {
+export function classifyText(text, options = {}) {
   if (!text) {
     return {
       type: "word",
@@ -22,55 +22,81 @@ export function classifyText(text) {
   const lower = clean.toLowerCase();
   const words = clean.split(/\s+/).filter(Boolean);
 
-  // Movie dialogues check
-  const movieKeywords = [
-    "close call",
-    "i've been through",
-    "cut the crap",
-    "make up your mind",
-    "too good to be true",
-    "walk away from me",
-    "it is what it is, we gotta move on",
-    "it is what it is",
-    "got your back",
-    "mixed signals",
-    "straight to the point",
-    "sign up for this",
-    "out of your mind",
-    "wrong foot",
-    "under the rug",
-    "wit's end",
-    "leap of faith",
-    "may the force",
+  // 1. Explicit Chip Triggered Sources (Highest Priority)
+  if (options?.isFromSongChip) {
+    return {
+      type: "song",
+      label: "LIRIK LAGU",
+      icon: "🎵",
+      color: "bg-pink-500/15 text-pink-700 dark:text-pink-300 border-pink-500/30",
+      badgeText: "Kutipan Lirik Lagu",
+    };
+  }
+
+  if (options?.isFromMovieChip) {
+    return {
+      type: "movie",
+      label: "DIALOG FILM",
+      icon: "🎬",
+      color: "bg-amber-500/15 text-amber-700 dark:text-amber-300 border-amber-500/30",
+      badgeText: "Kutipan Dialog Film",
+    };
+  }
+
+  // 2. Unmistakable Iconic Movie Quotes Only (Exact or strict starts-with match)
+  const iconicMovieQuotes = [
     "why so serious",
+    "may the force be with you",
+    "may the force",
     "i'll be back",
     "to infinity and beyond",
     "houston, we have a problem",
+    "here's looking at you, kid",
+    "say hello to my little friend",
+    "you talking to me",
   ];
 
-  // Song lyrics check
-  const songKeywords = [
+  if (iconicMovieQuotes.some((m) => lower === m || lower.startsWith(m))) {
+    return {
+      type: "movie",
+      label: "DIALOG FILM",
+      icon: "🎬",
+      color: "bg-amber-500/15 text-amber-700 dark:text-amber-300 border-amber-500/30",
+      badgeText: "Kutipan Dialog Film",
+    };
+  }
+
+  // 3. Strict Song Detection (Multi-line verse, explicit musical keywords, or exact song match)
+  const lines = clean.split("\n").map((l) => l.trim()).filter(Boolean);
+  const isMultiLineVerse =
+    lines.length >= 2 &&
+    lines.every((l) => {
+      const lineWords = l.split(/\s+/).filter(Boolean);
+      return lineWords.length >= 2 && lineWords.length <= 16;
+    });
+
+  const hasSongStructureKeyword =
+    /\b(chorus|verse(\s+\d+)?|pre-chorus|bridge|outro|intro|lyrics?)\b/i.test(clean);
+
+  // Exact curated song titles / iconic hooks (STRICT MATCH, NEVER LOOSE SUBSTRING!)
+  const curatedSongExact = [
+    "when i was your man",
     "the more i try to trace you",
+    "the more i try to trace you forthwith",
     "if u could see me cry",
     "apocalypse",
     "your lips, my lips",
-    "got the music in you",
-    "i love you but",
     "only exception",
     "somebody's pleasure",
     "soul try to figure it out",
     "flip through the pages",
     "i love you so bad",
     "i'm nothing without you",
-    "about you",
     "do you think i have forgotten",
-    "just like a star",
     "location unknown",
     "one day you'll know",
     "i have always loved you",
     "i've always loved you",
-    "hey, i'm tired",
-    "hey i'm tired",
     "you kept me like a secret",
     "it's me, hi",
     "band-aids don't fix",
@@ -85,17 +111,11 @@ export function classifyText(text) {
     "night changes",
   ];
 
-  if (movieKeywords.some((m) => lower === m || lower.includes(m))) {
-    return {
-      type: "movie",
-      label: "DIALOG FILM",
-      icon: "🎬",
-      color: "bg-amber-500/15 text-amber-700 dark:text-amber-300 border-amber-500/30",
-      badgeText: "Kutipan Dialog Film",
-    };
-  }
+  const matchesSongExact = curatedSongExact.some(
+    (s) => lower === s || lines.some((l) => l.toLowerCase() === s)
+  );
 
-  if (songKeywords.some((s) => lower === s || lower.includes(s))) {
+  if (isMultiLineVerse || hasSongStructureKeyword || matchesSongExact) {
     return {
       type: "song",
       label: "LIRIK LAGU",
@@ -105,7 +125,7 @@ export function classifyText(text) {
     };
   }
 
-  // Single word
+  // 4. Single word
   if (words.length === 1) {
     return {
       type: "word",
@@ -116,12 +136,13 @@ export function classifyText(text) {
     };
   }
 
-  // Short phrase / idiom (2-4 words without clause punctuation)
+  // 5. Short phrase / idiom (2-4 words without clause punctuation)
   if (
     words.length <= 4 &&
     !clean.includes("?") &&
     !clean.includes("!") &&
-    !clean.includes(",")
+    !clean.includes(",") &&
+    !clean.includes(".")
   ) {
     return {
       type: "phrase",
@@ -132,7 +153,7 @@ export function classifyText(text) {
     };
   }
 
-  // Full sentence / expression
+  // 6. Default: Netral KALIMAT Lengkap (No assumptions of song/movie)
   return {
     type: "sentence",
     label: "KALIMAT",
@@ -279,54 +300,136 @@ export function cleanExampleSentence(str) {
   return `${en} (${id})`;
 }
 
-export function isSongInput(text) {
-  if (!text || typeof text !== "string") return false;
-  const clean = text.trim();
-  const lower = clean.toLowerCase();
+const STOPWORDS = new Set([
+  'the', 'a', 'an', 'is', 'are', 'am', 'was', 'were', 'be', 'been', 'being',
+  'to', 'of', 'and', 'in', 'on', 'at', 'by', 'for', 'with', 'about', 'as',
+  'into', 'like', 'through', 'after', 'over', 'between', 'out', 'against',
+  'during', 'without', 'before', 'under', 'around', 'among', 'that', 'this',
+  'these', 'those', 'it', 'its', 'you', 'your', 'i', 'my', 'me', 'we', 'our',
+  'us', 'they', 'their', 'them', 'he', 'his', 'him', 'she', 'her', 'hers',
+  'do', 'does', 'did', 'have', 'has', 'had', 'will', 'would', 'shall',
+  'should', 'can', 'could', 'may', 'might', 'must', 'just', 'so', 'too', 'very'
+]);
 
-  // Multi-line verse check (user pasted 2+ lines)
-  const lines = clean.split("\n").filter((l) => l.trim().length > 0);
-  if (lines.length >= 2) {
+/**
+ * ATURAN MUTLAK MASALAH 3:
+ * Validasi apakah kalimat contoh mengandung teks asli user (atau focusPhrase)
+ * baik secara verbatim, frasa kontigu 3+ kata, atau minimal 1 kata signifikan unik.
+ */
+export function validateExampleContainsOriginal(exampleStr, originalText, focusPhrase = null) {
+  if (!exampleStr || typeof exampleStr !== 'string') return false;
+
+  const parenIdx = exampleStr.indexOf('(');
+  const englishPart = (parenIdx !== -1 ? exampleStr.slice(0, parenIdx) : exampleStr).toLowerCase();
+
+  // 1. Verbatim check: focusPhrase or originalText directly in English part
+  if (focusPhrase && focusPhrase.trim().length > 0) {
+    if (englishPart.includes(focusPhrase.toLowerCase().trim())) {
+      return true;
+    }
+  }
+
+  const cleanOriginal = (originalText || '').toLowerCase().trim();
+  if (cleanOriginal && englishPart.includes(cleanOriginal)) {
     return true;
   }
 
-  const songKeywords = [
-    "the more i try to trace you",
-    "if u could see me cry",
-    "apocalypse",
-    "your lips, my lips",
-    "got the music in you",
-    "i love you but",
-    "only exception",
-    "somebody's pleasure",
-    "soul try to figure it out",
-    "flip through the pages",
-    "i love you so bad",
-    "i'm nothing without you",
-    "about you",
-    "do you think i have forgotten",
-    "just like a star",
-    "location unknown",
-    "one day you'll know",
-    "i have always loved you",
-    "i've always loved you",
-    "hey, i'm tired",
-    "hey i'm tired",
-    "you kept me like a secret",
-    "it's me, hi",
-    "band-aids don't fix",
-    "stars around my scars",
-    "i knew you were trouble",
-    "i'm a creep",
-    "no surprises",
-    "karma police",
-    "you do it to yourself",
-    "what makes you beautiful",
-    "story of my life",
-    "night changes",
+  // 2. 3+ word contiguous phrase matching
+  const origWords = cleanOriginal.replace(/[^\w\s']/g, '').split(/\s+/).filter(Boolean);
+  if (origWords.length >= 3) {
+    for (let i = 0; i <= origWords.length - 3; i++) {
+      const sub = origWords.slice(i, i + 3).join(' ');
+      if (englishPart.includes(sub)) return true;
+    }
+  }
+
+  // 3. Check for at least ONE significant (longest, non-stopword) word
+  const significantWords = origWords
+    .map(w => w.replace(/[^\w']/g, ''))
+    .filter(w => w.length >= 3 && !STOPWORDS.has(w))
+    .sort((a, b) => b.length - a.length);
+
+  if (significantWords.length > 0) {
+    const topKeywords = significantWords.slice(0, 3);
+    const hasMatch = topKeywords.some(kw => {
+      const reg = new RegExp(`\\b${kw}\\b`, 'i');
+      return reg.test(englishPart);
+    });
+    if (hasMatch) return true;
+  } else if (origWords.length > 0) {
+    const anyWord = origWords.filter(w => w.length >= 3);
+    if (anyWord.some(w => new RegExp(`\\b${w}\\b`, 'i').test(englishPart))) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+/**
+ * Helper to detect if an example invents artificial settings (coffee, meeting, etc.)
+ * not present in the original input, or fails to include original text keywords.
+ * If mismatched, returns clean direct framing.
+ */
+export function validateAndSanitizeExample(exampleStr, originalText, translation, focusPhrase = null) {
+  if (!exampleStr) {
+    return `"${originalText}" ("${translation}")`;
+  }
+  const lowerOrig = (originalText || "").toLowerCase();
+
+  const artificialSettings = [
+    { regex: /\b(coffee|kopi|ngopi|cafe|kafe|catchup)\b/i, required: /\b(coffee|kopi|cafe|kafe|catchup)\b/i },
+    { regex: /\b(meeting|rapat|colleague|kolega|kantor|office|boss|atasan)\b/i, required: /\b(meeting|rapat|colleague|kolega|kantor|office|boss|atasan|work|kerja)\b/i },
+    { regex: /\b(party|pesta)\b/i, required: /\b(party|pesta)\b/i }
   ];
 
-  return songKeywords.some((s) => lower === s || lower.includes(s));
+  for (const setting of artificialSettings) {
+    if (setting.regex.test(exampleStr) && !setting.required.test(lowerOrig)) {
+      return `"${originalText}" ("${translation}")`;
+    }
+  }
+
+  // ATURAN MUTLAK MASALAH 3: Wajib nempel ke teks asli!
+  const isGrounded = validateExampleContainsOriginal(exampleStr, originalText, focusPhrase);
+  if (!isGrounded) {
+    return `"${originalText}" ("${translation}")`;
+  }
+
+  return exampleStr;
+}
+
+/**
+ * In-memory buffer to prevent repetitive template selection across consecutive searches.
+ */
+const recentTemplateIndices = new Map();
+
+export function pickVariedTemplate(categoryKey, templates, lastUsedIndex = -1) {
+  if (!templates || templates.length === 0) return "";
+  if (templates.length === 1) return templates[0];
+
+  const lastIndex = recentTemplateIndices.has(categoryKey)
+    ? recentTemplateIndices.get(categoryKey)
+    : lastUsedIndex;
+
+  const availableIndices = [];
+  for (let i = 0; i < templates.length; i++) {
+    if (i !== lastIndex) {
+      availableIndices.push(i);
+    }
+  }
+
+  const chosenIndex =
+    availableIndices.length > 0
+      ? availableIndices[Math.floor(Math.random() * availableIndices.length)]
+      : 0;
+
+  recentTemplateIndices.set(categoryKey, chosenIndex);
+  return templates[chosenIndex];
+}
+
+export function isSongInput(text, options = {}) {
+  if (!text || typeof text !== "string") return false;
+  return classifyText(text, options).type === "song";
 }
 
 export function sanitizeResultPayload(data) {
@@ -370,6 +473,13 @@ export function sanitizeResultPayload(data) {
 
   if (sanitized.arti) {
     sanitized.arti = normalizeToGaulSlang(sanitized.arti);
+    const originalText = (sanitized.teks_asli || sanitized.word || sanitized.focusPhrase || '').toLowerCase();
+    const hasRomanceExplicit = /\b(lover|babe|baby|darling|crush|pacar|kekasih|suami|istri|pasangan|soulmate|sweetheart|romance)\b/i.test(originalText);
+    if (!hasRomanceExplicit) {
+      sanitized.arti = sanitized.arti
+        .replace(/\s*(?:bareng|sama|dengan|bersama)\s*(?:orang\s*tersayang|ayang|pacar|gebetan)\b.*$/gi, '')
+        .trim();
+    }
   }
 
   if (Array.isArray(sanitized.penggunaan)) {

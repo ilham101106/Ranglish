@@ -320,6 +320,28 @@ export const DICTIONARY = {
     ],
     catatan: 'Frasa manis dan hangat buat nunjukin lu butuh sandaran emosional atau lagi pengen ditenangin sama orang tersayang.'
   },
+  'hit me': {
+    arti: 'Kasih tau gw / coba spill ke gw / ceritain sekarang',
+    cara_baca: 'hit mee',
+    penggunaan: [
+      'You got some fresh updates? Hit me! (Lu punya kabar baru? Coba spill ke gw!)',
+      '"Can I ask you something real quick?" — "Sure, hit me!" ("Bisa nanya bentar gak?" — "Boleh, langsung tanya aja!")',
+      'Hit me with the truth, I can handle it. (Kasih tau fakta sebenarnya ke gw, gw kuat kok.)'
+    ],
+    catatan: 'Frasa gaul kasual yang sering banget dipake pas lu minta temen buat langsung ngomong, ngasih kabar, atau spill cerita tanpa basa-basi.',
+    maknaFilosofis: 'Secara psikologis, "hit me" nunjukin keterbukaan pikiran dan kesiapan mental untuk menerima kabar atau obrolan apapun secara lugas.'
+  },
+  'hit me up': {
+    arti: 'Hubungi gw / kontak gw / kabarin gw nanti',
+    cara_baca: 'hit mee ap',
+    penggunaan: [
+      'Hit me up whenever you are free to hang out! (Kabarin gw kapanpun lu lagi senggang buat nongkrong!)',
+      'Just hit me up on WhatsApp if you need help. (Langsung kontak gw di WhatsApp aja ya kalau lu butuh bantuan.)',
+      'She told me to hit her up later tonight. (Dia bilang ke gw buat ngabarin dia nanti malem.)'
+    ],
+    catatan: 'Slang paling populer di chat dan pergaulan anak muda buat ngajak saling kontak atau ngabarin kabar terbaru.',
+    maknaFilosofis: 'Menjaga tali silaturahmi di perantauan lewat pintu komunikasi yang selalu terbuka bagi teman.'
+  },
   'rizz': {
     arti: 'Pesona / karisma buat ngegoda atau bikin lawan jenis klepek-klepek (singkatan dari "charisma")',
     cara_baca: 'riz',
@@ -2929,14 +2951,20 @@ function getLevenshteinDistance(a, b) {
 
 export function findClosestFuzzyMatch(inputText) {
   const lower = inputText.toLowerCase().trim();
-  if (lower.length < 3) return null;
+  // CRITICAL: Typo correction is ONLY for standalone single words (never phrases with spaces)
+  // and must be at least 5 characters long to prevent colliding with valid short words (e.g. hit -> hug, cat -> bat)
+  if (lower.length < 5 || lower.includes(" ")) return null;
 
   let bestMatch = null;
   let minDistance = 999;
 
   for (const key of Object.keys(DICTIONARY)) {
+    // Only compare against single-word dictionary keys
+    if (key.includes(" ")) continue;
+
     const dist = getLevenshteinDistance(lower, key);
-    const maxAllowedDist = key.length <= 5 ? 1 : 2;
+    // Strict threshold: exactly 1 edit difference for words >= 5 letters (e.g. "tomorow" -> "tomorrow")
+    const maxAllowedDist = 1;
     if (dist > 0 && dist <= maxAllowedDist && dist < minDistance) {
       minDistance = dist;
       bestMatch = key;
@@ -2973,7 +3001,7 @@ export function getInstantAnalysis(inputText) {
 
   const wordCount = lower.split(/\s+/).filter(Boolean).length;
 
-  // 2. Match for single-words or 2-word phrases
+  // 2. Exact match for single-words or 2-word phrases
   if (wordCount <= 2) {
     for (const key of Object.keys(DICTIONARY)) {
       const keyWords = key.split(/\s+/).filter(Boolean).length;
@@ -2984,8 +3012,10 @@ export function getInstantAnalysis(inputText) {
         };
       }
     }
+  }
 
-    // 3. 🔍 Fuzzy Typo Correction for single words
+  // 3. 🔍 Fuzzy Typo Correction ONLY for single words (wordCount === 1)
+  if (wordCount === 1) {
     const fuzzyMatchKey = findClosestFuzzyMatch(cleanPunctuation);
     if (fuzzyMatchKey && DICTIONARY[fuzzyMatchKey]) {
       return {

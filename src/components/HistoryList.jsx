@@ -13,6 +13,12 @@ import {
   Copy,
   Share2,
   Filter,
+  Layers,
+  Film,
+  Music,
+  MessageSquare,
+  ArrowRight,
+  Cloud,
 } from "lucide-react";
 import {
   getVocabHistory,
@@ -21,7 +27,12 @@ import {
 } from "../services/storage";
 import { speakText, stopSpeech } from "../services/speech";
 import { classifyText } from "../utils/textClassifier";
+import CategoryIcon from "./CategoryIcon";
 import VocabDetailModal from "./VocabDetailModal";
+import {
+  isSupabaseConfigured,
+  supabase,
+} from "../services/supabase";
 
 export default function HistoryList({ onSelectVocab, onHistoryChanged }) {
   const [history, setHistory] = useState([]);
@@ -30,6 +41,22 @@ export default function HistoryList({ onSelectVocab, onHistoryChanged }) {
   const [playingId, setPlayingId] = useState(null);
   const [copiedAll, setCopiedAll] = useState(false);
   const [selectedVocab, setSelectedVocab] = useState(null);
+  const [cloudCount, setCloudCount] = useState(null);
+
+  const fetchCloudCount = async () => {
+    if (isSupabaseConfigured() && supabase) {
+      try {
+        const { count, error } = await supabase
+          .from("vocab_bank")
+          .select("*", { count: "exact", head: true });
+        if (!error && count !== null && count !== undefined) {
+          setCloudCount(count);
+        }
+      } catch (e) {
+        // ignore
+      }
+    }
+  };
 
   const loadHistory = () => {
     setHistory(getVocabHistory());
@@ -37,6 +64,7 @@ export default function HistoryList({ onSelectVocab, onHistoryChanged }) {
 
   useEffect(() => {
     loadHistory();
+    fetchCloudCount();
 
     const handleUpdate = () => {
       loadHistory();
@@ -137,9 +165,17 @@ export default function HistoryList({ onSelectVocab, onHistoryChanged }) {
             </div>
             <div>
               <h2 className="font-extrabold text-base sm:text-lg theme-text-main">Riwayat Pencarian Kosakata</h2>
-              <p className="text-xs theme-text-muted">
-                Tersimpan lokal di browser kamu ({history.length} entri dipelajari)
-              </p>
+              <div className="flex items-center gap-2 flex-wrap mt-0.5">
+                <p className="text-xs theme-text-muted">
+                  Tersimpan lokal di browser kamu ({history.length} entri dipelajari)
+                </p>
+                {isSupabaseConfigured() && (
+                  <span className="inline-flex items-center gap-1.5 text-[10.5px] font-semibold px-2.5 py-0.5 rounded-full theme-bg-subtle theme-text-muted border theme-border shadow-2xs">
+                    <Cloud className="w-3 h-3 text-[#5842f5]" />
+                    <span>Cloud Aktif {cloudCount !== null ? `(${cloudCount} kata)` : ''}</span>
+                  </span>
+                )}
+              </div>
             </div>
           </div>
 
@@ -203,12 +239,13 @@ export default function HistoryList({ onSelectVocab, onHistoryChanged }) {
             <button
               type="button"
               onClick={() => setSelectedCategory('all')}
-              className={`text-xs px-3 py-1 rounded-full transition font-extrabold flex items-center gap-1.5 shadow-2xs ${
+              className={`text-xs px-3 py-1.5 rounded-full transition font-extrabold flex items-center gap-1.5 shadow-2xs ${
                 selectedCategory === 'all'
                   ? 'bg-[#5842f5] text-white shadow-sm'
                   : 'theme-bg-subtle theme-text-muted hover:theme-text-main'
               }`}
             >
+              <Layers className="w-3.5 h-3.5" />
               <span>Semua</span>
               <span className="text-[10px] opacity-80">({categoryCounts.all})</span>
             </button>
@@ -217,13 +254,14 @@ export default function HistoryList({ onSelectVocab, onHistoryChanged }) {
               <button
                 type="button"
                 onClick={() => setSelectedCategory('word')}
-                className={`text-xs px-3 py-1 rounded-full transition font-extrabold flex items-center gap-1.5 shadow-2xs ${
+                className={`text-xs px-3 py-1.5 rounded-full transition font-extrabold flex items-center gap-1.5 shadow-2xs ${
                   selectedCategory === 'word'
                     ? 'bg-[#5842f5] text-white shadow-sm'
                     : 'theme-bg-subtle theme-text-muted hover:theme-text-main'
                 }`}
               >
-                <span>📖 Kata</span>
+                <BookOpen className="w-3.5 h-3.5" />
+                <span>Kata</span>
                 <span className="text-[10px] opacity-80">({categoryCounts.word})</span>
               </button>
             )}
@@ -232,13 +270,14 @@ export default function HistoryList({ onSelectVocab, onHistoryChanged }) {
               <button
                 type="button"
                 onClick={() => setSelectedCategory('phrase')}
-                className={`text-xs px-3 py-1 rounded-full transition font-extrabold flex items-center gap-1.5 shadow-2xs ${
+                className={`text-xs px-3 py-1.5 rounded-full transition font-extrabold flex items-center gap-1.5 shadow-2xs ${
                   selectedCategory === 'phrase'
                     ? 'bg-emerald-600 text-white shadow-sm'
                     : 'theme-bg-subtle theme-text-muted hover:theme-text-main'
                 }`}
               >
-                <span>💬 Frasa</span>
+                <MessageSquare className="w-3.5 h-3.5" />
+                <span>Frasa</span>
                 <span className="text-[10px] opacity-80">({categoryCounts.phrase})</span>
               </button>
             )}
@@ -247,13 +286,14 @@ export default function HistoryList({ onSelectVocab, onHistoryChanged }) {
               <button
                 type="button"
                 onClick={() => setSelectedCategory('movie')}
-                className={`text-xs px-3 py-1 rounded-full transition font-extrabold flex items-center gap-1.5 shadow-2xs ${
+                className={`text-xs px-3 py-1.5 rounded-full transition font-extrabold flex items-center gap-1.5 shadow-2xs ${
                   selectedCategory === 'movie'
                     ? 'bg-amber-600 text-white shadow-sm'
                     : 'theme-bg-subtle theme-text-muted hover:theme-text-main'
                 }`}
               >
-                <span>🎬 Film</span>
+                <Film className="w-3.5 h-3.5" />
+                <span>Film</span>
                 <span className="text-[10px] opacity-80">({categoryCounts.movie})</span>
               </button>
             )}
@@ -262,13 +302,14 @@ export default function HistoryList({ onSelectVocab, onHistoryChanged }) {
               <button
                 type="button"
                 onClick={() => setSelectedCategory('song')}
-                className={`text-xs px-3 py-1 rounded-full transition font-extrabold flex items-center gap-1.5 shadow-2xs ${
+                className={`text-xs px-3 py-1.5 rounded-full transition font-extrabold flex items-center gap-1.5 shadow-2xs ${
                   selectedCategory === 'song'
                     ? 'bg-pink-600 text-white shadow-sm'
                     : 'theme-bg-subtle theme-text-muted hover:theme-text-main'
                 }`}
               >
-                <span>🎵 Lagu</span>
+                <Music className="w-3.5 h-3.5" />
+                <span>Lagu</span>
                 <span className="text-[10px] opacity-80">({categoryCounts.song})</span>
               </button>
             )}
@@ -277,13 +318,14 @@ export default function HistoryList({ onSelectVocab, onHistoryChanged }) {
               <button
                 type="button"
                 onClick={() => setSelectedCategory('sentence')}
-                className={`text-xs px-3 py-1 rounded-full transition font-extrabold flex items-center gap-1.5 shadow-2xs ${
+                className={`text-xs px-3 py-1.5 rounded-full transition font-extrabold flex items-center gap-1.5 shadow-2xs ${
                   selectedCategory === 'sentence'
                     ? 'bg-violet-600 text-white shadow-sm'
                     : 'theme-bg-subtle theme-text-muted hover:theme-text-main'
                 }`}
               >
-                <span>✨ Kalimat</span>
+                <Sparkles className="w-3.5 h-3.5" />
+                <span>Kalimat</span>
                 <span className="text-[10px] opacity-80">({categoryCounts.sentence})</span>
               </button>
             )}
@@ -328,8 +370,8 @@ export default function HistoryList({ onSelectVocab, onHistoryChanged }) {
                 <div className="flex items-start justify-between gap-3">
                   <div className="space-y-1.5 flex-1 min-w-0">
                     <div className="flex items-center gap-2">
-                      <span className={`text-[10px] font-extrabold px-2.5 py-0.5 rounded-full border ${classification.color} flex items-center gap-1 shadow-2xs`}>
-                        <span>{classification.icon}</span>
+                      <span className={`text-[10.5px] font-extrabold px-2.5 py-1 rounded-full border ${classification.color} flex items-center gap-1.5 shadow-2xs`}>
+                        <CategoryIcon type={classification.type} className="w-3 h-3 shrink-0" />
                         <span>{classification.label}</span>
                       </span>
                     </div>
@@ -339,8 +381,9 @@ export default function HistoryList({ onSelectVocab, onHistoryChanged }) {
                         {item.teks_asli}
                       </h4>
                       {item.cara_baca && (
-                        <span className="text-[11px] font-medium text-[#5842f5] bg-[#5842f5]/10 px-2 py-0.5 rounded-md border border-[#5842f5]/25">
-                          🗣️ {item.cara_baca}
+                        <span className="text-[11px] font-medium text-[#5842f5] bg-[#5842f5]/10 px-2 py-0.5 rounded-md border border-[#5842f5]/25 flex items-center gap-1">
+                          <Volume2 className="w-3 h-3 text-[#5842f5] shrink-0" />
+                          <span>{item.cara_baca}</span>
                         </span>
                       )}
                     </div>
@@ -379,23 +422,26 @@ export default function HistoryList({ onSelectVocab, onHistoryChanged }) {
 
                 {/* Timestamp & Catatan snippet */}
                 <div className="mt-3 pt-2.5 border-t theme-border-subtle flex items-center justify-between text-[11px] theme-text-faint">
-                  <span className="flex items-center gap-1 font-medium">
-                    <Calendar className="w-3 h-3 theme-text-faint" />
-                    {new Date(item.timestamp).toLocaleDateString('id-ID', {
-                      day: 'numeric',
-                      month: 'short',
-                      year: 'numeric',
-                      hour: '2-digit',
-                      minute: '2-digit'
-                    })}
+                  <span className="flex items-center gap-1.5 font-medium">
+                    <Calendar className="w-3.5 h-3.5 theme-text-faint shrink-0" />
+                    <span>
+                      {new Date(item.timestamp).toLocaleDateString('id-ID', {
+                        day: 'numeric',
+                        month: 'short',
+                        year: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                      })}
+                    </span>
                   </span>
                   {item.catatan ? (
                     <span className="truncate max-w-[240px] theme-text-muted italic">
                       "{item.catatan.substring(0, 45)}..."
                     </span>
                   ) : (
-                    <span className="theme-text-faint opacity-80 group-hover:text-[#5842f5] font-semibold transition">
-                      Klik untuk detail lengkap &rarr;
+                    <span className="theme-text-faint opacity-80 group-hover:text-[#5842f5] font-semibold transition flex items-center gap-1">
+                      <span>Klik untuk detail lengkap</span>
+                      <ArrowRight className="w-3.5 h-3.5 stroke-[2.75] inline-block group-hover:translate-x-0.5 transition-transform" />
                     </span>
                   )}
                 </div>

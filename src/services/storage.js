@@ -3,12 +3,27 @@ const HISTORY_KEY = 'ranglish_vocab_history';
 const VOCAB_BANK_KEY = 'ranglish_ai_vocab_bank';
 
 export const DEFAULT_MODELS = [
-  { id: 'openrouter/free', name: 'OpenRouter Free Auto-Router (Rekomendasi Utama)' },
+  { id: 'google/gemini-3.5-flash', name: 'Google Gemini 3.5 Flash (Tier 1 AI Utama)' },
+  { id: 'openrouter/free', name: 'OpenRouter Free Auto-Router (Tier 2 Fallback)' },
   { id: 'google/gemma-2-9b-it:free', name: 'Google Gemma 2 9B (Free)' },
   { id: 'meta-llama/llama-3.3-70b-instruct:free', name: 'Meta Llama 3.3 70B (Free)' },
   { id: 'qwen/qwen-2.5-72b-instruct:free', name: 'Qwen 2.5 72B (Free)' },
   { id: 'mistralai/mistral-7b-instruct:free', name: 'Mistral 7B (Free)' },
 ];
+
+/**
+ * Sanitizes text by stripping out legacy robotic template contamination
+ */
+export const stripTemplateContamination = (text) => {
+  if (!text || typeof text !== 'string') return text;
+  return text
+    .replace(/\s*—\s*Frasa\s*(?:percakapan\s*luwes|deskriptif|reflektif)[^.]*$/i, '')
+    .replace(/\s*Susunan kalimatnya lugas.*$/i, '')
+    .replace(/\s*Kejelasan dalam menyampaikan pikiran.*$/i, '')
+    .replace(/^(?:Makna santai|Makna emosional|Makna lugas|Makna formal|Makna gaul):\s*/i, '')
+    .replace(/\s*(?:bareng|sama|dengan|bersama)\s*(?:orang\s*tersayang|ayang|pacar|gebetan)\b/gi, '')
+    .trim();
+};
 
 export const getSettings = () => {
   const envModel = (typeof import.meta !== 'undefined' && import.meta.env?.VITE_OPENROUTER_MODEL) || DEFAULT_MODELS[0].id;
@@ -19,7 +34,7 @@ export const getSettings = () => {
       const parsed = JSON.parse(data);
       let model = parsed.model || envModel;
       
-      // Auto-migrate any broken or outdated model names to openrouter/free
+      // Auto-migrate any broken or outdated model names to Gemini or openrouter/free
       if (
         model.includes('3.2-3b') ||
         model.includes('3.1-8b') ||
@@ -27,7 +42,7 @@ export const getSettings = () => {
         model.includes('minimax') ||
         model.includes('nemotron')
       ) {
-        model = 'openrouter/free';
+        model = DEFAULT_MODELS[0].id;
       }
 
       const theme = parsed.theme || 'standar';
@@ -35,7 +50,7 @@ export const getSettings = () => {
       return {
         // API key kini sepenuhnya dikelola di server melalui serverless proxy /api/lookup
         apiKey: null,
-        model: model || 'openrouter/free',
+        model: model || DEFAULT_MODELS[0].id,
         theme: theme,
       };
     }
@@ -85,16 +100,37 @@ export const getLearnedVocabBank = () => {
 
       Object.keys(parsed).forEach((k) => {
         const item = parsed[k];
+        const isOldRobotNote =
+          item?.catatan &&
+          (item.catatan.includes('Bikin obrolan dua arah') ||
+            item.catatan.includes('luwes banget dipake pas lagi nongkrong') ||
+            item.catatan.includes('obrolan dua arah jadi lebih hidup'));
+        const hasCoffeeCatchup =
+          item?.penggunaan &&
+          Array.isArray(item.penggunaan) &&
+          item.penggunaan.some((ex) => /coffee catchup/i.test(ex));
+        const isLongSentence = k.split(/\s+/).filter(Boolean).length > 3;
+
         const isCorrupt =
           !item ||
           !item.arti ||
+          isOldRobotNote ||
+          hasCoffeeCatchup ||
+          isLongSentence ||
           item.arti.toLowerCase().includes('thinking process') ||
           item.arti.toLowerCase().includes('analyze user input') ||
           item.arti.toLowerCase().includes('makna & pemakaian kata') ||
           (item.catatan && item.catatan.toLowerCase().includes('thinking process'));
 
         if (!isCorrupt) {
-          cleanBank[k.toLowerCase()] = item;
+          const cleanedArti = stripTemplateContamination(item.arti);
+          if (cleanedArti !== item.arti) {
+            hasChanges = true;
+          }
+          cleanBank[k.toLowerCase()] = {
+            ...item,
+            arti: cleanedArti
+          };
         } else {
           hasChanges = true;
         }
@@ -127,9 +163,10 @@ export const saveLearnedVocabToBank = (word, vocabData) => {
 
     const cleanWord = word.toLowerCase().trim();
     const currentBank = getLearnedVocabBank();
+    const sanitizedArti = stripTemplateContamination(vocabData.arti);
 
     currentBank[cleanWord] = {
-      arti: vocabData.arti,
+      arti: sanitizedArti,
       cara_baca: vocabData.cara_baca || cleanWord,
       penggunaan: vocabData.penggunaan || [],
       catatan: vocabData.catatan || '',
@@ -152,14 +189,34 @@ export const getVocabHistory = () => {
     const data = localStorage.getItem(HISTORY_KEY);
     if (data) {
       const parsed = JSON.parse(data);
-      // Filter out any corrupt past items
-      const cleanHistory = parsed.filter(
-        (h) =>
-          h &&
-          h.arti &&
-          !h.arti.toLowerCase().includes('thinking process') &&
-          !h.arti.toLowerCase().includes('analyze user input')
-      );
+      let hasChanges = false;
+      const cleanHistory = [];
+
+      for (const h of parsed) {
+        if (!h || !h.arti) continue;
+        const artiStr = typeof h.arti === 'string' ? h.arti : String(h.arti);
+        if (
+          artiStr.toLowerCase().includes('thinking process') ||
+          artiStr.toLowerCase().includes('analyze user input')
+        ) {
+          hasChanges = true;
+          continue;
+        }
+
+        const cleanedArti = stripTemplateContamination(artiStr);
+        if (cleanedArti !== artiStr) {
+          hasChanges = true;
+        }
+        cleanHistory.push({
+          ...h,
+          arti: cleanedArti
+        });
+      }
+
+      if (hasChanges) {
+        localStorage.setItem(HISTORY_KEY, JSON.stringify(cleanHistory));
+      }
+
       return cleanHistory;
     }
   } catch (err) {
@@ -182,6 +239,8 @@ export const saveVocabItem = (item, fallbackText = '') => {
     ) {
       return null;
     }
+
+    const sanitizedArti = stripTemplateContamination(artiStr);
 
     // If dual-payload savedContent or wrapper is passed, unwrap to target
     const targetItem = item.savedContent || item;
@@ -209,7 +268,7 @@ export const saveVocabItem = (item, fallbackText = '') => {
     const newItem = {
       id: targetItem.id || `vocab_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
       teks_asli: cleanText,
-      arti: targetItem.arti || targetItem.focusPhraseMeaning || '',
+      arti: sanitizedArti,
       cara_baca: targetItem.cara_baca || '',
       penggunaan: targetItem.penggunaan || (targetItem.originalExampleSentence ? [targetItem.originalExampleSentence] : []),
       catatan: targetItem.catatan || '',

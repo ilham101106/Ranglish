@@ -1,0 +1,214 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" width="1000" height="1000">
+  <defs>
+    <!-- Deep Cosmic Void Background -->
+    <radialGradient id="bioBg" cx="50%" cy="50%" r="75%">
+      <stop offset="0%" stop-color="#140727" />
+      <stop offset="45%" stop-color="#080314" />
+      <stop offset="100%" stop-color="#020008" />
+    </radialGradient>
+
+    <!-- Hyper Bioluminescent Glows -->
+    <filter id="goldBiolum" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="8" result="blur1" />
+      <feGaussianBlur in="SourceGraphic" stdDeviation="22" result="blur2" />
+      <feMerge>
+        <feMergeNode in="blur2" />
+        <feMergeNode in="blur1" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+
+    <filter id="cyanBiolum" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur1" />
+      <feGaussianBlur in="SourceGraphic" stdDeviation="28" result="blur2" />
+      <feMerge>
+        <feMergeNode in="blur2" />
+        <feMergeNode in="blur1" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+
+    <filter id="magicalSpore" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="15" result="blur1" />
+      <feGaussianBlur in="SourceGraphic" stdDeviation="35" result="blur2" />
+      <feMerge>
+        <feMergeNode in="blur2" />
+        <feMergeNode in="blur1" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+
+    <!-- Chrome Obsidian Gradients -->
+    <linearGradient id="obsidianChrome" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3b3252" />
+      <stop offset="30%" stop-color="#19142b" />
+      <stop offset="70%" stop-color="#0d0a1a" />
+      <stop offset="100%" stop-color="#241d3b" />
+    </linearGradient>
+
+    <!-- Living Tendril Plasma Gradient -->
+    <linearGradient id="symbioteVine" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffd200" />
+      <stop offset="40%" stop-color="#ff2a85" />
+      <stop offset="75%" stop-color="#9d00ff" />
+      <stop offset="100%" stop-color="#00f2fe" />
+    </linearGradient>
+
+    <linearGradient id="coreAura" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ffffff" />
+      <stop offset="30%" stop-color="#00f2fe" />
+      <stop offset="70%" stop-color="#9d00ff" />
+      <stop offset="100%" stop-color="#ff2a85" stop-opacity="0" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background Base -->
+  <rect width="1000" height="1000" rx="220" fill="url(#bioBg)" />
+
+  <!-- Ambient Symbiote Spores Field -->
+  <g opacity="0.4">
+    <circle cx="210" cy="180" r="2.5" fill="#00f2fe" filter="url(#cyanBiolum)" />
+    <circle cx="160" cy="450" r="3.5" fill="#ffd200" filter="url(#goldBiolum)" />
+    <circle cx="180" cy="720" r="2" fill="#ff2a85" />
+    <circle cx="820" cy="190" r="3" fill="#00f2fe" filter="url(#cyanBiolum)" />
+    <circle cx="890" cy="480" r="4" fill="#ffd200" filter="url(#goldBiolum)" />
+    <circle cx="780" cy="850" r="3.5" fill="#9d00ff" />
+    <circle cx="450" cy="130" r="2" fill="#ffffff" />
+    <!-- Ethereal Orbital Halo -->
+    <ellipse cx="500" cy="500" rx="420" ry="420" fill="none" stroke="#9d00ff" stroke-width="1.2" stroke-opacity="0.25" stroke-dasharray="20 15 5 15" />
+  </g>
+
+  <!-- ==================================================== -->
+  <!-- 1. HURUF R UTAMA: KOKOH, TEGANG, OBSIDIAN CHROME     -->
+  <!-- ==================================================== -->
+
+  <!-- R Stem (Left Pillar) -->
+  <path d="M 230,200 L 370,200 L 370,800 L 230,800 Z" fill="#060410" />
+  <path d="M 240,210 L 360,210 L 360,790 L 240,790 Z" fill="url(#obsidianChrome)" stroke="#443963" stroke-width="2" />
+  
+  <!-- Stem Bevel Reflection -->
+  <line x1="244" y1="215" x2="244" y2="785" stroke="#ffffff" stroke-width="2" stroke-opacity="0.3" />
+  <line x1="355" y1="215" x2="355" y2="785" stroke="#000000" stroke-width="2" stroke-opacity="0.5" />
+
+  <!-- R Head (Semicircular Loop) -->
+  <path d="M 360,210 
+           L 570,210 
+           C 740,210 820,285 820,400 
+           C 820,515 740,580 570,580 
+           L 360,580 Z" 
+        fill="url(#obsidianChrome)" 
+        stroke="#443963" 
+        stroke-width="2" />
+  <path d="M 360,215 L 565,215 C 730,215 810,288 810,400 C 810,508 730,575 565,575" 
+        fill="none" 
+        stroke="#ffffff" 
+        stroke-width="2" 
+        stroke-opacity="0.2" />
+
+  <!-- Inner Loop Cutout (Chamber for Bio-AI Singularity) -->
+  <path d="M 360,305 
+           L 535,305 
+           C 625,305 675,350 675,400 
+           C 675,450 625,490 535,490 
+           L 360,490 Z" 
+        fill="#04020a" 
+        stroke="#1a1430" 
+        stroke-width="3" />
+
+  <!-- R Leg (Diagonal Foundation Kick) -->
+  <polygon points="480,555 600,555 830,795 705,795" 
+           fill="url(#obsidianChrome)" 
+           stroke="#443963" 
+           stroke-width="2" />
+
+  <!-- ==================================================== -->
+  <!-- 🧬 DI LUAR NALAR: CELESTIAL SYMBIOTE TENDRILS       -->
+  <!-- Organisme hidup melilit huruf R dengan sulur energi  -->
+  <!-- ==================================================== -->
+  
+  <!-- Tendril 1: Coiling around the Stem -->
+  <path d="M 210,750 
+           C 250,710 390,730 380,630 
+           C 370,530 200,560 210,450 
+           C 220,340 400,370 380,260 
+           C 360,180 280,180 270,140" 
+        fill="none" 
+        stroke="url(#symbioteVine)" 
+        stroke-width="6" 
+        stroke-linecap="round" 
+        filter="url(#cyanBiolum)" />
+  
+  <path d="M 210,750 
+           C 250,710 390,730 380,630 
+           C 370,530 200,560 210,450 
+           C 220,340 400,370 380,260 
+           C 360,180 280,180 270,140" 
+        fill="none" 
+        stroke="#ffffff" 
+        stroke-width="2.5" 
+        stroke-linecap="round" />
+
+  <!-- Bioluminescent Synaptic Bulbs on Tendril 1 -->
+  <circle cx="210" cy="750" r="7" fill="#00f2fe" filter="url(#cyanBiolum)" />
+  <circle cx="380" cy="630" r="6" fill="#9d00ff" filter="url(#cyanBiolum)" />
+  <circle cx="210" cy="450" r="7" fill="#ff2a85" filter="url(#cyanBiolum)" />
+  <circle cx="380" cy="260" r="6" fill="#ffd200" filter="url(#goldBiolum)" />
+  <circle cx="270" cy="140" r="9" fill="#ffffff" filter="url(#magicalSpore)" />
+
+  <!-- Tendril 2: Organic Weave through the Head into the Core -->
+  <path d="M 520,170 
+           C 660,150 780,220 780,330 
+           C 780,420 700,450 630,420 
+           C 560,390 520,400 480,400" 
+        fill="none" 
+        stroke="url(#symbioteVine)" 
+        stroke-width="4.5" 
+        stroke-linecap="round" 
+        filter="url(#goldBiolum)" />
+
+  <!-- ==================================================== -->
+  <!-- 👁️ DI LUAR NALAR: LIVING AI CELESTIAL EYE CORE      -->
+  <!-- Mata kosmik bio-cybernetic melayang di loop R        -->
+  <!-- ==================================================== -->
+  <g transform="translate(510, 395)">
+    <!-- Bioluminescent Halo Pulses -->
+    <circle cx="0" cy="0" r="60" fill="none" stroke="#00f2fe" stroke-width="1.5" stroke-dasharray="4 8" opacity="0.6" />
+    <circle cx="0" cy="0" r="75" fill="none" stroke="#ffd200" stroke-width="1" stroke-dasharray="8 12" opacity="0.4" />
+
+    <!-- Living Iris Petals -->
+    <path d="M 0,-40 C 25,-20 25,20 0,40 C -25,20 -25,-20 0,-40 Z" fill="none" stroke="#ff2a85" stroke-width="2" filter="url(#cyanBiolum)" />
+    <path d="M -40,0 C -20,25 20,25 40,0 C 20,-25 -20,-25 -40,0 Z" fill="none" stroke="#00f2fe" stroke-width="2" filter="url(#cyanBiolum)" />
+
+    <!-- Pure Intelligence Singularity -->
+    <circle cx="0" cy="0" r="20" fill="#000000" stroke="#ffd200" stroke-width="2.5" />
+    <circle cx="0" cy="0" r="12" fill="#ffffff" filter="url(#magicalSpore)" />
+    <circle cx="0" cy="0" r="5" fill="#00f2fe" />
+  </g>
+
+  <!-- Tendril 3: Roots branching along the Diagonal Leg -->
+  <path d="M 520,570 
+           C 600,600 660,680 730,730 
+           C 800,780 870,800 900,820" 
+        fill="none" 
+        stroke="url(#symbioteVine)" 
+        stroke-width="5" 
+        stroke-linecap="round" 
+        filter="url(#cyanBiolum)" />
+
+  <path d="M 620,670 C 670,720 680,780 700,840" fill="none" stroke="#ffd200" stroke-width="3" stroke-linecap="round" filter="url(#goldBiolum)" />
+  <circle cx="700" cy="840" r="5" fill="#ffd200" filter="url(#goldBiolum)" />
+
+  <circle cx="900" cy="820" r="8" fill="#ffffff" filter="url(#magicalSpore)" />
+
+  <!-- Four-Point Cosmic Sparks -->
+  <g transform="translate(900, 820)">
+    <path d="M 0,-20 Q 0,0 20,0 Q 0,0 0,20 Q 0,0 -20,0 Q 0,0 0,-20 Z" fill="#ffd200" filter="url(#goldBiolum)" />
+  </g>
+  <g transform="translate(270, 140)">
+    <path d="M 0,-18 Q 0,0 18,0 Q 0,0 0,18 Q 0,0 -18,0 Q 0,0 0,-18 Z" fill="#00f2fe" filter="url(#cyanBiolum)" />
+  </g>
+
+  <!-- Organic Tech Markings -->
+  <text x="245" y="830" fill="#ffd200" font-family="monospace" font-size="13" letter-spacing="4" opacity="0.75">ORGANIC-AI // SYMBIOTE</text>
+  <text x="600" y="185" fill="#00f2fe" font-family="monospace" font-size="12" letter-spacing="3" opacity="0.75">SPECIES: CELESTIAL-R</text>
+</svg>

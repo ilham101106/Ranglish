@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { speakText, stopSpeech } from "../services/speech";
 import { classifyText } from "../utils/textClassifier";
+import CategoryIcon from "./CategoryIcon";
 
 export default function VocabDetailModal({ isOpen, vocab, onClose, onOpenInVocab }) {
   const [isAudioPlaying, setIsAudioPlaying] = useState(false);
@@ -152,7 +153,7 @@ export default function VocabDetailModal({ isOpen, vocab, onClose, onOpenInVocab
             <span
               className={`text-[11px] font-extrabold px-3 py-1 rounded-full border ${classification.color} flex items-center gap-1.5 shadow-2xs`}
             >
-              <span>{classification.icon}</span>
+              <CategoryIcon type={classification.type} className="w-3.5 h-3.5 shrink-0" />
               <span>{classification.label}</span>
             </span>
             <span className="text-xs theme-text-muted font-bold">
@@ -215,8 +216,9 @@ export default function VocabDetailModal({ isOpen, vocab, onClose, onOpenInVocab
 
             {vocab.cara_baca && (
               <div className="inline-block">
-                <span className="text-xs sm:text-[13px] text-[#4338ca] dark:text-[#c9c2ff] bg-[#5842f5]/10 border border-[#5842f5]/25 px-3 py-1 rounded-full font-medium">
-                  🗣️ {vocab.cara_baca}
+                <span className="text-xs sm:text-[13px] text-[#4338ca] dark:text-[#c9c2ff] bg-[#5842f5]/10 border border-[#5842f5]/25 px-3 py-1 rounded-full font-medium inline-flex items-center gap-1.5">
+                  <Volume2 className="w-3.5 h-3.5 text-[#5842f5] shrink-0" />
+                  <span>{vocab.cara_baca}</span>
                 </span>
               </div>
             )}
@@ -299,7 +301,7 @@ export default function VocabDetailModal({ isOpen, vocab, onClose, onOpenInVocab
         <div className="space-y-2 pt-2 border-t theme-border-subtle">
           <div className="text-[11px] font-extrabold tracking-wider theme-text-muted uppercase flex items-center gap-1.5">
             <BookOpen className="w-4 h-4 text-[#5842f5]" />
-            <span>📖 ARTI BAHASA INDONESIA</span>
+            <span>ARTI BAHASA INDONESIA</span>
           </div>
           <p className="text-sm sm:text-base leading-[1.7] theme-text-main font-medium">
             {vocab.arti}
@@ -311,7 +313,7 @@ export default function VocabDetailModal({ isOpen, vocab, onClose, onOpenInVocab
           <div className="space-y-3 pt-2 border-t theme-border-subtle">
             <div className="text-[11px] font-extrabold tracking-wider theme-text-muted uppercase flex items-center gap-1.5">
               <FileText className="w-4 h-4 text-amber-500" />
-              <span>📄 CONTOH PENGGUNAAN (CONTEXT)</span>
+              <span>CONTOH PENGGUNAAN (CONTEXT)</span>
             </div>
 
             <div className="flex flex-col gap-2.5">

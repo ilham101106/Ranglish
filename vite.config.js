@@ -10,6 +10,10 @@ function devApiPlugin() {
         if (req.url?.startsWith("/api/lookup")) {
           try {
             const env = loadEnv("", process.cwd(), "");
+            process.env.GEMINI_API_KEY =
+              process.env.GEMINI_API_KEY ||
+              env.GEMINI_API_KEY ||
+              env.VITE_GEMINI_API_KEY;
             process.env.OPENROUTER_API_KEY =
               process.env.OPENROUTER_API_KEY ||
               env.OPENROUTER_API_KEY ||
@@ -55,6 +59,18 @@ function devApiPlugin() {
             return;
           }
         }
+        if (req.url?.startsWith("/api/tts")) {
+          try {
+            const { default: ttsHandler } = await import("./api/tts.js");
+            await ttsHandler(req, res);
+            return;
+          } catch (err) {
+            console.error("Dev TTS proxy error:", err);
+            res.statusCode = 500;
+            res.end(err.message);
+            return;
+          }
+        }
         next();
       });
     },
@@ -67,5 +83,6 @@ export default defineConfig({
   server: {
     port: 3000,
     open: true,
+    allowedHosts: true,
   },
 });

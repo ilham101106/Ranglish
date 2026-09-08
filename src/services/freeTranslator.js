@@ -2,112 +2,16 @@
 // Provides high-accuracy full-sentence Indonesian translation, context-driven emotional tone analysis,
 // philosophical psychological insights (maknaFilosofis), and authentic Temen Ngobrol / Anak Jaksel nuances.
 
-import { normalizeToGaulSlang, isSongInput } from '../utils/textClassifier.js';
+import { normalizeToGaulSlang, isSongInput, classifyText } from '../utils/textClassifier.js';
 import { generateSentencePhonetics } from '../utils/sentenceTranslator.js';
+import { normalizePronounsToJaksel } from '../utils/pronounNormalizer.js';
+import { generateDynamicRantauNote, generateDynamicMaknaFilosofis } from '../utils/rantauInsightGenerator.js';
 import vocab1000 from '../data/vocab1000.json' with { type: 'json' };
+
+export { normalizePronounsToJaksel };
 
 // Specific words/patterns to recognize as unrecognized/gibberish queries
 const UNRECOGNIZED_WORDS = new Set(['whirl-winds', 'plowed', 'asdfghjkl']);
-
-/**
- * Normalizes all Indonesian pronouns and possessive suffixes to pure Anak Rantau (gw / lu).
- * Eliminates "tanpamu", "denganmu", "untukmu", "kamu", "aku", "saya", "anda" consistently.
- */
-export function normalizePronounsToJaksel(text) {
-  if (!text || typeof text !== 'string') return '';
-  let s = text;
-
-  // Prepositional & compound pronoun replacements
-  s = s.replace(/\btanpamu\b/gi, 'tanpa lu');
-  s = s.replace(/\btanpaku\b/gi, 'tanpa gw');
-  s = s.replace(/\bdenganmu\b/gi, 'sama lu');
-  s = s.replace(/\bdenganku\b/gi, 'sama gw');
-  s = s.replace(/\bbersamamu\b/gi, 'bareng lu');
-  s = s.replace(/\bbersamaku\b/gi, 'bareng gw');
-  s = s.replace(/\buntukmu\b/gi, 'buat lu');
-  s = s.replace(/\buntukku\b/gi, 'buat gw');
-  s = s.replace(/\bpadamu\b/gi, 'ke lu');
-  s = s.replace(/\bpadaku\b/gi, 'ke gw');
-  s = s.replace(/\bkepadamu\b/gi, 'ke lu');
-  s = s.replace(/\bkepadaku\b/gi, 'ke gw');
-  s = s.replace(/\bterhadapmu\b/gi, 'ke lu');
-  s = s.replace(/\bterhadapku\b/gi, 'ke gw');
-  s = s.replace(/\bmenurutmu\b/gi, 'kata lu');
-  s = s.replace(/\bmenurutku\b/gi, 'kata gw');
-  s = s.replace(/\bkarenamu\b/gi, 'karena lu');
-  s = s.replace(/\bkarenaku\b/gi, 'karena gw');
-  s = s.replace(/\bolehmu\b/gi, 'sama lu');
-  s = s.replace(/\bolehku\b/gi, 'sama gw');
-  s = s.replace(/\bdirimu\b/gi, 'diri lu');
-  s = s.replace(/\bdiriku\b/gi, 'diri gw');
-  s = s.replace(/\bmilikmu\b/gi, 'punya lu');
-  s = s.replace(/\bmilikku\b/gi, 'punya gw');
-
-  // Common relational & emotional nouns/verbs with -mu and -ku
-  s = s.replace(/\bcintamu\b/gi, 'cinta lu');
-  s = s.replace(/\bcintaku\b/gi, 'cinta gw');
-  s = s.replace(/\bsayangmu\b/gi, 'sayang lu');
-  s = s.replace(/\bsayangku\b/gi, 'sayang gw');
-  s = s.replace(/\bhatimu\b/gi, 'hati lu');
-  s = s.replace(/\bhatiku\b/gi, 'hati gw');
-  s = s.replace(/\bmatamu\b/gi, 'mata lu');
-  s = s.replace(/\bmataku\b/gi, 'mata gw');
-  s = s.replace(/\bhidupmu\b/gi, 'hidup lu');
-  s = s.replace(/\bhidupku\b/gi, 'hidup gw');
-  s = s.replace(/\bsenyummu\b/gi, 'senyum lu');
-  s = s.replace(/\bsenyumku\b/gi, 'senyum gw');
-  s = s.replace(/\bjiwamu\b/gi, 'jiwa lu');
-  s = s.replace(/\bjiwaku\b/gi, 'jiwa gw');
-  s = s.replace(/\bkatamu\b/gi, 'kata lu');
-  s = s.replace(/\bkataku\b/gi, 'kata gw');
-  s = s.replace(/\bpikiranmu\b/gi, 'pikiran lu');
-  s = s.replace(/\bpikiranku\b/gi, 'pikiran gw');
-  s = s.replace(/\bdoamu\b/gi, 'doa lu');
-  s = s.replace(/\bdoaku\b/gi, 'doa gw');
-
-  s = s.replace(/\bmemelukku\b/gi, 'meluk gw');
-  s = s.replace(/\bmemelukmu\b/gi, 'meluk lu');
-  s = s.replace(/\bmembantuku\b/gi, 'bantu gw');
-  s = s.replace(/\bmembantumu\b/gi, 'bantu lu');
-  s = s.replace(/\bmenemaniku\b/gi, 'nemenin gw');
-  s = s.replace(/\bmenemanimu\b/gi, 'nemenin lu');
-  s = s.replace(/\bmencintaiku\b/gi, 'cinta sama gw');
-  s = s.replace(/\bmencintaimu\b/gi, 'cinta sama lu');
-  s = s.replace(/\bmeninggalkanku\b/gi, 'ninggalin gw');
-  s = s.replace(/\bmeninggalkanmu\b/gi, 'ninggalin lu');
-  s = s.replace(/\bmengajakmu\b/gi, 'ngajak lu');
-  s = s.replace(/\bmengajakku\b/gi, 'ngajak gw');
-  s = s.replace(/\bmemandangmu\b/gi, 'mandang lu');
-  s = s.replace(/\bmemandangku\b/gi, 'mandang gw');
-  s = s.replace(/\bmerindukanmu\b/gi, 'kangen sama lu');
-  s = s.replace(/\bmerindukanku\b/gi, 'kangen sama gw');
-
-  // Standalone pronouns
-  s = s.replace(/\baku\b/gi, 'gw');
-  s = s.replace(/\bsaya\b/gi, 'gw');
-  s = s.replace(/\bdaku\b/gi, 'gw');
-  s = s.replace(/\bkamu\b/gi, 'lu');
-  s = s.replace(/\banda\b/gi, 'lu');
-  s = s.replace(/\bengkau\b/gi, 'lu');
-  s = s.replace(/\bkau\b/gi, 'lu');
-
-  // Trailing suffixes -mu and -ku on remaining words (e.g. ceritamu -> cerita lu)
-  s = s.replace(/\b([a-zA-Z]{3,})mu\b/gi, (match, p1) => {
-    const p1Low = p1.toLowerCase();
-    if (['ta', 'il', 'te', 'ra', 'le', 'jam'].includes(p1Low)) return match;
-    return `${p1} lu`;
-  });
-  s = s.replace(/\b([a-zA-Z]{3,})ku\b/gi, (match, p1) => {
-    const p1Low = p1.toLowerCase();
-    if (['ku', 'su', 'be', 'ka', 'sa', 'la'].includes(p1Low)) return match;
-    return `${p1} gw`;
-  });
-
-  s = s.replace(/\b-ku\b/gi, ' gw');
-  s = s.replace(/\b-mu\b/gi, ' lu');
-
-  return s.trim();
-}
 
 /**
  * Fetch high-accuracy sentence translation using open endpoints with dual fallback.
@@ -375,9 +279,138 @@ function isTransliterationEcho(text, translation) {
   return false;
 }
 
+const STOPWORDS = new Set([
+  'the', 'a', 'an', 'is', 'are', 'am', 'was', 'were', 'be', 'been', 'being',
+  'to', 'of', 'and', 'in', 'on', 'at', 'by', 'for', 'with', 'about', 'as',
+  'into', 'like', 'through', 'after', 'over', 'between', 'out', 'against',
+  'during', 'without', 'before', 'under', 'around', 'among', 'that', 'this',
+  'these', 'those', 'it', 'its', 'you', 'your', 'i', 'my', 'me', 'we', 'our',
+  'us', 'they', 'their', 'them', 'he', 'his', 'him', 'she', 'her', 'hers',
+  'do', 'does', 'did', 'have', 'has', 'had', 'will', 'would', 'shall',
+  'should', 'can', 'could', 'may', 'might', 'must', 'just', 'so', 'too', 'very'
+]);
+
+/**
+ * ATURAN MUTLAK MASALAH 3:
+ * Validasi apakah kalimat contoh mengandung teks asli user (atau focusPhrase)
+ * baik secara verbatim, frasa kontigu 3+ kata, atau minimal 1 kata signifikan unik.
+ */
+export function validateExampleContainsOriginal(exampleStr, originalText, focusPhrase = null) {
+  if (!exampleStr || typeof exampleStr !== 'string') return false;
+
+  // Extract English portion before Indonesian translation in parentheses
+  const parenIdx = exampleStr.indexOf('(');
+  const englishPart = (parenIdx !== -1 ? exampleStr.slice(0, parenIdx) : exampleStr).toLowerCase();
+
+  // 1. Verbatim check: focusPhrase or originalText directly in English part
+  if (focusPhrase && focusPhrase.trim().length > 0) {
+    if (englishPart.includes(focusPhrase.toLowerCase().trim())) {
+      return true;
+    }
+  }
+
+  const cleanOriginal = (originalText || '').toLowerCase().trim();
+  if (cleanOriginal && englishPart.includes(cleanOriginal)) {
+    return true;
+  }
+
+  // 2. 3+ word contiguous phrase matching
+  const origWords = cleanOriginal.replace(/[^\w\s']/g, '').split(/\s+/).filter(Boolean);
+  if (origWords.length >= 3) {
+    for (let i = 0; i <= origWords.length - 3; i++) {
+      const sub = origWords.slice(i, i + 3).join(' ');
+      if (englishPart.includes(sub)) return true;
+    }
+  }
+
+  // 3. Check for at least ONE significant (longest, non-stopword) word
+  const significantWords = origWords
+    .map(w => w.replace(/[^\w']/g, ''))
+    .filter(w => w.length >= 3 && !STOPWORDS.has(w))
+    .sort((a, b) => b.length - a.length);
+
+  if (significantWords.length > 0) {
+    const topKeywords = significantWords.slice(0, 3);
+    const hasMatch = topKeywords.some(kw => {
+      const reg = new RegExp(`\\b${kw}\\b`, 'i');
+      return reg.test(englishPart);
+    });
+    if (hasMatch) return true;
+  } else if (origWords.length > 0) {
+    // If all words are stopwords (e.g. "when i was your man"), check if any word >= 3 chars appears
+    const anyWord = origWords.filter(w => w.length >= 3);
+    if (anyWord.some(w => new RegExp(`\\b${w}\\b`, 'i').test(englishPart))) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+/**
+ * Helper to detect if an example invents artificial settings (coffee, meeting, etc.)
+ * not present in the original input, or fails to include original text keywords.
+ * If mismatched, returns clean direct framing.
+ */
+export function validateAndSanitizeExample(exampleStr, originalText, translation, focusPhrase = null) {
+  if (!exampleStr) {
+    return `"${originalText}" ("${translation}")`;
+  }
+  const lowerOrig = (originalText || "").toLowerCase();
+
+  const artificialSettings = [
+    { regex: /\b(coffee|kopi|ngopi|cafe|kafe|catchup)\b/i, required: /\b(coffee|kopi|cafe|kafe|catchup)\b/i },
+    { regex: /\b(meeting|rapat|colleague|kolega|kantor|office|boss|atasan)\b/i, required: /\b(meeting|rapat|colleague|kolega|kantor|office|boss|atasan|work|kerja)\b/i },
+    { regex: /\b(party|pesta)\b/i, required: /\b(party|pesta)\b/i }
+  ];
+
+  for (const setting of artificialSettings) {
+    if (setting.regex.test(exampleStr) && !setting.required.test(lowerOrig)) {
+      return `"${originalText}" ("${translation}")`;
+    }
+  }
+
+  // ATURAN MUTLAK MASALAH 3: Wajib nempel ke teks asli!
+  const isGrounded = validateExampleContainsOriginal(exampleStr, originalText, focusPhrase);
+  if (!isGrounded) {
+    return `"${originalText}" ("${translation}")`;
+  }
+
+  return exampleStr;
+}
+
+/**
+ * In-memory buffer to prevent repetitive template selection across consecutive searches.
+ */
+const recentTemplateIndices = new Map();
+
+export function pickVariedTemplate(categoryKey, templates, lastUsedIndex = -1) {
+  if (!templates || templates.length === 0) return "";
+  if (templates.length === 1) return templates[0];
+
+  const lastIndex = recentTemplateIndices.has(categoryKey)
+    ? recentTemplateIndices.get(categoryKey)
+    : lastUsedIndex;
+
+  const availableIndices = [];
+  for (let i = 0; i < templates.length; i++) {
+    if (i !== lastIndex) {
+      availableIndices.push(i);
+    }
+  }
+
+  const chosenIndex =
+    availableIndices.length > 0
+      ? availableIndices[Math.floor(Math.random() * availableIndices.length)]
+      : 0;
+
+  recentTemplateIndices.set(categoryKey, chosenIndex);
+  return templates[chosenIndex];
+}
+
 /**
  * Detect emotional tone of the input sentence.
- * Returns: 'angry_breakup' | 'sad_heartbroken' | 'romantic_love' | 'casual_chill'
+ * Returns: 'angry_breakup' | 'reflective_philosophical' | 'sad_heartbroken' | 'romantic_love' | 'casual_chill'
  */
 export function detectSentenceTone(text, translation) {
   const combined = `${text} ${translation}`.toLowerCase();
@@ -391,7 +424,16 @@ export function detectSentenceTone(text, translation) {
     return 'angry_breakup';
   }
 
-  // 2. Sad / Heartbroken / Grief / Longing
+  // 2. Reflective / Philosophical / Deep Monologue / Fate & Destiny
+  if (
+    /\b(fate|destiny|future|behind|cross(\s+the)?\s+line|hides|unknown|horizon|abyss|purpose|meaning|journey|path|choices?|fear|courage|hesitate|wonder|reflection|whisper|silent|silence|darkness|universe|takdir|nasib|masa\s+depan|melewati\s+batas|merenung|filosofis|makna\s+hidup|arah\s+hidup|batin|perenungan)\b/i.test(
+      combined
+    )
+  ) {
+    return 'reflective_philosophical';
+  }
+
+  // 3. Sad / Heartbroken / Grief / Longing
   if (
     /\b(cry|crying|tears|broken\s+heart|miss\s+you|miss\s+u|alone|lonely|sad|grief|sorrow|depressed|heartbreak|empty|hurts|pain|sedih|nangis|kehilangan|hampa|patah\s+hati|rindu|sepi|rapuh|kangen|merana)\b/i.test(
       combined
@@ -400,9 +442,9 @@ export function detectSentenceTone(text, translation) {
     return 'sad_heartbroken';
   }
 
-  // 3. Romantic / Love / Affection / Tender Soul & Light Metaphors
+  // 4. Romantic / Love / Affection / Tender Soul & Light Metaphors
   if (
-    /\b(love|sweetheart|darling|forever|crush|kiss|hug|lips|beloved|fall\s+in\s+love|soul|souls|light|lights|heart|hearts|shine|shining|glow|glowing|cherish|adore|precious|my\s+world|mean\s+the\s+world|means\s+the\s+world|you\s+mean|in\s+my\s+soul|of\s+my\s+soul|light\s+in|lights\s+in|beautiful|sweetest|cinta|sayang|cantik|manis|romantis|baper|naksir|peluk|kekasih|pujaan|jiwa|jiwaku|hatiku|kesayangan|belahan\s+jiwa|terang\s+dalam\s+jiwa)\b/i.test(
+    /\b(love|sweetheart|darling|forever|crush|kiss|hug|lips|beloved|fall\s+in\s+love|soul|souls|cherish|adore|precious|my\s+world|mean\s+the\s+world|means\s+the\s+world|you\s+mean|in\s+my\s+soul|of\s+my\s+soul|beautiful|sweetest|cinta|sayang|cantik|manis|romantis|baper|naksir|peluk|kekasih|pujaan|jiwaku|hatiku|kesayangan|belahan\s+jiwa)\b/i.test(
       combined
     )
   ) {
@@ -413,15 +455,175 @@ export function detectSentenceTone(text, translation) {
 }
 
 /**
+ * Regenerate alternative example sentence on-demand for "Kurang Pas? Coba Lagi" button.
+ */
+export function regenerateAlternativeExample(rawText, cleanTranslation, tone, classifiedType = 'sentence', currentExample = "") {
+  const text = rawText.trim();
+  const lower = text.toLowerCase();
+  const words = text.split(/\s+/).filter(Boolean);
+  const wordCount = words.length;
+
+  const isQuestion =
+    text.endsWith('?') ||
+    /^(what|why|how|where|when|who|which|whose|whom|is|are|am|was|were|do|does|did|can|could|will|would|should|may|might|have|has|had)\b/i.test(text);
+
+  let pool = [];
+
+  if (classifiedType === 'song') {
+    pool = [
+      `In everyday conversation, you can naturally use "${text}" when expressing how you feel. (Di obrolan sehari-hari, lu bisa wajar memakai "${text}" pas lagi ngungkapin perasaan lu.)`,
+      `Reflecting on that moment, he admitted: "${text}." (Merenungkan momen itu, dia mengakui: "${cleanTranslation}."`,
+      `When speaking from the heart, she whispered: "${text}." (Pas lagi ngomong dari lubuk hati terdalam, dia berbisik: "${cleanTranslation}."`,
+      `You can borrow this line directly: "${text}" to describe what you are going through. (Lu bisa langsung pinjam kalimat "${text}" buat melukiskan apa yang lagi lu alamin.)`,
+      `It captures that vulnerable feeling so well: "${text}." (Kalimat ini nangkep perasaan rapuh itu dengan pas: "${cleanTranslation}."`,
+      `Whenever you need words for that exact sentiment, just say: "${text}." (Tiap kali lu butuh kata-kata buat rasa itu, tinggal bilang: "${cleanTranslation}.")`,
+    ];
+  } else if (classifiedType === 'movie') {
+    pool = [
+      `In a memorable confrontation, the line hits hard: "${text}." (Di adegan konfrontasi yang membekas, dialog ini kena banget: "${cleanTranslation}."`,
+      `Delivering this line with calm intensity: "${text}." (Nyampein kalimat ini dengan ketegasan yang tenang: "${cleanTranslation}."`,
+      `Just like an iconic scene, you can declare: "${text}." (Persis adegan film legendaris, lu bisa tegasin: "${cleanTranslation}."`,
+      `When words need weight, this line says it all: "${text}." (Pas perkataan butuh bobot mendalam, kalimat ini udah cukup: "${cleanTranslation}."`,
+      `Spoken with quiet confidence: "${text}." (Diucapkan dengan rasa percaya diri yang tenang: "${cleanTranslation}."`,
+      `A classic, impactful line to remember: "${text}." (Kalimat klasik dan berbobot buat diinget: "${cleanTranslation}.")`,
+    ];
+  } else if (classifiedType === 'word' || wordCount === 1) {
+    const isVerbLike = /^(me|meng|ber)/i.test(cleanTranslation);
+    pool = isVerbLike
+      ? [
+          `"Let's make sure to ${lower} every single detail carefully before moving forward." ("Yuk pastiin kita ${cleanTranslation} setiap detailnya secara teliti sebelum lanjut.")`,
+          `"She tried her best to ${lower} the situation so everyone stayed calm." ("Dia berusaha sebaik mungkin buat ${cleanTranslation} situasinya biar semua orang tetep tenang.")`,
+          `"Can you help me ${lower} this properly?" ("Bisa bantu gw ${cleanTranslation} ini dengan bener gak?")`,
+          `"Take your time to ${lower} everything step by step." ("Santai aja, luangkan waktu buat ${cleanTranslation} semuanya tahap demi tahap.")`,
+          `"Knowing when to ${lower} makes a huge difference in the outcome." ("Tahu kapan harus ${cleanTranslation} bawa pengaruh gede ke hasil akhirnya.")`,
+          `"We need someone who can ${lower} this with confidence." ("Kita butuh orang yang bisa ${cleanTranslation} hal ini dengan percaya diri.")`,
+        ]
+      : [
+          `"Having a clear grasp of ${lower} makes everyday communication a lot smoother." ("Punya pemahaman jelas soal ${cleanTranslation} bikin komunikasi sehari-hari jauh lebih lancar.")`,
+          `"He brought up the word '${lower}' during our discussion today." ("Dia ngebahas kata '${cleanTranslation}' pas obrolan kita tadi.")`,
+          `"Basically, just focus on ${lower} when dealing with this." ("Basically ya, tinggal fokus ke ${cleanTranslation} aja pas ngadepin ini.")`,
+          `"A simple reminder that ${lower} really matters in the long run." ("Pengingat sederhana kalo ${cleanTranslation} bener-bener penting untuk jangka panjang.")`,
+          `"Understanding the real meaning of ${lower} helps avoid misunderstandings." ("Paham makna asli ${cleanTranslation} ngebantu banget biar gak salah paham.")`,
+          `"You can see the influence of ${lower} in everyday situations." ("Lu bisa liat pengaruh ${cleanTranslation} di situasi sehari-hari.")`,
+        ];
+  } else if (classifiedType === 'phrase') {
+    pool = [
+      `"Using '${text}' in your conversation sounds very natural." ("Pake frasa '${text}' di obrolan lu kedengeran alami banget.")`,
+      `"Finding the right ${text} can make a huge difference in your journey." ("Nemu ${cleanTranslation} yang pas bisa ngebawa perubahan gede di perjalanan lu.")`,
+      `"They spent the whole afternoon talking about their ${text}." ("Mereka ngabisin sepanjang sore ngebahas ${cleanTranslation} mereka.")`,
+      `"Just trying to manage ${text} better every single day." ("Lagi nyoba nata ${cleanTranslation} biar lebih beres tiap harinya.")`,
+      `"In daily communication, you can naturally say: '${text}'" ("Di percakapan sehari-hari, lu bisa dengan alami ngomong: '${cleanTranslation}'")`,
+      `"A clear and handy phrase to express ${cleanTranslation}: '${text}'" ("Frasa praktis dan jelas buat nyampein ${cleanTranslation}: '${text}'")`,
+    ];
+  } else if (isQuestion) {
+    pool = [
+      `"Pausing for a second, she asked genuinely: '${text}'" ("Sempat terdiam sejenak, dia bertanya dengan tulus: '${cleanTranslation}'")`,
+      `"Curious about what was happening, he asked: '${text}'" ("Penasaran sama apa yang lagi terjadi, dia nanya: '${cleanTranslation}'")`,
+      `"A straightforward question you can naturally ask: '${text}'" ("Pertanyaan lugas yang bisa lu lontarkan secara alami: '${cleanTranslation}'")`,
+      `"To clarify the situation without awkwardness, just ask: '${text}'" ("Biar situasinya jelas tanpa canggung, tinggal tanya: '${cleanTranslation}'")`,
+      `"She turned around and wondered aloud: '${text}'" ("Dia noleh dan bertanya-tanya penasaran: '${cleanTranslation}'")`,
+      `"In honest conversation, you might ask: '${text}'" ("Di obrolan yang jujur, lu bisa nanya: '${cleanTranslation}'")`,
+    ];
+  } else if (tone === 'reflective_philosophical') {
+    pool = [
+      `"Reflecting quietly on what lies ahead, she whispered: '${text}'" ("Merenung tenang soal apa yang menanti di depan, dia berbisik: '${cleanTranslation}'")`,
+      `"Standing before an unknown journey, you can say: '${text}'" ("Berdiri di hadapan perjalanan yang belum pasti, lu bisa bilang: '${cleanTranslation}'")`,
+      `"In moments of deep personal reflection: '${text}'" ("Di momen perenungan diri yang mendalam: '${cleanTranslation}'")`,
+      `"Contemplating the upcoming turn of events, I murmured: '${text}'" ("Merenungkan arah masa depan yang bakal terjadi, gw bergumam: '${cleanTranslation}'")`,
+      `"When pondering the path ahead, she said: '${text}'" ("Pas lagi mikirin jalan di depan, dia bilang: '${cleanTranslation}'")`,
+      `"Looking into the distance with a quiet heart: '${text}'" ("Menatap ke kejauhan dengan hati yang tenang: '${cleanTranslation}'")`,
+    ];
+  } else if (tone === 'sad_heartbroken') {
+    pool = [
+      `"Late at night when everything goes quiet, you might feel: '${text}'" ("Pas larut malam saat suasana hening, lu mungkin ngerasa: '${cleanTranslation}'")`,
+      `"Holding back a heavy sigh, she admitted: '${text}'" ("Nahan napas berat, dia ngaku: '${cleanTranslation}'")`,
+      `"Whenever old memories resurface, all I can say is: '${text}'" ("Tiap kali memori lama muncul lagi, yang bisa gw bilang cuma: '${cleanTranslation}'")`,
+      `"Sitting alone with overwhelming thoughts: '${text}'" ("Duduk sendirian dengan pikiran berkecamuk: '${cleanTranslation}'")`,
+      `"It hurts to admit it, but honestly: '${text}'" ("Sakit emang buat ngakuinnya, tapi sejujurnya: '${cleanTranslation}'")`,
+      `"In a moment of vulnerability, he confessed: '${text}'" ("Di momen batin lagi rapuh, dia ngaku: '${cleanTranslation}'")`,
+    ];
+  } else if (tone === 'angry_breakup') {
+    pool = [
+      `"After thinking it through, I stood my ground and said: '${text}'" ("Abis mikir panjang, gw pasang batasan tegas dan bilang: '${cleanTranslation}'")`,
+      `"Looking him right in the eye, she declared: '${text}'" ("Natap langsung ke matanya, dia tegas bilang: '${cleanTranslation}'")`,
+      `"Setting a clear boundary once and for all: '${text}'" ("Masang batasan jelas biar beres: '${cleanTranslation}'")`,
+      `"Tired of being taken for granted, he blurted out: '${text}'" ("Udah capek disepelein terus, dia langsung ngomong: '${cleanTranslation}'")`,
+      `"I refuse to tolerate this any longer: '${text}'" ("Gw nolak buat mentoleransi ini lebih lama lagi: '${cleanTranslation}'")`,
+      `"Enough is enough, so I made it clear: '${text}'" ("Cukup ya cukup, jadi gw pertegas: '${cleanTranslation}'")`,
+    ];
+  } else if (tone === 'romantic_love') {
+    pool = [
+      `"I don't say sweet things often, but honestly: '${text}'" ("Gw gak sering ngomong manis, tapi beneran deh: '${cleanTranslation}'")`,
+      `"Every time I look into your eyes, I think: '${text}'" ("Tiap kali gw natap mata lu, gw mikir: '${cleanTranslation}'")`,
+      `"Holding hands quietly under the evening sky: '${text}'" ("Genggaman tangan tenang di bawah langit sore: '${cleanTranslation}'")`,
+      `"A genuine reminder of how much you mean to me: '${text}'" ("Pengingat tulus soal betapa berartinya lu buat gw: '${cleanTranslation}'")`,
+      `"Softly sharing what has been on my heart: '${text}'" ("Dengan lembut ngungkapin apa yang ada di hati gw: '${cleanTranslation}'")`,
+      `"No grand gestures needed, just simple honesty: '${text}'" ("Gak butuh gaya-gayaan berlebihan, cukup kejujuran sederhana: '${cleanTranslation}'")`,
+    ];
+  } else {
+    // 💬 Neutral sentence default: Realistic situational dialogues, never meta-tutorials
+    const isCorrelative = /^the\s+(more|less|sooner|harder|longer|better|greater)\b/i.test(text);
+    const isFirstPerson = /^(i|we|my|our)\b/i.test(text) || /\b(i'm|i've|i'd|i\s+feel|i\s+think)\b/i.test(text);
+    const isSecondPerson = /^(you|your)\b/i.test(text) || /\b(you're|you've|you'd)\b/i.test(text);
+
+    if (isCorrelative) {
+      pool = [
+        `"The truth is, ${text}, the more complicated things get." ("Kenyataannya, ${cleanTranslation}, situasinya malah makin rumit.")`,
+        `"I realized that ${text}, the harder it becomes to find any real clue." ("Gw sadar kalau ${cleanTranslation}, makin susah buat nemu petunjuk jelas.")`,
+        `"It felt like chasing shadows; ${text}, the less sense any of this makes." ("Rasanya kayak ngejar bayangan; ${cleanTranslation}, makin gak masuk akal semua ini.")`,
+        `"She told me that ${text}, the further away the truth seems." ("Dia bilang ke gw kalau ${cleanTranslation}, kebenarannya malah kelihatan makin jauh.")`,
+        `"No matter how fast we move, ${text}, the more exhausted we feel." ("Secepet apapun kita jalan, ${cleanTranslation}, rasanya malah makin capek.")`,
+        `"It became obvious that ${text}, the more tension grew between them." ("Makin jelas kalau ${cleanTranslation}, tensi di antara mereka malah makin kerasa.")`,
+      ];
+    } else if (isFirstPerson) {
+      pool = [
+        `"Honestly, ${text}, and that's why I need to take a step back." ("Jujur aja, ${cleanTranslation}, dan itu alasannya gw perlu ambil jeda sejenak.")`,
+        `"I had to admit that ${text}, even though it wasn't easy to say out loud." ("Gw harus ngakuin kalau ${cleanTranslation}, meskipun gak gampang buat diucapin.")`,
+        `"During our discussion, she paused when I said: '${text}.'" ("Pas obrolan kita, dia sempat terdiam waktu gw bilang: '${cleanTranslation}.'")`,
+        `"To be completely real with you, ${text}." ("Biar bener-bener jujur sama lu ya, ${cleanTranslation}.")`,
+        `"Sitting there in silence, all I could think was: '${text}.'" ("Duduk diam di sana, yang ada di pikiran gw cuma: '${cleanTranslation}.'")`,
+        `"I wanted to make sure everyone understood that ${text}." ("Gw pengen pastiin semua orang paham kalau ${cleanTranslation}.")`,
+      ];
+    } else if (isSecondPerson) {
+      pool = [
+        `"You can't just expect everything to be fine when ${text}." ("Lu gak bisa cuma ngarepin semuanya baik-baik aja pas ${cleanTranslation}.")`,
+        `"I noticed that ${text}, so I wanted to check in on you." ("Gw ngeh kalau ${cleanTranslation}, makanya gw pengen nanyain kabar lu.")`,
+        `"Before making any hasty decisions, remember that ${text}." ("Sebelum ambil keputusan gegabah, inget kalau ${cleanTranslation}.")`,
+        `"She looked at you and said: '${text},' which changed the whole mood." ("Dia natap lu dan bilang: '${cleanTranslation},' yang langsung ngubah suasana.")`,
+        `"It's important to realize that ${text} before it's too late." ("Penting buat sadar kalau ${cleanTranslation} sebelum semuanya terlambat.")`,
+        `"They all agreed that ${text} was the main issue here." ("Mereka semua sepakat kalau ${cleanTranslation} emang jadi isu utamanya.")`,
+      ];
+    } else {
+      pool = [
+        `"In situations like this, remember that ${text}." ("Di situasi kayak gini, inget kalau ${cleanTranslation}.")`,
+        `"The conversation shifted when someone mentioned: '${text}.'" ("Arah obrolan langsung berubah pas ada yang nyeletuk: '${cleanTranslation}.'")`,
+        `"It's pretty clear that ${text} under these circumstances." ("Cukup jelas kalau ${cleanTranslation} di kondisi kayak gini.")`,
+        `"She smiled gently and said: '${text}.'" ("Dia senyum tipis terus bilang: '${cleanTranslation}.'")`,
+        `"Everyone in the room agreed that ${text}." ("Semua orang di ruangan itu setuju kalau ${cleanTranslation}.")`,
+        `"Looking back at what happened, ${text} makes total sense now." ("Kalo diinget lagi apa yang kejadian, ${cleanTranslation} sekarang masuk akal banget.")`,
+      ];
+    }
+  }
+
+  // Filter out current example if present
+  const available = pool.filter(ex => ex.trim() !== currentExample.trim());
+  const selected = available.length > 0
+    ? available[Math.floor(Math.random() * available.length)]
+    : pool[0];
+
+  return validateAndSanitizeExample(selected, text, cleanTranslation);
+}
+
+/**
  * Generate rich, informative, educational analysis for ANY arbitrary sentence, lyric, or dialogue.
  * Satisfies all quality standards:
  * - Standar 1: Cross-verified translation, idiom priority & strict pronoun normalization (gw/lu)
- * - Standar 2: Grammatically correct examples across contextual emotional tones
+ * - Standar 2: Grammatically correct examples across contextual emotional tones (default 1 example)
  * - Standar 3: Insightful, Temen Ngobrol notes with authentic Jaksel interjections
  * - Standar 4: maknaFilosofis field with emotional/psychological insight
  * - Standar 5: Confidence level tracking ('high' | 'medium' | 'low')
  */
-export async function generateRichSentenceAnalysis(rawText) {
+export async function generateRichSentenceAnalysis(rawText, exampleCount = 1, options = {}) {
   const text = rawText.trim();
   const lower = text.toLowerCase();
   const phonetics = generateSentencePhonetics(text);
@@ -460,7 +662,6 @@ export async function generateRichSentenceAnalysis(rawText) {
     };
   }
 
-  // Determine final meaning and confidence
   let cleanTranslation = cleanTranslationRaw;
   let finalConfidence = dualConfidence;
 
@@ -469,10 +670,24 @@ export async function generateRichSentenceAnalysis(rawText) {
     finalConfidence = 'high';
   }
 
-  const isLyric = isSongInput(text);
+  // Determine classifiedType (MASALAH 2 POIN 1: gunakan classifiedType dari caller jika tersedia)
+  const classification = classifyText(text, options);
+  const classifiedType = options?.classifiedType || classification.type;
+
   let tone = detectSentenceTone(text, cleanTranslation);
 
-  // Self-check safeguard: Ensure romantic/intimate words never trigger general statement (office/colleagues)
+  // 3. Grammatical structure & input shape classification
+  const words = text.split(/\s+/).filter(Boolean);
+  const wordCount = words.length;
+
+  const isQuestion =
+    text.endsWith('?') ||
+    /^(what|why|how|where|when|who|which|whose|whom|is|are|am|was|were|do|does|did|can|could|will|would|should|may|might|have|has|had)\b/i.test(text);
+
+  const isActionOrImperative =
+    /^(please\s+)?(hug|help|tell|let|make|give|take|call|listen|look|wait|stop|try|come|go|bring|show|ask|remember|forget|keep|hold|send|check|find|leave|stand|wake|run)\b/i.test(text);
+
+  // Self-check safeguard: Ensure romantic/intimate words trigger romantic_love
   const hasRomanticWords =
     /\b(soul|souls|light|lights|heart|hearts|love|darling|sweet|cinta|sayang|jiwa|hatiku|belahan\s+jiwa|mean\s+the\s+world|my\s+world|shine|glow)\b/i.test(
       text
@@ -481,26 +696,21 @@ export async function generateRichSentenceAnalysis(rawText) {
 
   if (
     tone !== 'angry_breakup' &&
+    tone !== 'reflective_philosophical' &&
     tone !== 'sad_heartbroken' &&
     hasRomanticWords
   ) {
     tone = 'romantic_love';
   }
 
-  // Grammatical structure detectors
-  const isQuestion =
-    text.endsWith('?') ||
-    /^(what|why|how|where|when|who|which|whose|whom|is|are|am|was|were|do|does|did|can|could|will|would|should|may|might|have|has|had)\b/i.test(text);
-
-  const isActionOrImperative =
-    /^(please\s+)?(hug|help|tell|let|make|give|take|call|listen|look|wait|stop|try|come|go|bring|show|ask|remember|forget|keep|hold|send|check|find|leave|stand|wake|run)\b/i.test(text);
-
   let examples = [];
   let note = '';
   let maknaFilosofis = '';
+  let finalArti = cleanTranslation;
 
   // ══════════════════════════════════════════════════════════════════════════════
-  // GENERATE CONTEXTUAL EXAMPLES, CATATAN & MAKNA FILOSOFIS BY EMOTIONAL TONE
+  // GENERATE CONTEXTUAL EXAMPLES, CATATAN & MAKNA FILOSOFIS BY CATEGORY & TONE
+  // ATURAN MASALAH 4: MINIMAL 6 VARIASI TEMPLATE DENGAN PEMILIHAN ACAK BER-BUFFER
   // ══════════════════════════════════════════════════════════════════════════════
 
   if (isKnownIdiom) {
@@ -509,93 +719,247 @@ export async function generateRichSentenceAnalysis(rawText) {
     const etymology = mainIdiom.asalUsul ? ` ${mainIdiom.asalUsul}` : '';
     note = `Tbh ini idiom otentik yang hits banget: "${mainIdiom.key}" yang artinya "${mainIdiom.arti}".${etymology} ${mainIdiom.penjelasan} Luwes banget dipake pas lagi chat atau ngobrol kasual!`;
     maknaFilosofis = mainIdiom.maknaFilosofis || `Secara filosofis, idiom seperti ini memperkaya cara pandang kita terhadap dinamika hidup dengan analogi yang cerdas dan menyegarkan.`;
-  } else if (tone === 'angry_breakup') {
-    // 💔 ANGRY / BREAKUP CONTEXT
-    examples = [
-      `"After all the drama, I looked in the mirror and said: '${text}.'" ("Abis semua drama toxic itu, gw natap cermin dan bilang: '${cleanTranslation}.'")`,
-      `"She stood her ground, looked him dead in the eye, and said: '${text}.'" ("Dia pasang batasan tegas, natap matanya langsung, dan bilang: '${cleanTranslation}.'")`,
-      `"A: 'Are you gonna text them back?' — B: 'Hell no, ${text}!' (A: 'Lu bakal bales chat dia?' — B: 'Dih ogah banget, ${cleanTranslation}!')"`,
-      `"It took months of overthinking to finally realize: '${text}.'" ("Butuh berbulan-bulan overthinking buat akhirnya sadar: '${cleanTranslation}.'")`,
+  } else if (classifiedType === 'word' || wordCount === 1) {
+    // 🔍 SINGLE WORD CONTEXT (VERB / NOUN / ADJECTIVE)
+    if (lower === 'trace') {
+      finalArti = 'Melacak / Menelusuri / Jejak';
+      const tracePool = [
+        `"Police are working day and night to trace the origin of the phone call." ("Polisi kerja siang malam buat melacak asal-usul panggilan telepon itu.")`,
+        `"The suspect vanished into the crowded subway without leaving a trace." ("Tersangka ngilang di kereta bawah tanah yang padat tanpa ninggalin jejak sedikitpun.")`,
+        `"Can you help me trace where this bug came from?" ("Bisa bantu gw telusuri bug kodingan ini dari mana?")`,
+        `"She could trace every happy memory back to their first meeting." ("Dia bisa menelusuri tiap memori bahagia kembali ke pertemuan pertama mereka.")`,
+        `"Without leaving a trace, the mysterious car drove away." ("Tanpa ninggalin jejak sedikitpun, mobil misterius itu melaju pergi.")`,
+        `"Let's trace the server logs together to solve this." ("Yuk kita telusuri log servernya bareng biar cepet kelar.")`,
+      ];
+      examples = [pickVariedTemplate('trace_examples', tracePool)];
+      note = `Tbh kata 'trace' ini tuh fleksibel dan sering banget kepake di film detektif atau dunia teknologi. Sebagai kata kerja (verb), artinya melacak atau menelusuri alur data/kejadian; sedangkan sebagai kata benda (noun), artinya jejak. Dijamin asik banget dipake pas lu lagi ngomongin investigasi atau nyari akar masalah!`;
+      maknaFilosofis = `Real talk, keinginan manusia buat menelusuri (to trace) akar masalah adalah bentuk kesadaran diri yang tinggi. Kita gak bisa bener-bener paham kondisi hari ini tanpa tahu jejak langkah yang nuntun kita sampe ke titik ini. Which is kenapa memahami asal-usul selalu jadi kunci utama penyelesaian krisis apapun.`;
+    } else if (lower === 'angry') {
+      finalArti = 'Marah / Kesal / Murka';
+      const angryPool = [
+        `"She was so angry when she found out they had been lying to her all along." ("Dia kesel banget pas tahu mereka udah bohongin dia dari awal.")`,
+        `"Take a deep breath; there's no point in making big decisions when you're angry." ("Tarik napas panjang; gak ada gunanya ambil keputusan penting pas lu lagi emosi/marah.")`,
+        `"Is he still angry at me after what happened yesterday?" ("Dia masih marah sama gw ya setelah apa yang terjadi kemarin?")`,
+        `"It's okay to feel angry, but make sure you express it constructively." ("Wajar kok ngerasa marah, tapi pastiin lu luapkan dengan cara yang membangun.")`,
+        `"Walking away when angry prevents saying things you might regret." ("Menjauh sejenak pas lagi marah nyegah lu ngomong hal-hal yang bakal disesali.")`,
+        `"He looked visibly angry but chose to stay quiet." ("Kelihatan jelas dia lagi marah banget, tapi dia milih buat tetep diam.")`,
+      ];
+      examples = [pickVariedTemplate('angry_word_examples', angryPool)];
+      note = `Nah ini nih kata dasar emosi yang literally paling sering kepake. Tbh bedanya sama 'mad' atau 'furious', 'angry' ini adalah istilah paling universal dan netral buat ngungkapin rasa kesel lu.`;
+      maknaFilosofis = `Tbh dari kacamata psikologi emosi, marah adalah sinyal alami bahwa batas personal (boundary) lu sedang dilanggar. Menolak merasa marah justru tidak sehat; kuncinya adalah menyalurkannya secara asertif tanpa destruktif.`;
+    } else {
+      // General single word (6 variations)
+      finalArti = cleanTranslation;
+      const isVerbLike = /^(me|meng|ber)/i.test(cleanTranslation);
+      const wordPool = isVerbLike
+        ? [
+            `"Let's make sure to ${lower} every single detail carefully before moving forward." ("Yuk pastiin kita ${cleanTranslation} setiap detailnya secara teliti sebelum lanjut.")`,
+            `"She tried her best to ${lower} the situation so everyone stayed calm." ("Dia berusaha sebaik mungkin buat ${cleanTranslation} situasinya biar semua orang tetep tenang.")`,
+            `"Can you help me ${lower} this properly?" ("Bisa bantu gw ${cleanTranslation} ini dengan bener gak?")`,
+            `"Take your time to ${lower} everything step by step." ("Santai aja, luangkan waktu buat ${cleanTranslation} semuanya tahap demi tahap.")`,
+            `"Knowing when to ${lower} makes a huge difference in the outcome." ("Tahu kapan harus ${cleanTranslation} bawa pengaruh gede ke hasil akhirnya.")`,
+            `"We need someone who can ${lower} this with confidence." ("Kita butuh orang yang bisa ${cleanTranslation} hal ini dengan percaya diri.")`,
+          ]
+        : [
+            `"Having a clear grasp of ${lower} makes everyday communication a lot smoother." ("Punya pemahaman jelas soal ${cleanTranslation} bikin komunikasi sehari-hari jauh lebih lancar.")`,
+            `"He brought up the word '${lower}' during our discussion today." ("Dia ngebahas kata '${cleanTranslation}' pas obrolan kita tadi.")`,
+            `"Basically, just focus on ${lower} when dealing with this." ("Basically ya, tinggal fokus ke ${cleanTranslation} aja pas ngadepin ini.")`,
+            `"A simple reminder that ${lower} really matters in the long run." ("Pengingat sederhana kalo ${cleanTranslation} bener-bener penting untuk jangka panjang.")`,
+            `"Understanding the real meaning of ${lower} helps avoid misunderstandings." ("Paham makna asli ${cleanTranslation} ngebantu banget biar gak salah paham.")`,
+            `"You can see the influence of ${lower} in everyday situations." ("Lu bisa liat pengaruh ${cleanTranslation} di situasi sehari-hari.")`,
+          ];
+      examples = [pickVariedTemplate(`word_pool_${isVerbLike ? 'verb' : 'noun'}`, wordPool)];
+      note = generateDynamicRantauNote(text, cleanTranslation, tone, wordCount);
+      maknaFilosofis = generateDynamicMaknaFilosofis(text, cleanTranslation, tone, wordCount);
+    }
+  } else if (classifiedType === 'phrase') {
+    // 🌸 NOUN PHRASE / IDIOM PHRASE (6 variations, no artificial claims)
+    finalArti = cleanTranslation;
+
+    const phrasePool = isNegativeNP
+      ? [
+          `"Getting involved with the ${text} can ruin your future plans." ("Terjebak sama ${cleanTranslation} bisa ngerusak rencana masa depan lu.")`,
+          `"He realized he was in the ${text} business and decided to walk away." ("Dia sadar kalau dia ada di bisnis ${cleanTranslation} dan milih buat pergi.")`,
+          `"Honestly, it all started from the ${text} environment." ("Jujur ya, semuanya berawal dari lingkungan ${cleanTranslation}.")`,
+          `"Steering clear of ${text} is the best decision you can make." ("Menjauh dari ${cleanTranslation} adalah keputusan terbaik yang bisa lu ambil.")`,
+          `"Nobody wants to deal with a ${text} situation." ("Gak ada orang yang mau berurusan sama situasi ${cleanTranslation}.")`,
+          `"Recognizing a ${text} early saves a lot of heartache." ("Menyadari ${cleanTranslation} sejak awal nyelametin lu dari banyak sakit hati.")`,
+        ]
+      : [
+          `"Finding the right ${text} can make a huge difference in your journey." ("Nemu ${cleanTranslation} yang pas bisa ngebawa perubahan gede di perjalanan lu.")`,
+          `"They spent the whole afternoon talking about their ${text}." ("Mereka ngabisin sepanjang sore ngebahas ${cleanTranslation} mereka.")`,
+          `"Just trying to manage ${text} better every single day." ("Lagi nyoba nata ${cleanTranslation} biar lebih beres tiap harinya.")`,
+          `"Having ${text} ready makes the entire process seamless." ("Nyiapin ${cleanTranslation} bikin seluruh prosesnya berjalan mulus.")`,
+          `"She shared a thoughtful perspective on ${text}." ("Dia ngebagiin sudut pandang yang berbobot soal ${cleanTranslation}.")`,
+          `"Focusing on the right ${text} helps keep things on track." ("Fokus ke ${cleanTranslation} yang tepat ngebantu semuanya tetep teratur.")`,
+        ];
+    examples = [pickVariedTemplate(`phrase_pool_${isNegativeNP ? 'neg' : 'pos'}`, phrasePool)];
+    note = generateDynamicRantauNote(text, cleanTranslation, tone, wordCount);
+    maknaFilosofis = generateDynamicMaknaFilosofis(text, cleanTranslation, tone, wordCount);
+  } else if (classifiedType === 'song') {
+    // 🎵 PURE SONG LYRIC CONTEXT (6 variations weaving the text)
+    const songPool = [
+      `In everyday conversation, you can naturally use "${text}" when expressing how you feel. (Di obrolan sehari-hari, lu bisa wajar memakai "${text}" pas lagi ngungkapin perasaan lu.)`,
+      `Reflecting on that moment, he admitted: "${text}." (Merenungkan momen itu, dia mengakui: "${cleanTranslation}.")`,
+      `When speaking from the heart, she whispered: "${text}." (Pas lagi ngomong dari lubuk hati terdalam, dia berbisik: "${cleanTranslation}.")`,
+      `You can borrow this line directly: "${text}" to describe what you are going through. (Lu bisa langsung pinjam kalimat "${text}" buat melukiskan apa yang lagi lu alamin.)`,
+      `It captures that vulnerable feeling so well: "${text}." (Kalimat ini nangkep perasaan rapuh itu dengan pas: "${cleanTranslation}.")`,
+      `Whenever you need words for that exact sentiment, just say: "${text}." (Tiap kali lu butuh kata-kata buat rasa itu, tinggal bilang: "${cleanTranslation}.")`,
     ];
-    note = `Nah ini nih salah satu ekspresi yang paling tegas pas lu lagi ngerasa kecewa berat tapi udah di tahap 'enough is enough'. Tbh penggunaan kalimat ini nunjukin rasa percaya diri baru bahwa hidup lu bakal jauh lebih damai dan berkembang tanpa kehadiran orang toxic tersebut. Pernah gak sih ngerasa pengen bilang gini ke seseorang pas udah muak banget?`;
-    maknaFilosofis = `Tbh dari kacamata psikologi hubungan, kalimat ini melukiskan fase 'the turning point' — titik balik pas seseorang akhirnya berhenti denial dan mulai reclaim harga dirinya. Marah di sini bukan sekadar emosi destruktif, tapi bentuk self-defense mechanism yang sehat buat masang boundary tegas. Which is valid banget sih, karena kadang lu emang butuh rasa kesel itu buat bener-bener berani mutus toxic cycle dan melangkah maju tanpa noleh ke belakang lagi.`;
-  } else if (tone === 'sad_heartbroken') {
-    // 🌧️ SAD / HEARTBROKEN / GRIEF CONTEXT
-    examples = [
-      `"It's 2 AM, looking at old memories, and honestly ${text}." ("Udah jam 2 pagi, lagi liatin memori lama, dan sejujurnya ${cleanTranslation}.")`,
-      `"I tried rewiring my thoughts, but deep down ${text}." ("Gw nyoba alihin pikiran gw, tapi di lubuk hati terdalam ${cleanTranslation}.")`,
-      `"Whenever our favorite song plays on shuffle, ${text}." ("Tiap kali lagu favorit kita keputer acak, rasanya ${cleanTranslation}.")`,
-      `"A: 'Are you doing okay?' — B: 'Honestly, ${text}.' (A: 'Lu baik-baik aja kan?' — B: 'Sejujurnya, ${cleanTranslation}.')"`
+    examples = [pickVariedTemplate('song_pool', songPool)];
+    note = generateDynamicRantauNote(text, cleanTranslation, tone, wordCount);
+    maknaFilosofis = generateDynamicMaknaFilosofis(text, cleanTranslation, tone, wordCount);
+  } else if (classifiedType === 'movie') {
+    // 🎬 PURE MOVIE CONTEXT (6 variations weaving the text)
+    const moviePool = [
+      `In a memorable confrontation, the line hits hard: "${text}." (Di adegan konfrontasi yang membekas, dialog ini kena banget: "${cleanTranslation}.")`,
+      `Delivering this line with calm intensity: "${text}." (Nyampein kalimat ini dengan ketegasan yang tenang: "${cleanTranslation}.")`,
+      `Just like an iconic scene, you can declare: "${text}." (Persis adegan film legendaris, lu bisa tegasin: "${cleanTranslation}.")`,
+      `When words need weight, this line says it all: "${text}." (Pas perkataan butuh bobot mendalam, kalimat ini udah cukup: "${cleanTranslation}.")`,
+      `Spoken with quiet confidence: "${text}." (Diucapkan dengan rasa percaya diri yang tenang: "${cleanTranslation}.")`,
+      `A classic, impactful line to remember: "${text}." (Kalimat klasik dan berbobot buat diinget: "${cleanTranslation}.")`,
     ];
-    note = `Waduh, kalimat ini tuh dalem banget maknanya — literally bikin baper sih kalo denger ini pas lagi galau sendirian di kamar. Tbh jangan dipendem terus ya, which is kenapa ngeluarin isi hati lewat kata-kata kayak gini bisa bikin perasaan lu jadi jauh lebih lega. Relate banget gak nih sama playlist jam 2 pagi lu?`;
-    maknaFilosofis = `Honestly, kalimat ini punya vibrasi melancholic yang dalem banget — tipe kata yang biasanya muncul pas fase grief atau jam-jam overthinking malam hari. Secara psikologis, ngakuin rasa sedih kayak gini tuh bentuk emotional release (katarsis) yang krusial banget. Which is kenapa dengerin kalimat ini rasanya kayak ada yang ngertiin perasaan hampa lu tanpa lu harus capek-capek jelasin panjang lebar ke orang lain.`;
-  } else if (tone === 'romantic_love') {
-    // 💖 ROMANTIC / LOVE / SWEET CONTEXT
-    examples = [
-      `"I don't usually get this emotional, but honestly ${text}." ("Gw biasanya gak se-emosional ini, tapi beneran deh ${cleanTranslation}.")`,
-      `"Every time you smile across the table, ${text}." ("Tiap kali lu senyum di seberang meja, rasanya ${cleanTranslation}.")`,
-      `"Under the city skyline lights, he looked into her eyes and whispered: '${text}.'" ("Di bawah gemerlap lampu kota, dia natap matanya dan berbisik: '${cleanTranslation}.'")`,
-      `"A: 'Why do you care so much?' — B: 'Because ${text}!' (A: 'Kenapa lu segitu pedulinya?' — B: 'Soalnya ${cleanTranslation}!')"`
-    ];
-    note = `Nah ini nih salah satu kalimat yang literally paling manis dan tulus buat diucapin ke gebetan atau pasangan! As you know, ungkapan kayak gini tuh bikin lawan bicara ngerasa bener-bener dihargai dan dispesialkan. Cocok banget dipake pas lagi momen hangat berdua biar suasananya makin melting wkwk.`;
-    maknaFilosofis = `As you know, ini adalah bentuk ekspresi afeksi tulus yang berani nunjukin vulnerability (kerentanan batin). Di zaman di mana banyak orang gengsi ngakuin rasa sayangnya, berani berucap sehangat ini tuh literally bikin hati luluh. So basically, ini bukan cuma sekadar gombalan kasual, tapi ada rasa aman (secure attachment) dan komitmen tulus yang pengen dibagi bareng pasangan.`;
-  } else if (isLyric) {
-    // 🎵 LYRIC CONTEXT
-    examples = [
-      `"Whenever this part of the track plays, '${text}' always hits so differently." ("Tiap kali bagian lagu ini keputer, lirik '${cleanTranslation}' selalu kerasa ngena banget di hati.")`,
-      `"I wrote down that meaningful line in my notes: '${text}'" ("Gw nyatet bait yang penuh makna dari lirik itu: '${cleanTranslation}'")`,
-      `"The acoustic rendition highlights '${text}' so beautifully." ("Versi akustiknya bikin penggalan '${cleanTranslation}' kedengeran makin dalam dan menyentuh.")`,
-    ];
-    note = `Kutipan ini punya rasa puitis ala lirik lagu indie. Penekanannya ada pada ekspresi rasa dan estetika bahasa. Di obrolan santai, lu bisa pakai penggalan frasa intinya buat melukiskan perasaan jujur ke temen dekat tanpa terkesan kaku!`;
-    maknaFilosofis = `Lirik musik sering kali menangkap emosi-emosi samar yang sulit dirumuskan oleh percakapan biasa. Melalui metafora dan ritme, kalimat ini menghubungkan pengalaman batin pribadi dengan perasaan universal manusia.`;
+    examples = [pickVariedTemplate('movie_pool', moviePool)];
+    note = generateDynamicRantauNote(text, cleanTranslation, tone, wordCount);
+    maknaFilosofis = generateDynamicMaknaFilosofis(text, cleanTranslation, tone, wordCount);
   } else if (isQuestion) {
-    // ❓ CASUAL QUESTION CONTEXT
-    examples = [
-      `"During our coffee catchup, my friend asked: '${text}'" ("Pas lagi ngopi santai, temen gw nanya: '${cleanTranslation}'")`,
-      `"Before making any rushed move, let me ask you: '${text}'" ("Sebelum kita buru-buru ambil langkah, coba gw tanya ke lu: '${cleanTranslation}'")`,
-      `"A: '${text}' — B: 'Honestly, I haven't even thought that far yet!' (A: '${cleanTranslation}' — B: 'Jujur, gw bahkan belum mikir sejauh itu!')"`
+    // ❓ QUESTION CONTEXT (6 variations, clean & direct)
+    const questionPool = [
+      `"Pausing for a second, she asked genuinely: '${text}'" ("Sempat terdiam sejenak, dia bertanya dengan tulus: '${cleanTranslation}'")`,
+      `"Curious about what was happening, he asked: '${text}'" ("Penasaran sama apa yang lagi terjadi, dia nanya: '${cleanTranslation}'")`,
+      `"A straightforward question you can naturally ask: '${text}'" ("Pertanyaan lugas yang bisa lu lontarkan secara alami: '${cleanTranslation}'")`,
+      `"To clarify the situation without awkwardness, just ask: '${text}'" ("Biar situasinya jelas tanpa canggung, tinggal tanya: '${cleanTranslation}'")`,
+      `"She turned around and wondered aloud: '${text}'" ("Dia noleh dan bertanya-tanya penasaran: '${cleanTranslation}'")`,
+      `"In honest conversation, you might ask: '${text}'" ("Di obrolan yang jujur, lu bisa nanya: '${cleanTranslation}'")`,
     ];
-    note = `Tbh kalimat tanya ini luwes banget dipake pas lagi nongkrong atau chat santai sama temen akrab. Bikin obrolan dua arah jadi lebih hidup tanpa terkesan menginterogasi — which is why native speaker sering banget pake pola ini!`;
-    maknaFilosofis = `Secara psikologis, mengajukan pertanyaan santai yang terbuka mencerminkan rasa ingin tahu yang sehat dan ketiadaan penghakiman (non-judgmental space). Ini membuka jembatan empati yang membuat orang lain merasa aman untuk bercerita.`;
+    examples = [pickVariedTemplate('question_pool', questionPool)];
+    note = generateDynamicRantauNote(text, cleanTranslation, tone, wordCount);
+    maknaFilosofis = generateDynamicMaknaFilosofis(text, cleanTranslation, tone, wordCount);
+  } else if (tone === 'reflective_philosophical') {
+    // 🌌 REFLECTIVE / PHILOSOPHICAL CONTEXT (6 variations, grounded & non-whisper cliché)
+    const reflectivePool = [
+      `"Reflecting quietly on what lies ahead, she whispered: '${text}'" ("Merenung tenang soal apa yang menanti di depan, dia berbisik: '${cleanTranslation}'")`,
+      `"Standing before an unknown journey, you can say: '${text}'" ("Berdiri di hadapan perjalanan yang belum pasti, lu bisa bilang: '${cleanTranslation}'")`,
+      `"In moments of deep personal reflection: '${text}'" ("Di momen perenungan diri yang mendalam: '${cleanTranslation}'")`,
+      `"Contemplating the upcoming turn of events, I murmured: '${text}'" ("Merenungkan arah masa depan yang bakal terjadi, gw bergumam: '${cleanTranslation}'")`,
+      `"When pondering the path ahead, she said: '${text}'" ("Pas lagi mikirin jalan di depan, dia bilang: '${cleanTranslation}'")`,
+      `"Looking into the distance with a quiet heart: '${text}'" ("Menatap ke kejauhan dengan hati yang tenang: '${cleanTranslation}'")`,
+    ];
+    examples = [pickVariedTemplate('reflective_pool', reflectivePool)];
+    note = generateDynamicRantauNote(text, cleanTranslation, tone, wordCount);
+    maknaFilosofis = generateDynamicMaknaFilosofis(text, cleanTranslation, tone, wordCount);
+  } else if (tone === 'sad_heartbroken') {
+    // 🌧️ SAD / HEARTBROKEN CONTEXT (6 variations)
+    const sadPool = [
+      `"Late at night when everything goes quiet, you might feel: '${text}'" ("Pas larut malam saat suasana hening, lu mungkin ngerasa: '${cleanTranslation}'")`,
+      `"Holding back a heavy sigh, she admitted: '${text}'" ("Nahan napas berat, dia ngaku: '${cleanTranslation}'")`,
+      `"Whenever old memories resurface, all I can say is: '${text}'" ("Tiap kali memori lama muncul lagi, yang bisa gw bilang cuma: '${cleanTranslation}'")`,
+      `"Sitting alone with overwhelming thoughts: '${text}'" ("Duduk sendirian dengan pikiran berkecamuk: '${cleanTranslation}'")`,
+      `"It hurts to admit it, but honestly: '${text}'" ("Sakit emang buat ngakuinnya, tapi sejujurnya: '${cleanTranslation}'")`,
+      `"In a moment of vulnerability, he confessed: '${text}'" ("Di momen batin lagi rapuh, dia ngaku: '${cleanTranslation}'")`,
+    ];
+    examples = [pickVariedTemplate('sad_pool', sadPool)];
+    note = generateDynamicRantauNote(text, cleanTranslation, tone, wordCount);
+    maknaFilosofis = generateDynamicMaknaFilosofis(text, cleanTranslation, tone, wordCount);
+  } else if (tone === 'angry_breakup') {
+    // 💔 ANGRY / BREAKUP CONTEXT (6 variations)
+    const angryPool = [
+      `"After thinking it through, I stood my ground and said: '${text}'" ("Abis mikir panjang, gw pasang batasan tegas dan bilang: '${cleanTranslation}'")`,
+      `"Looking him right in the eye, she declared: '${text}'" ("Natap langsung ke matanya, dia tegas bilang: '${cleanTranslation}'")`,
+      `"Setting a clear boundary once and for all: '${text}'" ("Masang batasan jelas biar beres: '${cleanTranslation}'")`,
+      `"Tired of being taken for granted, he blurted out: '${text}'" ("Udah capek disepelein terus, dia langsung ngomong: '${cleanTranslation}'")`,
+      `"I refuse to tolerate this any longer: '${text}'" ("Gw nolak buat mentoleransi ini lebih lama lagi: '${cleanTranslation}'")`,
+      `"Enough is enough, so I made it clear: '${text}'" ("Cukup ya cukup, jadi gw pertegas: '${cleanTranslation}'")`,
+    ];
+    examples = [pickVariedTemplate('angry_pool', angryPool)];
+    note = generateDynamicRantauNote(text, cleanTranslation, tone, wordCount);
+    maknaFilosofis = generateDynamicMaknaFilosofis(text, cleanTranslation, tone, wordCount);
+  } else if (tone === 'romantic_love') {
+    // 💖 ROMANTIC / LOVE CONTEXT (6 variations)
+    const romanticPool = [
+      `"I don't say sweet things often, but honestly: '${text}'" ("Gw gak sering ngomong manis, tapi beneran deh: '${cleanTranslation}'")`,
+      `"Every time I look into your eyes, I think: '${text}'" ("Tiap kali gw natap mata lu, gw mikir: '${cleanTranslation}'")`,
+      `"Holding hands quietly under the evening sky: '${text}'" ("Genggaman tangan tenang di bawah langit sore: '${cleanTranslation}'")`,
+      `"A genuine reminder of how much you mean to me: '${text}'" ("Pengingat tulus soal betapa berartinya lu buat gw: '${cleanTranslation}'")`,
+      `"Softly sharing what has been on my heart: '${text}'" ("Dengan lembut ngungkapin apa yang ada di hati gw: '${cleanTranslation}'")`,
+      `"No grand gestures needed, just simple honesty: '${text}'" ("Gak butuh gaya-gayaan berlebihan, cukup kejujuran sederhana: '${cleanTranslation}'")`,
+    ];
+    examples = [pickVariedTemplate('romantic_pool', romanticPool)];
+    note = generateDynamicRantauNote(text, cleanTranslation, tone, wordCount);
+    maknaFilosofis = generateDynamicMaknaFilosofis(text, cleanTranslation, tone, wordCount);
   } else if (isActionOrImperative) {
-    // ⚡ ACTION / IMPERATIVE CONTEXT
-    examples = [
+    // ⚡ ACTION / IMPERATIVE CONTEXT (6 variations)
+    const actionPool = [
       `"Take a deep breath and remember to ${text}." ("Tarik napas panjang dan jangan lupa buat ${cleanTranslation}.")`,
       `"Whenever things get overwhelming, don't hesitate to ${text}." ("Tiap kali situasi mulai berasa berat, jangan sungkan buat ${cleanTranslation}.")`,
-      `"Before walking out the door, she turned around and said: '${text}.'" ("Sebelum melangkah keluar pintu, dia noleh dan bilang: '${cleanTranslation}.'")`
+      `"Before moving to the next step, make sure to ${text}." ("Sebelum lanjut ke tahap berikutnya, pastiin lu ${cleanTranslation}.")`,
+      `"If you ever feel stuck, the best thing to do is ${text}." ("Kalo lu sempet ngerasa buntu, hal terbaik yang bisa dilakuin adalah ${cleanTranslation}.")`,
+      `"A simple yet powerful rule to live by: always ${text}." ("Aturan simpel tapi berbobot buat dipegang: selalu ${cleanTranslation}.")`,
+      `"No matter what happens around you, promise to ${text}." ("Gimanapun situasi sekitar lu, janji buat selalu ${cleanTranslation}.")`,
     ];
-    note = `Ungkapan ini sifatnya hangat dan suportif banget pas diucapin ke temen deket yang lagi butuh sandaran. So basically, ini cara yang manis buat nunjukin kalau lu peduli dan siap ada buat mereka kapan pun dibutuhkan!`;
-    maknaFilosofis = `Ajakan hangat dan tindakan nyata adalah wujud kepedulian yang paling konkret. Ketika kata-kata formal terasa dingin, kalimat aksi yang tulus mampu memberikan rasa tenang dan kehangatan seketika.`;
+    examples = [pickVariedTemplate('action_pool', actionPool)];
+    note = generateDynamicRantauNote(text, cleanTranslation, tone, wordCount);
+    maknaFilosofis = generateDynamicMaknaFilosofis(text, cleanTranslation, tone, wordCount);
   } else {
-    // ☕ GENERAL STATEMENT CONTEXT
-    examples = [
-      `"Over coffee break today, my colleague pointed out: '${text}.'" ("Pas lagi ngopi santai tadi, temen kantor gw ngingetin: '${cleanTranslation}.'")`,
-      `"Looking at the whole situation objectively, it's clear that ${text}." ("Melihat situasinya secara objektif, kelihatan jelas kalo ${cleanTranslation}.")`,
-      `"A: 'What's your main takeaway here?' — B: 'Basically, ${text}.' (A: 'Poin penting lu apa?' — B: 'Basically ya, ${cleanTranslation}.')"`
-    ];
-    note = `Tbh kalimat ini tuh salah satu yang paling gampang nyangkut di kepala dan luwes banget dipake pas ngobrol santai sehari-hari. Which is kenapa native speaker sering pake buat nyampein pemikiran secara to-the-point tapi tetep santai!`;
-    maknaFilosofis = `Real talk, kejelasan dalam berbicara adalah bentuk rasa hormat pada waktu dan energi orang lain. Menyampaikan fakta atau argumen dengan lugas tanpa berbelit-belit menciptakan relasi komunikasi yang sehat dan saling percaya.`;
+    // 💬 NEUTRAL SENTENCE DEFAULT: Real situational dialogues, never meta-tutorials
+    const isCorrelative = /^the\s+(more|less|sooner|harder|longer|better|greater)\b/i.test(text);
+    const isFirstPerson = /^(i|we|my|our)\b/i.test(text) || /\b(i'm|i've|i'd|i\s+feel|i\s+think)\b/i.test(text);
+    const isSecondPerson = /^(you|your)\b/i.test(text) || /\b(you're|you've|you'd)\b/i.test(text);
+
+    let situationalPool = [];
+
+    if (isCorrelative) {
+      situationalPool = [
+        `"The truth is, ${text}, the more complicated things get." ("Kenyataannya, ${cleanTranslation}, situasinya malah makin rumit.")`,
+        `"I realized that ${text}, the harder it becomes to find any real clue." ("Gw sadar kalau ${cleanTranslation}, makin susah buat nemu petunjuk jelas.")`,
+        `"It felt like chasing shadows; ${text}, the less sense any of this makes." ("Rasanya kayak ngejar bayangan; ${cleanTranslation}, makin gak masuk akal semua ini.")`,
+        `"She told me that ${text}, the further away the truth seems." ("Dia bilang ke gw kalau ${cleanTranslation}, kebenarannya malah kelihatan makin jauh.")`,
+        `"No matter how fast we move, ${text}, the more exhausted we feel." ("Secepet apapun kita jalan, ${cleanTranslation}, rasanya malah makin capek.")`,
+        `"It became obvious that ${text}, the more tension grew between them." ("Makin jelas kalau ${cleanTranslation}, tensi di antara mereka malah makin kerasa.")`,
+      ];
+    } else if (isFirstPerson) {
+      situationalPool = [
+        `"Honestly, ${text}, and that's why I need to take a step back." ("Jujur aja, ${cleanTranslation}, dan itu alasannya gw perlu ambil jeda sejenak.")`,
+        `"I had to admit that ${text}, even though it wasn't easy to say out loud." ("Gw harus ngakuin kalau ${cleanTranslation}, meskipun gak gampang buat diucapin.")`,
+        `"During our discussion, she paused when I said: '${text}.'" ("Pas obrolan kita, dia sempat terdiam waktu gw bilang: '${cleanTranslation}.'")`,
+        `"To be completely real with you, ${text}." ("Biar bener-bener jujur sama lu ya, ${cleanTranslation}.")`,
+        `"Sitting there in silence, all I could think was: '${text}.'" ("Duduk diam di sana, yang ada di pikiran gw cuma: '${cleanTranslation}.'")`,
+        `"I wanted to make sure everyone understood that ${text}." ("Gw pengen pastiin semua orang paham kalau ${cleanTranslation}.")`,
+      ];
+    } else if (isSecondPerson) {
+      situationalPool = [
+        `"You can't just expect everything to be fine when ${text}." ("Lu gak bisa cuma ngarepin semuanya baik-baik aja pas ${cleanTranslation}.")`,
+        `"I noticed that ${text}, so I wanted to check in on you." ("Gw ngeh kalau ${cleanTranslation}, makanya gw pengen nanyain kabar lu.")`,
+        `"Before making any hasty decisions, remember that ${text}." ("Sebelum ambil keputusan gegabah, inget kalau ${cleanTranslation}.")`,
+        `"She looked at you and said: '${text},' which changed the whole mood." ("Dia natap lu dan bilang: '${cleanTranslation},' yang langsung ngubah suasana.")`,
+        `"It's important to realize that ${text} before it's too late." ("Penting buat sadar kalau ${cleanTranslation} sebelum semuanya terlambat.")`,
+        `"They all agreed that ${text} was the main issue here." ("Mereka semua sepakat kalau ${cleanTranslation} emang jadi isu utamanya.")`,
+      ];
+    } else {
+      situationalPool = [
+        `"In situations like this, remember that ${text}." ("Di situasi kayak gini, inget kalau ${cleanTranslation}.")`,
+        `"The conversation shifted when someone mentioned: '${text}.'" ("Arah obrolan langsung berubah pas ada yang nyeletuk: '${cleanTranslation}.'")`,
+        `"It's pretty clear that ${text} under these circumstances." ("Cukup jelas kalau ${cleanTranslation} di kondisi kayak gini.")`,
+        `"She smiled gently and said: '${text}.'" ("Dia senyum tipis terus bilang: '${cleanTranslation}.'")`,
+        `"Everyone in the room agreed that ${text}." ("Semua orang di ruangan itu setuju kalau ${cleanTranslation}.")`,
+        `"Looking back at what happened, ${text} makes total sense now." ("Kalo diinget lagi apa yang kejadian, ${cleanTranslation} sekarang masuk akal banget.")`,
+      ];
+    }
+
+    examples = [pickVariedTemplate('situational_pool', situationalPool)];
+    note = generateDynamicRantauNote(text, cleanTranslation, tone, wordCount);
+    maknaFilosofis = generateDynamicMaknaFilosofis(text, cleanTranslation, tone, wordCount);
   }
 
-  // B5: Extended arti for sentences > 5 words
-  let finalArti = cleanTranslation;
-  const wordCount = text.split(/\s+/).filter(Boolean).length;
-  if (wordCount > 5) {
-    if (tone === 'angry_breakup') {
-      finalArti = `${cleanTranslation} — Tbh kalimat ini meluapkan rasa kecewa mendalam sekaligus menegaskan batasan diri lu secara tegas tanpa basa-basi.`;
-    } else if (tone === 'sad_heartbroken') {
-      finalArti = `${cleanTranslation} — Honestly kalimat ini melukiskan suasana hati yang lagi rapuh atau sedih mendalam, relate banget pas lu lagi butuh ruang buat memproses perasaan.`;
-    } else if (tone === 'romantic_love') {
-      finalArti = `${cleanTranslation} — Kalimat manis yang tulus banget buat ngungkapin afeksi atau rasa sayang lu ke orang yang spesial tanpa gengsi.`;
-    } else {
-      finalArti = `${cleanTranslation} — Frasa percakapan luwes yang enak banget dipakai buat menyampaikan pemikiran lu secara jelas di obrolan sehari-hari.`;
-    }
-  }
+  const sanitizedExamples = (examples || [])
+    .map((ex) => validateAndSanitizeExample(ex, text, cleanTranslation))
+    .filter(Boolean)
+    .slice(0, Math.max(1, exampleCount));
 
   return {
     arti: finalArti,
     cara_baca: phonetics || text.toLowerCase(),
-    penggunaan: examples,
+    penggunaan: sanitizedExamples,
     catatan: note,
     maknaFilosofis: maknaFilosofis,
     confidenceLevel: finalConfidence,
@@ -641,21 +1005,23 @@ export async function generateSongDualPayload(rawText, detectedSongInfo = null) 
   const rawFocusMeaning = await fetchLiveTranslation(focusPhrase) || "makna frasa lirik pilihan";
   const focusPhraseMeaning = normalizePronounsToJaksel(rawFocusMeaning);
 
-  // 4. Generate contextual original example sentence (Jaksel & Temen Ngobrol)
-  const focusLower = focusPhrase.toLowerCase();
-  let originalExampleSentence = "";
-  if (detectedIdioms.length > 0) {
-    const idm = detectedIdioms[0];
-    originalExampleSentence = `Take a deep breath; don't let this unexpected situation ${idm.key} too much. (Tarik napas panjang; jangan biarin situasi tak terduga ini bikin ${idm.arti} kejauhan.)`;
-  } else if (/feel|small|down|sad|alone|cry|hurt|numb/i.test(focusLower)) {
-    originalExampleSentence = `Whenever work gets exhausting, it's completely normal to ${focusPhrase} for a while. (Tiap kali kerjaan lagi capek banget, wajar kok kalo lu sempet ${focusPhraseMeaning} sebentar.)`;
-  } else if (/love|heart|care|miss|kiss|lips|stay|hold/i.test(focusLower)) {
-    originalExampleSentence = `She smiled warmly and proved that she would always ${focusPhrase}. (Dia senyum tulus dan ngebuktiin kalo dia bakal selalu ${focusPhraseMeaning}.)`;
-  } else if (/run|walk|away|leave|go|time|night/i.test(focusLower)) {
-    originalExampleSentence = `Before making a rushed decision, don't just ${focusPhrase} without talking it through. (Sebelum buru-buru ambil keputusan, jangan langsung ${focusPhraseMeaning} tanpa diobrolin dulu.)`;
-  } else {
-    originalExampleSentence = `In everyday conversations, you can naturally use "${focusPhrase}" when expressing how you feel. (Di percakapan sehari-hari, lu bisa wajar memakai "${focusPhrase}" pas lagi ngungkapin perasaan lu.)`;
-  }
+  // 4. Generate contextual original example sentence with focusPhrase (MASALAH 3 POIN 2: focusPhrase WAJIB muncul verbatim)
+  const songExampleTemplates = [
+    `In everyday conversation, you can naturally use "${focusPhrase}" when expressing your feelings. (Di percakapan sehari-hari, lu bisa wajar memakai "${focusPhrase}" pas lagi ngungkapin perasaan lu.)`,
+    `Reflecting on that moment, he admitted: "${focusPhrase}." (Merenungkan momen itu, dia mengakui: "${focusPhraseMeaning}.")`,
+    `When speaking from the heart, she whispered: "${focusPhrase}." (Pas lagi ngomong dari lubuk hati terdalam, dia berbisik: "${focusPhraseMeaning}.")`,
+    `You can borrow this line directly: "${focusPhrase}" to describe what you're going through. (Lu bisa langsung pinjam kalimat "${focusPhrase}" buat melukiskan apa yang lagi lu alamin.)`,
+    `It captures that vulnerable feeling so well: "${focusPhrase}." (Kalimat ini nangkep perasaan rapuh itu dengan pas: "${focusPhraseMeaning}.")`,
+    `Whenever you need words for that exact sentiment, just say: "${focusPhrase}." (Tiap kali lu butuh kata-kata buat rasa itu, tinggal bilang: "${focusPhraseMeaning}.")`
+  ];
+
+  const rawOriginalExample = pickVariedTemplate('song_dual_example', songExampleTemplates);
+  const originalExampleSentence = validateAndSanitizeExample(
+    rawOriginalExample,
+    text,
+    focusPhraseMeaning,
+    focusPhrase
+  );
 
   // 5. Emotional meaning explanation
   const meaningExplanation = `Tbh lirik ini membawa nuansa emosional mendalam yang melukiskan suasana hati atau refleksi batin — which is relate banget pas lu lagi dengerin lagu jam 2 pagi. Di obrolan sehari-hari, lu bisa pakai frasa intinya ("${focusPhrase}") buat ngungkapin perasaan jujur ke temen dekat tanpa terdengar kaku!`;
@@ -677,10 +1043,7 @@ export async function generateSongDualPayload(rawText, detectedSongInfo = null) 
     catatan: meaningExplanation,
     maknaFilosofis: `Musik adalah bahasa emosi universal. Melalui bait lirik ini, penyanyi melukiskan kerapuhan rasa yang sering kali kita rasakan tapi sulit diungkapkan secara gamblang dalam obrolan sehari-hari.`,
     confidenceLevel: 'high',
-    penggunaan: [
-      originalExampleSentence,
-      `"Whenever you feel that way, remember you don't have to face it all by yourself." ("Tiap kali lu ngerasa kayak gitu, inget kalo lu gak harus ngadepin semuanya sendirian.")`,
-    ],
+    penggunaan: [originalExampleSentence],
     focusPhrase: focusPhrase,
   };
 
@@ -721,6 +1084,10 @@ export async function generateSongDualPayload(rawText, detectedSongInfo = null) 
 // COMPREHENSIVE LOCAL BREAKDOWN DICTIONARIES (GUARANTEED OFFLINE / INSTANT 0ms)
 // ══════════════════════════════════════════════════════════════════════════════
 const BREAKDOWN_KNOWN_PHRASES = {
+  "pretty wife": "istri yang cantik",
+  "the lights in my soul": "cahaya dalam jiwa gw",
+  "lights in my soul": "cahaya dalam jiwa gw",
+  "in my soul": "dalam jiwa gw",
   "have no idea": "sama sekali gak paham / gak tau",
   "no idea": "gak ada ide / sama sekali gak tau",
   "i've been through": "udah pernah gw lewatin / alamin",
@@ -1010,6 +1377,14 @@ const BREAKDOWN_KNOWN_WORDS = {
   cake: "kue",
   piece: "potongan / bagian",
   leg: "kaki",
+  trace: "melacak / menelusuri / jejak",
+  wife: "istri",
+  husband: "suami",
+  pretty: "cantik",
+  lights: "cahaya / penerang",
+  pointed: "mengingatkan / menunjukkan",
+  colleague: "rekan kerja / temen kantor",
+  situation: "situasi / keadaan",
 };
 
 /**

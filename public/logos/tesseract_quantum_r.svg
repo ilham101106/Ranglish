@@ -1,0 +1,197 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" width="1000" height="1000">
+  <defs>
+    <!-- Cosmic Background -->
+    <radialGradient id="tessBg" cx="50%" cy="50%" r="70%">
+      <stop offset="0%" stop-color="#0e0d26" />
+      <stop offset="55%" stop-color="#060512" />
+      <stop offset="100%" stop-color="#020108" />
+    </radialGradient>
+
+    <!-- Glow Filters -->
+    <filter id="neonGlowCyan" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur1" />
+      <feGaussianBlur in="SourceGraphic" stdDeviation="24" result="blur2" />
+      <feMerge>
+        <feMergeNode in="blur2" />
+        <feMergeNode in="blur1" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+
+    <filter id="neonGlowViolet" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="12" result="blur1" />
+      <feGaussianBlur in="SourceGraphic" stdDeviation="30" result="blur2" />
+      <feMerge>
+        <feMergeNode in="blur2" />
+        <feMergeNode in="blur1" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+
+    <filter id="coreGlow" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="18" result="blur1" />
+      <feGaussianBlur in="SourceGraphic" stdDeviation="40" result="blur2" />
+      <feMerge>
+        <feMergeNode in="blur2" />
+        <feMergeNode in="blur1" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+
+    <!-- Gradients -->
+    <linearGradient id="bodyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1b1838" />
+      <stop offset="40%" stop-color="#100d24" />
+      <stop offset="100%" stop-color="#070614" />
+    </linearGradient>
+
+    <linearGradient id="tesseractNeon" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00ffcc" />
+      <stop offset="45%" stop-color="#0077ff" />
+      <stop offset="100%" stop-color="#b000ff" />
+    </linearGradient>
+
+    <linearGradient id="bladeGrad1" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#00ffcc" stop-opacity="0.9" />
+      <stop offset="100%" stop-color="#0077ff" stop-opacity="0.2" />
+    </linearGradient>
+
+    <linearGradient id="bladeGrad2" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#b000ff" stop-opacity="0.9" />
+      <stop offset="100%" stop-color="#ff0077" stop-opacity="0.2" />
+    </linearGradient>
+  </defs>
+
+  <!-- Base Canvas -->
+  <rect width="1000" height="1000" rx="220" fill="url(#tessBg)" />
+
+  <!-- Outer Dimensional Grid Matrix -->
+  <g opacity="0.18">
+    <line x1="150" y1="500" x2="850" y2="500" stroke="#00ffcc" stroke-width="1" stroke-dasharray="4 8" />
+    <line x1="500" y1="150" x2="500" y2="850" stroke="#00ffcc" stroke-width="1" stroke-dasharray="4 8" />
+    <circle cx="500" cy="500" r="380" fill="none" stroke="#7952ff" stroke-width="1.5" stroke-dasharray="12 12" />
+    <circle cx="500" cy="500" r="440" fill="none" stroke="#00ffcc" stroke-width="1" stroke-opacity="0.5" />
+  </g>
+
+  <!-- ==================================================== -->
+  <!-- 🌌 4D TESSERACT HYPERCUBE PROJECTION WIREFRAMES      -->
+  <!-- Menembus dimensi ketiga & keempat melintasi huruf R  -->
+  <!-- ==================================================== -->
+  <g stroke="url(#tesseractNeon)" stroke-width="1.8" fill="none" opacity="0.65">
+    <!-- Outer Hypercube Frame -->
+    <polygon points="500,100 860,260 860,740 500,900 140,740 140,260" stroke-width="2" opacity="0.4" stroke-dasharray="6 6" />
+    
+    <!-- Isometric Perspective Projection Lines -->
+    <line x1="500" y1="100" x2="500" y2="340" stroke="#00ffcc" stroke-width="2" filter="url(#neonGlowCyan)" />
+    <line x1="860" y1="260" x2="680" y2="420" stroke="#0077ff" stroke-width="1.5" />
+    <line x1="860" y1="740" x2="680" y2="600" stroke="#b000ff" stroke-width="1.5" />
+    <line x1="500" y1="900" x2="500" y2="680" stroke="#ff0077" stroke-width="2" filter="url(#neonGlowViolet)" />
+    <line x1="140" y1="740" x2="320" y2="600" stroke="#b000ff" stroke-width="1.5" />
+    <line x1="140" y1="260" x2="320" y2="420" stroke="#00ffcc" stroke-width="1.5" />
+  </g>
+
+  <!-- ==================================================== -->
+  <!-- 1. HURUF R UTAMA: KOKOH, SOLID, UNMISTAKABLY "R"     -->
+  <!-- ==================================================== -->
+
+  <!-- R Stem (Left Column) -->
+  <path d="M 230,200 L 370,200 L 370,800 L 230,800 Z" fill="#05040d" />
+  <path d="M 240,210 L 360,210 L 360,790 L 240,790 Z" fill="url(#bodyGrad)" stroke="#2b2554" stroke-width="2" />
+  
+  <!-- Coolant Conduits (Stem Internal Tech) -->
+  <line x1="270" y1="230" x2="270" y2="770" stroke="#00ffcc" stroke-width="2.5" opacity="0.8" filter="url(#neonGlowCyan)" />
+  <line x1="285" y1="230" x2="285" y2="770" stroke="#120e2e" stroke-width="12" />
+  <line x1="285" y1="230" x2="285" y2="770" stroke="#0077ff" stroke-width="3" opacity="0.6" />
+  
+  <!-- Coolant Node Rings -->
+  <circle cx="270" cy="300" r="6" fill="#00ffcc" filter="url(#neonGlowCyan)" />
+  <circle cx="270" cy="500" r="5" fill="#ffffff" />
+  <circle cx="270" cy="700" r="6" fill="#b000ff" filter="url(#neonGlowViolet)" />
+
+  <!-- R Head (Semicircular Loop) -->
+  <!-- Outer Arc -->
+  <path d="M 360,210 
+           L 580,210 
+           C 730,210 810,285 810,395 
+           C 810,505 730,575 580,575 
+           L 360,575 Z" 
+        fill="url(#bodyGrad)" 
+        stroke="url(#tesseractNeon)" 
+        stroke-width="3.5" />
+
+  <!-- Inner Loop Cutout / Void Reactor Chamber -->
+  <path d="M 360,305 
+           L 545,305 
+           C 630,305 675,345 675,395 
+           C 675,445 630,485 545,485 
+           L 360,485 Z" 
+        fill="#020108" 
+        stroke="#00ffcc" 
+        stroke-width="2" 
+        filter="url(#neonGlowCyan)" />
+
+  <!-- ==================================================== -->
+  <!-- 🪐 DI LUAR NALAR: GYROSCOPIC AI QUANTUM CORE         -->
+  <!-- Melayang di dalam loop kepala R                      -->
+  <!-- ==================================================== -->
+  <g transform="translate(520, 395)">
+    <!-- Gyro Ring 1 (Horizontal Inclined) -->
+    <ellipse cx="0" cy="0" rx="90" ry="28" fill="none" stroke="#00ffcc" stroke-width="2.5" transform="rotate(-20)" filter="url(#neonGlowCyan)" />
+    <!-- Gyro Ring 2 (Vertical Inclined) -->
+    <ellipse cx="0" cy="0" rx="32" ry="85" fill="none" stroke="#b000ff" stroke-width="2" transform="rotate(35)" filter="url(#neonGlowViolet)" />
+    <!-- Gyro Ring 3 (Equatorial Tech Gauge) -->
+    <circle cx="0" cy="0" r="62" fill="none" stroke="#ffffff" stroke-width="1" stroke-dasharray="6 14" opacity="0.7" />
+
+    <!-- Central Singularity Eye (The Super-AI Mind) -->
+    <circle cx="0" cy="0" r="22" fill="#000000" stroke="#00ffcc" stroke-width="3" />
+    <circle cx="0" cy="0" r="14" fill="#ffffff" filter="url(#coreGlow)" />
+    <circle cx="0" cy="0" r="6" fill="#00ffcc" />
+
+    <!-- Orbital Data Nodes -->
+    <circle cx="85" cy="-28" r="4.5" fill="#00ffcc" filter="url(#neonGlowCyan)" />
+    <circle cx="-75" cy="32" r="3.5" fill="#ff00aa" filter="url(#neonGlowViolet)" />
+    <circle cx="10" cy="-80" r="3" fill="#ffffff" />
+  </g>
+
+  <!-- ==================================================== -->
+  <!-- ⚡ R LEG: DIMENSIONAL FREQUENCY BLADES (Out-of-world) -->
+  <!-- Kaki R yang membelah ruang menjadi bilah energi      -->
+  <!-- ==================================================== -->
+  
+  <!-- Blade 1 (Primary Structural Foot) -->
+  <polygon points="480,550 600,550 820,790 700,790" 
+           fill="url(#bodyGrad)" 
+           stroke="#00ffcc" 
+           stroke-width="2.5" />
+
+  <!-- Blade 2 (Phase-Shifted Energy Wing) -->
+  <polygon points="560,575 660,575 860,795 760,795" 
+           fill="url(#bladeGrad1)" 
+           stroke="#ffffff" 
+           stroke-width="1.5" 
+           filter="url(#neonGlowCyan)" />
+
+  <!-- Blade 3 (Sub-space Trail) -->
+  <polygon points="630,605 710,605 890,795 810,795" 
+           fill="url(#bladeGrad2)" 
+           stroke="#b000ff" 
+           stroke-width="1.5" 
+           filter="url(#neonGlowViolet)" />
+
+  <!-- Anti-Gravity Floating Shards Behind Stem -->
+  <polygon points="175,320 210,340 210,420 175,400" fill="url(#bodyGrad)" stroke="#00ffcc" stroke-width="1.5" filter="url(#neonGlowCyan)" />
+  <polygon points="160,520 205,545 205,630 160,605" fill="url(#bodyGrad)" stroke="#b000ff" stroke-width="1.5" filter="url(#neonGlowViolet)" />
+
+  <!-- Quantum Particle Teleport Sparkles -->
+  <g transform="translate(860, 800)">
+    <path d="M 0,-24 Q 0,0 24,0 Q 0,0 0,24 Q 0,0 -24,0 Q 0,0 0,-24 Z" fill="#00ffcc" filter="url(#coreGlow)" />
+    <circle cx="0" cy="0" r="4" fill="#ffffff" />
+  </g>
+  <g transform="translate(740, 210)">
+    <path d="M 0,-14 Q 0,0 14,0 Q 0,0 0,14 Q 0,0 -14,0 Q 0,0 0,-14 Z" fill="#ffffff" filter="url(#neonGlowCyan)" />
+  </g>
+
+  <!-- Typography & Coordinates -->
+  <text x="245" y="830" fill="#00ffcc" font-family="monospace" font-size="14" letter-spacing="4" opacity="0.8">TESSERACT // R-01</text>
+  <text x="610" y="195" fill="#b000ff" font-family="monospace" font-size="12" letter-spacing="3" opacity="0.7">DIMENSION: 4D</text>
+</svg>
