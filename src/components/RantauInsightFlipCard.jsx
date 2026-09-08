@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { Lightbulb, Sparkles, RotateCw, RotateCcw, Music, Film, ArrowRight, ArrowLeft } from 'lucide-react';
+import FormattedText from './FormattedText';
 
 export default function RantauInsightFlipCard({ tips, maknaFilosofis, isSong = false, isMovie = false }) {
   const [isFlipped, setIsFlipped] = useState(false);
 
-  const isMusicContent = isSong || /karya band|lirik|album|lagu|musisi/i.test(tips || "");
-  const isMovieContent = isMovie || /dialog|film|quotes/i.test(tips || "");
+  const isMusicContent = Boolean(isSong);
+  const isMovieContent = !isMusicContent && Boolean(isMovie);
 
   const displayTips = tips || "Tips pemakaian santai untuk kata ini dalam percakapan sehari-hari.";
   const displayMakna = maknaFilosofis || "Hmm, buat kata ini belum ada insight mendalam nih — tapi tenang, tips di depan udah cukup kok buat lu paham cara pakainya!";
@@ -57,7 +58,7 @@ export default function RantauInsightFlipCard({ tips, maknaFilosofis, isSong = f
 
           <div className="flex-1 overflow-y-auto pr-1 py-1">
             <p className="text-xs sm:text-[13px] leading-[1.8] font-normal theme-text-main whitespace-pre-line">
-              {displayTips}
+              <FormattedText text={displayTips} />
             </p>
           </div>
 
@@ -90,7 +91,7 @@ export default function RantauInsightFlipCard({ tips, maknaFilosofis, isSong = f
 
           <div className="flex-1 overflow-y-auto pr-1 py-1">
             <p className="text-xs sm:text-[13px] leading-[1.8] font-normal theme-text-main whitespace-pre-line">
-              {displayMakna}
+              <FormattedText text={displayMakna} />
             </p>
           </div>
 

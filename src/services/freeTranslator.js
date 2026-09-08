@@ -155,6 +155,32 @@ export const COMMON_IDIOMS = [
     ]
   },
   {
+    regex: /\bstick(ing)?\s+around\b/i,
+    key: 'stick around',
+    arti: 'tetap tinggal / bertahan / nemenin di sini',
+    asalUsul: 'Berasal dari bahasa sehari-hari abad ke-19 yang mengibaratkan seseorang yang "menempel" (stick) pada suatu tempat atau lingkaran pertemanan daripada beranjak pergi.',
+    penjelasan: 'Dipakai saat lu atau seseorang memilih untuk tetap tinggal di suatu tempat, bertahan dalam situasi sulit, atau terus menemani orang lain.',
+    maknaFilosofis: 'Di era serba instan di mana orang gampang pergi saat situasi rumit, "sticking around" adalah wujud loyalitas dan kehadiran nyata yang paling bernilai dalam sebuah hubungan atau perjuangan.',
+    situasi: [
+      `"Thanks for sticking around when things got really overwhelming." ("Makasih banyak ya udah tetep bertahan nemenin pas situasi bener-bener berat.")`,
+      `"Are you planning on sticking around after the event finishes?" ("Lu ada rencana buat tetep nongkrong di sini abis acaranya kelar?")`,
+      `"There's no point in sticking around if nobody values what you bring to the table." ("Gak ada gunanya tetep tinggal kalau gak ada yang ngehargain kontribusi lu.")`,
+    ]
+  },
+  {
+    regex: /\b(you\s+)?owe\s+yourself\b/i,
+    key: 'owe yourself',
+    arti: 'berutang pada diri sendiri / berhak memprioritaskan diri sendiri',
+    asalUsul: 'Berasal dari konsep psikologi etika modern dan self-compassion yang mengadopsi metafora finansial: jika kita merasa wajib membayar utang kepada orang lain, maka kita memiliki kewajiban moral yang setara untuk memberikan kebaikan, istirahat, dan penghargaan kepada diri kita sendiri.',
+    penjelasan: 'Dipakai untuk mengingatkan seseorang yang terlalu memforsir diri atau selalu mementingkan orang lain (people pleaser) agar mulai merawat dan menghargai dirinya sendiri.',
+    maknaFilosofis: 'Kita sering merasa bersalah saat beristirahat atau memilih diri sendiri. "Owe yourself" mengingatkan bahwa menghargai diri sendiri bukanlah keegoisan, melainkan prasyarat agar kita tetap waras dan mampu terus melangkah.',
+    situasi: [
+      `"You owe yourself a good night's sleep after everything you went through today." ("Lu berutang pada diri sendiri tidur yang nyenyak malam ini abis semua yang lu lewatin hari ini.")`,
+      `"Stop beating yourself up; you owe yourself some forgiveness." ("Berhenti nyalahin diri sendiri terus; lu berutang maaf dan kebaikan ke diri lu sendiri.")`,
+      `"After months of relentless work, she realized she owed herself a long vacation." ("Abis berbulan-bulan kerja tanpa henti, dia sadar kalau dia berutang liburan panjang buat dirinya sendiri.")`,
+    ]
+  },
+  {
     regex: /\bhit the sack\b/i,
     key: 'hit the sack',
     arti: 'pergi tidur / rebahan karena tepar',
@@ -455,6 +481,139 @@ export function detectSentenceTone(text, translation) {
 }
 
 /**
+ * Extract clean primary definition (stripping multi-option delimiters like commas, slashes, or "atau").
+ */
+export function getPrimaryMeaning(translation) {
+  if (!translation || typeof translation !== 'string') return '';
+  const first = translation.split(/[,;\/]|(?:\s+atau\s+)/i)[0].trim();
+  return first || translation.trim();
+}
+
+/**
+ * Detect grammatical part-of-speech for single words to produce natural, contextual sentences.
+ * Returns: 'adverb' | 'adjective' | 'verb' | 'noun'
+ */
+export function detectWordPartOfSpeech(word, translation) {
+  const w = (word || '').toLowerCase().trim();
+  const t = (translation || '').toLowerCase().trim();
+
+  // 1. Adverbs (words modifying actions/states)
+  const nonAdverbLy = new Set([
+    'family', 'friendly', 'lovely', 'lonely', 'silly', 'ugly', 'early', 'holy',
+    'daily', 'weekly', 'monthly', 'yearly', 'orderly', 'lively', 'costly'
+  ]);
+  const isAdverbLy = w.endsWith('ly') && w.length > 3 && !nonAdverbLy.has(w);
+  const commonAdverbs = new Set([
+    'often', 'seldom', 'never', 'always', 'sometimes', 'soon', 'already',
+    'perhaps', 'maybe', 'together', 'abroad', 'anyway', 'somehow', 'well',
+    'now', 'then', 'today', 'yesterday', 'tomorrow', 'here', 'there',
+    'everywhere', 'nowhere', 'somewhere', 'anywhere', 'too', 'very',
+    'quite', 'rather', 'almost', 'nearly', 'fast', 'hard', 'late', 'even'
+  ]);
+  const isAdverbIndo = /^(dengan|secara|seketika|langsung)\s+/i.test(t);
+
+  if (isAdverbLy || commonAdverbs.has(w) || isAdverbIndo) {
+    return 'adverb';
+  }
+
+  // 2. Adjectives (words describing characteristics, emotions, qualities)
+  const isAdjSuffix = /(?:ful|less|able|ible|ive|ous|ish|ic|al|ent|ant|ary|ory)$/i.test(w) && w.length > 4;
+  const commonAdjectives = new Set([
+    'good', 'bad', 'happy', 'sad', 'big', 'small', 'hot', 'cold', 'cool', 'warm',
+    'new', 'old', 'easy', 'hard', 'soft', 'heavy', 'light', 'dark', 'bright',
+    'rich', 'poor', 'safe', 'clean', 'dirty', 'quiet', 'loud', 'calm', 'angry',
+    'crazy', 'weird', 'awkward', 'cute', 'sweet', 'nice', 'fine', 'strong', 'weak',
+    'sick', 'ill', 'dead', 'alive', 'ready', 'open', 'close', 'sure', 'certain',
+    'true', 'false', 'real', 'fake', 'pure', 'raw', 'dry', 'wet', 'deep', 'shallow',
+    'wide', 'narrow', 'high', 'low', 'tall', 'short', 'smart', 'dumb', 'stupid',
+    'lazy', 'busy', 'free', 'expensive', 'cheap', 'fresh', 'tight', 'loose',
+    'proud', 'shy', 'nervous', 'anxious', 'curious', 'urgent', 'jealous', 'generous',
+    'stubborn', 'honest', 'patient', 'creative', 'reliable', 'grateful', 'clumsy',
+    'relieved', 'exhausted', 'comfortable', 'confused', 'scared', 'tired'
+  ]);
+  const isAdjIndo = /^(merasa|sangat|terasa|cukup|agak)\s+/i.test(t);
+
+  if (isAdjSuffix || commonAdjectives.has(w) || isAdjIndo) {
+    return 'adjective';
+  }
+
+  // 3. Verbs (words describing actions, processes)
+  const isVerbIndo = /^(me|meng|men|meny|mem|ber|ter(?=[a-z]{4,}))/i.test(t);
+  const commonVerbs = new Set([
+    'make', 'do', 'go', 'come', 'take', 'give', 'get', 'see', 'look', 'find',
+    'think', 'tell', 'ask', 'work', 'seem', 'feel', 'try', 'leave', 'call',
+    'keep', 'let', 'begin', 'start', 'help', 'show', 'hear', 'play', 'run',
+    'move', 'live', 'believe', 'bring', 'happen', 'write', 'provide', 'sit',
+    'stand', 'lose', 'pay', 'meet', 'include', 'continue', 'set', 'learn',
+    'change', 'lead', 'understand', 'watch', 'follow', 'stop', 'create', 'speak',
+    'read', 'allow', 'add', 'spend', 'grow', 'open', 'walk', 'win', 'offer',
+    'remember', 'love', 'consider', 'appear', 'buy', 'wait', 'serve', 'die',
+    'send', 'expect', 'build', 'stay', 'fall', 'cut', 'reach', 'kill', 'remain',
+    'suggest', 'raise', 'pass', 'sell', 'require', 'report', 'decide', 'pull',
+    'manage', 'handle', 'improve', 'solve', 'check', 'protect'
+  ]);
+
+  if (isVerbIndo || commonVerbs.has(w)) {
+    return 'verb';
+  }
+
+  // 4. Nouns (objects, people, abstract ideas)
+  return 'noun';
+}
+
+/**
+ * Generate 6 natural, grammatically correct contextual example sentences for single words.
+ * Strictly avoids generic boilerplate / nonsense phrases like "focus on [adverb]"!
+ */
+export function getSingleWordExamplePool(lower, cleanTranslation) {
+  const primary = getPrimaryMeaning(cleanTranslation);
+  const pos = detectWordPartOfSpeech(lower, cleanTranslation);
+
+  if (pos === 'adverb') {
+    return [
+      `"Please let me know ${lower} if anything changes." ("Tolong kabarin gw ${primary} ya kalo ada perubahan apa-apa.")`,
+      `"She responded ${lower} after reading the urgent message." ("Dia ngebales ${primary} abis baca pesan penting itu.")`,
+      `"We need to handle this situation ${lower} before it gets worse." ("Kita harus beresin situasi ini ${primary} sebelum makin parah.")`,
+      `"He realized ${lower} that something was completely off." ("Dia nyadar ${primary} kalo ada yang bener-bener janggal.")`,
+      `"They decided to leave ${lower} to avoid the heavy rush hour." ("Mereka mutusin buat cabut ${primary} biar gak kejebak macet parah jam pulang.")`,
+      `"I will get back to you ${lower} once I finish this task." ("Gw bakal kabarin lu lagi ${primary} begitu kelar tugas ini.")`
+    ];
+  }
+
+  if (pos === 'adjective') {
+    return [
+      `"It's really important to stay ${lower} even when things get tough." ("Penting banget buat tetep ${primary} walau situasinya lagi berat.")`,
+      `"Everyone could tell that she was feeling pretty ${lower} today." ("Semua orang bisa nangkep kalo dia lagi ngerasa cukup ${primary} hari ini.")`,
+      `"Finding a ${lower} solution is our top priority right now." ("Nemu solusi yang ${primary} jadi prioritas utama kita sekarang.")`,
+      `"Don't be too ${lower}, just take things one step at a time." ("Jangan terlalu ${primary}, jalanin aja pelan-pelan selangkah demi selangkah.")`,
+      `"That was a really ${lower} experience that taught us a lot." ("Itu pengalaman yang bener-bener ${primary} dan ngajarin kita banyak hal.")`,
+      `"We really need someone who is ${lower} to handle this project." ("Kita beneran butuh orang yang ${primary} buat nanganin proyek ini.")`
+    ];
+  }
+
+  if (pos === 'verb') {
+    return [
+      `"Let's make sure to ${lower} every single detail carefully before moving forward." ("Yuk pastiin kita ${primary} setiap detailnya secara teliti sebelum lanjut.")`,
+      `"She tried her best to ${lower} the situation so everyone stayed calm." ("Dia berusaha sebaik mungkin buat ${primary} situasinya biar semua orang tetep tenang.")`,
+      `"Can you help me ${lower} this whenever you have some free time?" ("Bisa bantu gw ${primary} ini pas lu lagi ada waktu luang gak?")`,
+      `"Take your time if you still need to ${lower} everything step by step." ("Santai aja kalo lu masih perlu ${primary} semuanya tahap demi tahap.")`,
+      `"Knowing when to ${lower} makes a huge difference in the outcome." ("Tahu kapan harus ${primary} bawa pengaruh gede banget ke hasil akhirnya.")`,
+      `"We need someone who can ${lower} this with full confidence." ("Kita butuh orang yang bisa ${primary} hal ini dengan penuh rasa percaya diri.")`
+    ];
+  }
+
+  // Noun default
+  return [
+    `"We should discuss the ${lower} together before making any big move." ("Kita harus rembukan bareng soal ${primary} ini sebelum ambil langkah besar.")`,
+    `"Having a solid ${lower} in place will save us a lot of trouble later on." ("Punya ${primary} yang matang bakal nyelametin kita dari banyak ribet ke depannya.")`,
+    `"She shared a really thoughtful perspective on the ${lower} earlier." ("Tadi dia ngebagiin sudut pandang yang berbobot banget soal ${primary} itu.")`,
+    `"Focusing on the right ${lower} helps everyone stay on the same page." ("Fokus ke ${primary} yang tepat ngebantu semua orang tetep sefrekuensi.")`,
+    `"It took a lot of effort, but that ${lower} was totally worth it." ("Emang butuh banyak usaha, tapi ${primary} itu beneran sepadan hasilnya.")`,
+    `"A small adjustment to the ${lower} completely improved the workflow." ("Penyesuaian kecil di ${primary} langsung bikin alur kerjanya jauh lebih lancar.")`
+  ];
+}
+
+/**
  * Regenerate alternative example sentence on-demand for "Kurang Pas? Coba Lagi" button.
  */
 export function regenerateAlternativeExample(rawText, cleanTranslation, tone, classifiedType = 'sentence', currentExample = "") {
@@ -488,24 +647,7 @@ export function regenerateAlternativeExample(rawText, cleanTranslation, tone, cl
       `A classic, impactful line to remember: "${text}." (Kalimat klasik dan berbobot buat diinget: "${cleanTranslation}.")`,
     ];
   } else if (classifiedType === 'word' || wordCount === 1) {
-    const isVerbLike = /^(me|meng|ber)/i.test(cleanTranslation);
-    pool = isVerbLike
-      ? [
-          `"Let's make sure to ${lower} every single detail carefully before moving forward." ("Yuk pastiin kita ${cleanTranslation} setiap detailnya secara teliti sebelum lanjut.")`,
-          `"She tried her best to ${lower} the situation so everyone stayed calm." ("Dia berusaha sebaik mungkin buat ${cleanTranslation} situasinya biar semua orang tetep tenang.")`,
-          `"Can you help me ${lower} this properly?" ("Bisa bantu gw ${cleanTranslation} ini dengan bener gak?")`,
-          `"Take your time to ${lower} everything step by step." ("Santai aja, luangkan waktu buat ${cleanTranslation} semuanya tahap demi tahap.")`,
-          `"Knowing when to ${lower} makes a huge difference in the outcome." ("Tahu kapan harus ${cleanTranslation} bawa pengaruh gede ke hasil akhirnya.")`,
-          `"We need someone who can ${lower} this with confidence." ("Kita butuh orang yang bisa ${cleanTranslation} hal ini dengan percaya diri.")`,
-        ]
-      : [
-          `"Having a clear grasp of ${lower} makes everyday communication a lot smoother." ("Punya pemahaman jelas soal ${cleanTranslation} bikin komunikasi sehari-hari jauh lebih lancar.")`,
-          `"He brought up the word '${lower}' during our discussion today." ("Dia ngebahas kata '${cleanTranslation}' pas obrolan kita tadi.")`,
-          `"Basically, just focus on ${lower} when dealing with this." ("Basically ya, tinggal fokus ke ${cleanTranslation} aja pas ngadepin ini.")`,
-          `"A simple reminder that ${lower} really matters in the long run." ("Pengingat sederhana kalo ${cleanTranslation} bener-bener penting untuk jangka panjang.")`,
-          `"Understanding the real meaning of ${lower} helps avoid misunderstandings." ("Paham makna asli ${cleanTranslation} ngebantu banget biar gak salah paham.")`,
-          `"You can see the influence of ${lower} in everyday situations." ("Lu bisa liat pengaruh ${cleanTranslation} di situasi sehari-hari.")`,
-        ];
+    pool = getSingleWordExamplePool(lower, cleanTranslation);
   } else if (classifiedType === 'phrase') {
     pool = [
       `"Using '${text}' in your conversation sounds very natural." ("Pake frasa '${text}' di obrolan lu kedengeran alami banget.")`,
@@ -596,7 +738,7 @@ export function regenerateAlternativeExample(rawText, cleanTranslation, tone, cl
     } else {
       pool = [
         `"In situations like this, remember that ${text}." ("Di situasi kayak gini, inget kalau ${cleanTranslation}.")`,
-        `"The conversation shifted when someone mentioned: '${text}.'" ("Arah obrolan langsung berubah pas ada yang nyeletuk: '${cleanTranslation}.'")`,
+        `"It's always worth considering whether ${text} makes sense for our current situation." ("Selalu patut dipertimbangkan apakah ${cleanTranslation} masuk akal buat situasi kita sekarang.")`,
         `"It's pretty clear that ${text} under these circumstances." ("Cukup jelas kalau ${cleanTranslation} di kondisi kayak gini.")`,
         `"She smiled gently and said: '${text}.'" ("Dia senyum tipis terus bilang: '${cleanTranslation}.'")`,
         `"Everyone in the room agreed that ${text}." ("Semua orang di ruangan itu setuju kalau ${cleanTranslation}.")`,
@@ -748,52 +890,71 @@ export async function generateRichSentenceAnalysis(rawText, exampleCount = 1, op
       note = `Nah ini nih kata dasar emosi yang literally paling sering kepake. Tbh bedanya sama 'mad' atau 'furious', 'angry' ini adalah istilah paling universal dan netral buat ngungkapin rasa kesel lu.`;
       maknaFilosofis = `Tbh dari kacamata psikologi emosi, marah adalah sinyal alami bahwa batas personal (boundary) lu sedang dilanggar. Menolak merasa marah justru tidak sehat; kuncinya adalah menyalurkannya secara asertif tanpa destruktif.`;
     } else {
-      // General single word (6 variations)
+      // General single word (6 variations with smart POS awareness)
       finalArti = cleanTranslation;
-      const isVerbLike = /^(me|meng|ber)/i.test(cleanTranslation);
-      const wordPool = isVerbLike
-        ? [
-            `"Let's make sure to ${lower} every single detail carefully before moving forward." ("Yuk pastiin kita ${cleanTranslation} setiap detailnya secara teliti sebelum lanjut.")`,
-            `"She tried her best to ${lower} the situation so everyone stayed calm." ("Dia berusaha sebaik mungkin buat ${cleanTranslation} situasinya biar semua orang tetep tenang.")`,
-            `"Can you help me ${lower} this properly?" ("Bisa bantu gw ${cleanTranslation} ini dengan bener gak?")`,
-            `"Take your time to ${lower} everything step by step." ("Santai aja, luangkan waktu buat ${cleanTranslation} semuanya tahap demi tahap.")`,
-            `"Knowing when to ${lower} makes a huge difference in the outcome." ("Tahu kapan harus ${cleanTranslation} bawa pengaruh gede ke hasil akhirnya.")`,
-            `"We need someone who can ${lower} this with confidence." ("Kita butuh orang yang bisa ${cleanTranslation} hal ini dengan percaya diri.")`,
-          ]
-        : [
-            `"Having a clear grasp of ${lower} makes everyday communication a lot smoother." ("Punya pemahaman jelas soal ${cleanTranslation} bikin komunikasi sehari-hari jauh lebih lancar.")`,
-            `"He brought up the word '${lower}' during our discussion today." ("Dia ngebahas kata '${cleanTranslation}' pas obrolan kita tadi.")`,
-            `"Basically, just focus on ${lower} when dealing with this." ("Basically ya, tinggal fokus ke ${cleanTranslation} aja pas ngadepin ini.")`,
-            `"A simple reminder that ${lower} really matters in the long run." ("Pengingat sederhana kalo ${cleanTranslation} bener-bener penting untuk jangka panjang.")`,
-            `"Understanding the real meaning of ${lower} helps avoid misunderstandings." ("Paham makna asli ${cleanTranslation} ngebantu banget biar gak salah paham.")`,
-            `"You can see the influence of ${lower} in everyday situations." ("Lu bisa liat pengaruh ${cleanTranslation} di situasi sehari-hari.")`,
-          ];
-      examples = [pickVariedTemplate(`word_pool_${isVerbLike ? 'verb' : 'noun'}`, wordPool)];
+      const pos = detectWordPartOfSpeech(lower, cleanTranslation);
+      const wordPool = getSingleWordExamplePool(lower, cleanTranslation);
+      examples = [pickVariedTemplate(`word_pool_${pos}`, wordPool)];
       note = generateDynamicRantauNote(text, cleanTranslation, tone, wordCount);
       maknaFilosofis = generateDynamicMaknaFilosofis(text, cleanTranslation, tone, wordCount);
     }
   } else if (classifiedType === 'phrase') {
-    // 🌸 NOUN PHRASE / IDIOM PHRASE (6 variations, no artificial claims)
+    // 🌸 NOUN PHRASE / ACTION PHRASE / IDIOM PHRASE (6 variations, context-aware)
     finalArti = cleanTranslation;
 
-    const phrasePool = isNegativeNP
-      ? [
-          `"Getting involved with the ${text} can ruin your future plans." ("Terjebak sama ${cleanTranslation} bisa ngerusak rencana masa depan lu.")`,
-          `"He realized he was in the ${text} business and decided to walk away." ("Dia sadar kalau dia ada di bisnis ${cleanTranslation} dan milih buat pergi.")`,
-          `"Honestly, it all started from the ${text} environment." ("Jujur ya, semuanya berawal dari lingkungan ${cleanTranslation}.")`,
-          `"Steering clear of ${text} is the best decision you can make." ("Menjauh dari ${cleanTranslation} adalah keputusan terbaik yang bisa lu ambil.")`,
-          `"Nobody wants to deal with a ${text} situation." ("Gak ada orang yang mau berurusan sama situasi ${cleanTranslation}.")`,
-          `"Recognizing a ${text} early saves a lot of heartache." ("Menyadari ${cleanTranslation} sejak awal nyelametin lu dari banyak sakit hati.")`,
-        ]
-      : [
-          `"Finding the right ${text} can make a huge difference in your journey." ("Nemu ${cleanTranslation} yang pas bisa ngebawa perubahan gede di perjalanan lu.")`,
-          `"They spent the whole afternoon talking about their ${text}." ("Mereka ngabisin sepanjang sore ngebahas ${cleanTranslation} mereka.")`,
-          `"Just trying to manage ${text} better every single day." ("Lagi nyoba nata ${cleanTranslation} biar lebih beres tiap harinya.")`,
-          `"Having ${text} ready makes the entire process seamless." ("Nyiapin ${cleanTranslation} bikin seluruh prosesnya berjalan mulus.")`,
-          `"She shared a thoughtful perspective on ${text}." ("Dia ngebagiin sudut pandang yang berbobot soal ${cleanTranslation}.")`,
-          `"Focusing on the right ${text} helps keep things on track." ("Fokus ke ${cleanTranslation} yang tepat ngebantu semuanya tetep teratur.")`,
-        ];
-    examples = [pickVariedTemplate(`phrase_pool_${isNegativeNP ? 'neg' : 'pos'}`, phrasePool)];
+    const isNegativeNP =
+      tone === 'angry_breakup' ||
+      tone === 'sad_heartbroken' ||
+      /toxic|problem|issue|trouble|bad|fail|loss|pain|risk|danger|bahaya|masalah|rusak/i.test(lower) ||
+      /bahaya|masalah|rusak/i.test(cleanTranslation);
+
+    const isReflexiveSelfPhrase =
+      /\b(yourself|myself|himself|herself|themselves|ourselves|oneself)\b/i.test(lower);
+
+    const isActionOrVerbPhrase =
+      isReflexiveSelfPhrase ||
+      /^(owe|owing|stick|sticking|hang|hanging|give|giving|hold|holding|look|looking|run|running|show|showing|come|coming|go|going|take|taking|get|getting|make|making|figure|figuring|keep|keeping|break|breaking|turn|turning|stand|standing|carry|carrying|bring|bringing|fall|falling|grow|growing|put|putting|set|setting|catch|catching|pick|picking|pass|passing|call|calling|leave|leaving|love|loving|trust|trusting|forgive|forgiving|blame|blaming|help|helping|respect|respecting|remind|reminding|push|pushing|treat|treating|express|expressing|allow|allowing)\b/i.test(lower) ||
+      /\b(around|up|out|down|off|on|away|in|over|through|back)\b/i.test(lower);
+
+    let phrasePool;
+    if (isReflexiveSelfPhrase) {
+      phrasePool = [
+        `"You really ${text} a moment of peace after dealing with all that stress." ("Lu beneran ${cleanTranslation} momen tenang abis ngadepin semua tekanan itu.")`,
+        `"Never forget that you ${text} the same kindness and compassion you give to others." ("Jangan pernah lupa kalau lu ${cleanTranslation} kebaikan dan empati yang sama kayak yang lu kasih ke orang lain.")`,
+        `"After working so hard for months, you ${text} a proper break." ("Abis kerja keras berbulan-bulan, lu ${cleanTranslation} istirahat yang layak.")`,
+        `"Taking time to ${text} is never selfish; it's necessary for your well-being." ("Nyediain waktu buat ${cleanTranslation} gak pernah egois; itu perlu buat kesehatan batin lu.")`,
+        `"Sometimes you just need to pause and ${text} some patience." ("Kadang lu cuma butuh berhenti sejenak dan ${cleanTranslation} sedikit kesabaran.")`,
+        `"You ${text} honesty, even when it's hard to face." ("Lu ${cleanTranslation} kejujuran, bahkan pas kenyataannya berat buat dihadapi.")`,
+      ];
+    } else if (isActionOrVerbPhrase) {
+      phrasePool = [
+        `"Thanks for ${text} when things got tough." ("Makasih ya udah ${cleanTranslation} pas situasi lagi susah.")`,
+        `"There is really no point in ${text} if you don't feel appreciated." ("Beneran gak ada gunanya ${cleanTranslation} kalau lu gak ngerasa dihargai.")`,
+        `"I never expected everyone to start ${text} for so long." ("Gw gak pernah nyangka semua orang bakal mulai ${cleanTranslation} selama ini.")`,
+        `"Sometimes, simply ${text} is the best support you can give." ("Kadang-kadang, sekadar ${cleanTranslation} adalah dukungan terbaik yang bisa lu kasih.")`,
+        `"She hesitated before deciding on ${text}." ("Dia sempat ragu sebelum akhirnya milih buat ${cleanTranslation}.")`,
+        `"You will realize that ${text} actually taught you a lot about patience." ("Lu bakal sadar kalau ${cleanTranslation} justru ngajarin lu banyak hal tentang kesabaran.")`,
+      ];
+    } else if (isNegativeNP) {
+      phrasePool = [
+        `"Getting involved with the ${text} can ruin your future plans." ("Terjebak sama ${cleanTranslation} bisa ngerusak rencana masa depan lu.")`,
+        `"He realized he was in the ${text} business and decided to walk away." ("Dia sadar kalau dia ada di urusan ${cleanTranslation} dan milih buat pergi.")`,
+        `"Honestly, it all started from the ${text} environment." ("Jujur ya, semuanya berawal dari lingkungan ${cleanTranslation}.")`,
+        `"Steering clear of ${text} is the best decision you can make." ("Menjauh dari ${cleanTranslation} adalah keputusan terbaik yang bisa lu ambil.")`,
+        `"Nobody wants to deal with a ${text} situation." ("Gak ada orang yang mau berurusan sama situasi ${cleanTranslation}.")`,
+        `"Recognizing a ${text} early saves a lot of heartache." ("Menyadari ${cleanTranslation} sejak awal nyelametin lu dari banyak sakit hati.")`,
+      ];
+    } else {
+      phrasePool = [
+        `"Finding the right ${text} can make a huge difference in your journey." ("Nemu ${cleanTranslation} yang pas bisa ngebawa perubahan gede di perjalanan lu.")`,
+        `"They spent the whole afternoon talking about their ${text}." ("Mereka ngabisin sepanjang sore ngebahas ${cleanTranslation} mereka.")`,
+        `"Just trying to manage ${text} better every single day." ("Lagi nyoba nata ${cleanTranslation} biar lebih beres tiap harinya.")`,
+        `"Having ${text} ready makes the entire process seamless." ("Nyiapin ${cleanTranslation} bikin seluruh prosesnya berjalan mulus.")`,
+        `"She shared a thoughtful perspective on ${text}." ("Dia ngebagiin sudut pandang yang berbobot soal ${cleanTranslation}.")`,
+        `"Focusing on the right ${text} helps keep things on track." ("Fokus ke ${cleanTranslation} yang tepat ngebantu semuanya tetep teratur.")`,
+      ];
+    }
+    examples = [pickVariedTemplate(`phrase_pool_${isActionOrVerbPhrase ? 'action' : isNegativeNP ? 'neg' : 'pos'}`, phrasePool)];
     note = generateDynamicRantauNote(text, cleanTranslation, tone, wordCount);
     maknaFilosofis = generateDynamicMaknaFilosofis(text, cleanTranslation, tone, wordCount);
   } else if (classifiedType === 'song') {
@@ -938,7 +1099,7 @@ export async function generateRichSentenceAnalysis(rawText, exampleCount = 1, op
     } else {
       situationalPool = [
         `"In situations like this, remember that ${text}." ("Di situasi kayak gini, inget kalau ${cleanTranslation}.")`,
-        `"The conversation shifted when someone mentioned: '${text}.'" ("Arah obrolan langsung berubah pas ada yang nyeletuk: '${cleanTranslation}.'")`,
+        `"It's always worth considering whether ${text} makes sense for our current situation." ("Selalu patut dipertimbangkan apakah ${cleanTranslation} masuk akal buat situasi kita sekarang.")`,
         `"It's pretty clear that ${text} under these circumstances." ("Cukup jelas kalau ${cleanTranslation} di kondisi kayak gini.")`,
         `"She smiled gently and said: '${text}.'" ("Dia senyum tipis terus bilang: '${cleanTranslation}.'")`,
         `"Everyone in the room agreed that ${text}." ("Semua orang di ruangan itu setuju kalau ${cleanTranslation}.")`,

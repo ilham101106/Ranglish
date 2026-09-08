@@ -218,9 +218,78 @@ Sebelum perbaikan, sistem Ranglish mengalami beberapa kendala fungsional dan est
 
 ---
 
-## 📌 Checkpoint Status Sebelum Laptop Restart
-- Semua kode fitur utama aman & berjalan normal.
-- Dev server port 3000 dan Supabase Cloud tersambung.
-- Seluruh aset dan dokumentasi tersimpan rapi di repository.
+---
+
+## 11. Perbaikan Integritas Faktual & Pembasmian Halusinasi Lirik/Lagu/Film Fiktif (Zero Tolerance)
+- **Tanggal:** 8 September 2026
+- **Keluhan Pengguna:** *"datanya ngarang! (aku telusuri ternyata tidak terdapat dalam lirik alias kamu ngarang! jangan seperti itu lagi tolong diperbaiki dengan detail sesuai referensinya jangan menyesatkan itu yang utama)"*
+- **Kasus Uji Nyata:**
+  - Kalimat input: `"Or how to not attach your whole self-worth to someone else sticking around."` (kutipan refleksi diri / quote batasan diri & harga diri umum).
+  - Respon salah sebelumnya: AI mengklaim kalimat ini sebagai lirik lagu indie populer *"I Bet on Losing Dogs"* dari album *Puberty 2* (2016) karya Mitski, bahkan mengarang lirik lanjutan palsu (*"I'm bettin' on losin' dogs / Ah, I'm stoppin' the creek / Or how to not attach..."*), merender badge `🎵 Lagu: I Bet on Losing Dogs — Mitski`, dan mengubah kartu insight menjadi `🎵 Konteks Musik & Lagu`.
+  - Fakta: Kalimat tersebut sama sekali tidak ada di lirik lagu Mitski manapun. Hal ini murni halusinasi AI yang menyesatkan.
+
+- **Akar Masalah:**
+  1. **Tekanan Prompt Sistem (`SYSTEM_PROMPT_VOCAB`):** Instruksi lama mewajibkan AI (*"WAJIB periksa apakah teks ini merupakan bagian dari judul lagu..."*) dan memerintahkan (*"Di field catatan, WAJIB sebutkan Konteks Musik... Lirik lengkapnya berbunyi: '[Lirik lanjutan / bait lengkap]'"*). Hal ini memaksa LLM mencocok-cocokkan kalimat emosional apapun ke lagu yang dirasa bertema mirip dan mengarang lirik palsu demi memenuhi instruksi prompt.
+  2. **Ketiadaan Validasi Client-Side:** Di [`src/services/openrouter.js`](file:///c:/ME/PROJECT/RANGLISH/src/services/openrouter.js), jika respon JSON menyertakan `detectedSong`, sistem langsung menerima dan menimpa klasifikasi menjadi `"song"`, meskipun teks input merupakan kalimat umum (`sentence`) tanpa konteks musik sama sekali.
+  3. **False Trigger di Flip Card:** [`src/components/RantauInsightFlipCard.jsx`](file:///c:/ME/PROJECT/RANGLISH/src/components/RantauInsightFlipCard.jsx) menggunakan regex longgar `/karya band|lirik|album|lagu|musisi/i.test(tips)` sehingga jika teks catatan menyebut kata "lagu" atau "album", kartu otomatis berubah menjadi kartu musik merah muda.
+
+- **Solusi Tuntas & Multi-Layer Guardrail:**
+  1. **Kebijakan Integritas Faktual Super Ketat di Prompt (`src/services/openrouter.js`):**
+     - Menetapkan aturan mutlak: **DILARANG KERAS MENGARANG ATAU MEMANIPULASI FAKTA/LIRIK!**
+     - Anggap 98% input adalah kalimat, idiom, frasa, atau quote kehidupan biasa (`detectedSong: null`, `detectedMovie: null`).
+     - HANYA perbolehkan mengisi `detectedSong` jika teks input BENAR-BENAR 100% VERBATIM merupakan penggalan lirik otentik yang dapat diverifikasi secara faktual.
+     - Dilarang keras mencocok-cocokkan teks hanya karena kesamaan vibe/emosi/tema, dan dilarang keras mengarang lirik lanjutan palsu.
+  2. **Client-Side Anti-Hallucination Guard (`extractCleanResponse` di `src/services/openrouter.js`):**
+     - Menguji apakah teks input memiliki keterkaitan nyata (*anchor match*) dengan judul lagu atau nama artis yang diklaim AI.
+     - Jika pengguna tidak mengklik chip lagu dan teks input adalah kalimat umum (`type: 'sentence'`), maka klaim lagu yang tidak memiliki anchor faktual **otomatis dibatalkan (`detectedSong = null`)**, klasifikasi dikembalikan ke kalimat umum, dan catatan rekaan dibersihkan menjadi catatan reflektif yang relevan dan jujur.
+  3. **Strict Boolean Flag pada Kartu Insight (`src/components/RantauInsightFlipCard.jsx`):**
+     - Menghapus regex spekulatif pada teks tip. Kartu musik (`Konteks Musik & Lagu`) dan kartu film (`Konteks Film & Dialog`) kini strictly dikendalikan oleh boolean flag `isSong` dan `isMovie`.
+---
+
+## 12. Perbaikan Frasa Echo Tanpa Arti & Penghapusan Template Robotik ("sticking around")
+- **Tanggal:** 8 September 2026
+- **Keluhan dari Screenshot:**
+  - Input: `"sticking around"`
+  - Masalah 1: *Arti Bahasa Indonesia* hanya mengulang teks bahasa Inggris mentah (`sticking around`) tanpa diterjemahkan ke bahasa Indonesia.
+  - Masalah 2: Contoh kalimat menggunakan template robotik meta-dialogue: `"The conversation shifted when someone mentioned "sticking around."" ("Arah obrolan langsung berubah pas ada yang nyeletuk: 'sticking around.'")`.
+  - Masalah 3: Catatan anak rantau menggunakan template satu kalimat generik: *"Kosakata ringkas yang fungsional banget..."*.
+- **Akar Masalah:**
+  1. **Runtime ReferenceError pada Fallback-1 (`src/services/freeTranslator.js`):** Saat input terklasifikasi sebagai frasa (`phrase`), kode memanggil variabel `isNegativeNP` yang belum dideklarasikan (`ReferenceError: isNegativeNP is not defined`). Hal ini menyebabkan fallback live translation langsung crash seketika.
+  2. **Echo Bocor pada Fallback-2 (`src/utils/sentenceTranslator.js`):** Fungsi `generateSmartSentenceAnalysis` memanggil `translateWordOrPhrase(input)`. Karena kata *sticking* dan *around* tidak ada di mapping lokal, fungsi tersebut mengembalikan kata bahasa Inggris aslinya (`"sticking around"`). Sistem Fallback-2 tidak memverifikasi apakah hasil terjemahan identik dengan teks asli, sehingga menganggap `"sticking around"` sebagai terjemahan Indonesia valid.
+  3. **Template Robotik Meta-Dialogue:** Template lama menyisipkan teks input ke dalam format kaku *"The conversation shifted when someone mentioned: '...' "* yang terdengar aneh dan tidak natural untuk frasa kerja/idiom.
+- **Solusi Tuntas:**
+  1. **Perbaikan Variabel & Phrase Pool di `freeTranslator.js`:** Mendefinisikan `isNegativeNP` dengan benar serta menambahkan pemilahan khusus frasa kerja/gerund (`isActionOrVerbPhrase`) sehingga contoh kalimat yang dihasilkan selalu natural dan gramatikal.
+  2. **Penghapusan Total Template Robotik:** Menghapus seluruh kemunculan template *"The conversation shifted when someone mentioned..."* di seluruh codebase dan menggantikannya dengan kalimat situasional yang kontekstual dan hidup.
+  3. **Strict Echo Guard di Seluruh Layer:**
+     - Pada `sentenceTranslator.js`: Jika `translatedMeaning` sama dengan input bahasa Inggris, fungsi **wajib mengembalikan `null`** (menolak echo mentah).
+     - Pada `instantEngine.js` & `openrouter.js`: Memasang filter penolak echo di setiap tahap fallback, dilanjutkan ke live translation safety net.
+  4. **Pendaftaran Entri Kamus Otentik (0ms):**
+     - Mendaftarkan `"stick around"` dan `"sticking around"` ke dalam kamus bawaan dengan arti terverifikasi: *"tetap tinggal / bertahan / menemani"*, contoh kalimat realistis, serta catatan tips Temen Ngobrol yang kaya.
+  5. **Auto-Purge Riwayat Tercemar:** Menambahkan validator di `storage.js` dan `VocabLookup.jsx` untuk membersihkan entri echo mentah dan template robotik dari `localStorage`.
+
+---
+
+## 13. Perbaikan Echo Frasa Refleksif & Pembaharuan Dinamis Catatan Rantau ("owe yourself")
+- **Tanggal:** 8 September 2026
+- **Keluhan dari Screenshot:**
+  - Input: `"owe yourself"`
+  - Masalah 1: *Arti Bahasa Indonesia* hanya mengulang teks bahasa Inggris mentah (`owe yourself`) tanpa diterjemahkan.
+  - Masalah 2: Contoh penggunaan terkontaminasi template lama: `"The conversation shifted when someone mentioned... ("Arah obrolan langsung berubah pas ada yang nyeletuk: 'owe yourself.'")"`.
+  - Masalah 3: Catatan Anak Rantau berulang statis: *"Kosakata ringkas yang fungsional banget. Kalo lu bisa selipin kata ini dengan intonasi yang pas..."*.
+- **Akar Masalah & Perbaikan Terpadu:**
+  1. **Akar Masalah Bersama:** Sama halnya dengan `"sticking around"`, frasa 2 kata seperti `"owe yourself"` sebelumnya tersangkut di Fallback-2 lokal yang belum memiliki kosakata kata kerja *owe* dan kata ganti refleksif (*yourself, myself, himself, herself*), menghasilkan pantulan echo mentah.
+  2. **Penambahan Kosakata Refleksif & Self-Worth:**
+     - Mendaftarkan entri bawaan `"owe yourself"` (dan variasinya `"you owe yourself"`, `"owe"`, `"owing"`) ke dalam `DICTIONARY` dan `vocab1000.json` dengan respon instan 0ms:
+       - **Arti:** *"berutang pada diri sendiri / berhak memprioritaskan diri sendiri"*
+       - **Pelafalan:** *"oh yoor-self"*
+       - **Contoh Kalimat:** *"You owe yourself the same love and kindness you give so freely to others. (Lu berutang pada diri sendiri cinta dan kebaikan yang sama kayak yang selama ini lu kasih dengan tulus ke orang lain.)"*
+  3. **Penghapusan Template Statis pada Catatan Rantau (`src/utils/rantauInsightGenerator.js`):**
+     - Memperbarui `generateDynamicRantauNote` dengan penanganan khusus frasa *self-worth* / *owe yourself* dan *sticking around*.
+     - Menghapus kalimat tunggal statis pada frasa pendek (<= 2 kata) dan menggantinya dengan pool acak dinamis (`pickVariedTemplate('dynamic_rantau_note_short', ...)`).
+  4. **Pembersihan Menyeluruh pada Storage & Cache Browser:**
+     - Menambahkan filter otomatis di `storage.js` (`getLearnedVocabBank`, `saveLearnedVocabToBank`, dan `getVocabHistory`) serta `isStale` di `VocabLookup.jsx` untuk mendeteksi dan menghapus cache lama yang memuat teks *"Kosakata ringkas yang fungsional banget"* atau arti yang mengulang kata input (*echo*).
+     - Menjamin pengguna yang merefresh atau mencari kata tersebut langsung mendapatkan tampilan data yang segar, akurat, dan kaya konteks.
+
+
 
 

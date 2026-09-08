@@ -27,6 +27,14 @@ export const stripTemplateContamination = (text) => {
 
 export const getSettings = () => {
   const envModel = (typeof import.meta !== 'undefined' && import.meta.env?.VITE_OPENROUTER_MODEL) || DEFAULT_MODELS[0].id;
+  if (typeof window === 'undefined' || typeof localStorage === 'undefined') {
+    return {
+      apiKey: '',
+      model: envModel,
+      theme: 'light',
+      customPrompt: ''
+    };
+  }
 
   try {
     const data = localStorage.getItem(SETTINGS_KEY);
@@ -91,6 +99,9 @@ export const setAppTheme = (theme) => {
 // 📚 AI VOCABULARY BANK PERSISTENCE (AUTO-CLEANING & UPGRADING)
 // ==========================================
 export const getLearnedVocabBank = () => {
+  if (typeof window === 'undefined' || typeof localStorage === 'undefined') {
+    return {};
+  }
   try {
     const data = localStorage.getItem(VOCAB_BANK_KEY);
     if (data) {
@@ -100,22 +111,39 @@ export const getLearnedVocabBank = () => {
 
       Object.keys(parsed).forEach((k) => {
         const item = parsed[k];
+        const isEcho =
+          item?.arti &&
+          (item.arti.toLowerCase().trim() === k.toLowerCase().trim() ||
+            (item.word && item.arti.toLowerCase().trim() === item.word.toLowerCase().trim()));
         const isOldRobotNote =
           item?.catatan &&
           (item.catatan.includes('Bikin obrolan dua arah') ||
             item.catatan.includes('luwes banget dipake pas lagi nongkrong') ||
-            item.catatan.includes('obrolan dua arah jadi lebih hidup'));
+            item.catatan.includes('obrolan dua arah jadi lebih hidup') ||
+            item.catatan.includes('Kosakata ringkas yang fungsional banget'));
         const hasCoffeeCatchup =
           item?.penggunaan &&
           Array.isArray(item.penggunaan) &&
           item.penggunaan.some((ex) => /coffee catchup/i.test(ex));
+        const hasBadTemplate =
+          item?.penggunaan &&
+          Array.isArray(item.penggunaan) &&
+          item.penggunaan.some((ex) =>
+            /Basically,\s+just\s+focus\s+on/i.test(ex) ||
+            /Having a clear grasp of/i.test(ex) ||
+            /He brought up the word/i.test(ex) ||
+            /The conversation shifted when someone mentioned/i.test(ex) ||
+            /A simple reminder that .* really matters in the long run/i.test(ex)
+          );
         const isLongSentence = k.split(/\s+/).filter(Boolean).length > 3;
 
         const isCorrupt =
           !item ||
           !item.arti ||
+          isEcho ||
           isOldRobotNote ||
           hasCoffeeCatchup ||
+          hasBadTemplate ||
           isLongSentence ||
           item.arti.toLowerCase().includes('thinking process') ||
           item.arti.toLowerCase().includes('analyze user input') ||
@@ -150,10 +178,32 @@ export const getLearnedVocabBank = () => {
 
 export const saveLearnedVocabToBank = (word, vocabData) => {
   try {
-    if (!word || !vocabData || !vocabData.arti) return;
-    
-    // Strict quality gate: never save corrupt or thinking-process data
+    const cleanWord = word.toLowerCase().trim();
+    const isEcho =
+      vocabData.arti.toLowerCase().trim() === cleanWord ||
+      (vocabData.word && vocabData.arti.toLowerCase().trim() === vocabData.word.toLowerCase().trim());
+    const isGenericFiller =
+      vocabData.catatan &&
+      (vocabData.catatan.includes('Kosakata ringkas yang fungsional banget') ||
+        vocabData.catatan.includes('Bikin obrolan dua arah') ||
+        vocabData.catatan.includes('luwes banget dipake pas lagi nongkrong'));
+
+    const hasBadTemplate =
+      vocabData.penggunaan &&
+      Array.isArray(vocabData.penggunaan) &&
+      vocabData.penggunaan.some((ex) =>
+        /Basically,\s+just\s+focus\s+on/i.test(ex) ||
+        /Having a clear grasp of/i.test(ex) ||
+        /He brought up the word/i.test(ex) ||
+        /The conversation shifted when someone mentioned/i.test(ex) ||
+        /A simple reminder that .* really matters in the long run/i.test(ex)
+      );
+
+    // Strict quality gate: never save corrupt, echoed, or thinking-process data
     const isCorrupt =
+      isEcho ||
+      isGenericFiller ||
+      hasBadTemplate ||
       vocabData.arti.toLowerCase().includes('thinking process') ||
       vocabData.arti.toLowerCase().includes('analyze user input') ||
       vocabData.arti.toLowerCase().includes('makna & pemakaian kata') ||
@@ -161,7 +211,6 @@ export const saveLearnedVocabToBank = (word, vocabData) => {
 
     if (isCorrupt) return;
 
-    const cleanWord = word.toLowerCase().trim();
     const currentBank = getLearnedVocabBank();
     const sanitizedArti = stripTemplateContamination(vocabData.arti);
 
@@ -185,6 +234,9 @@ export const saveLearnedVocabToBank = (word, vocabData) => {
 // 🕒 USER VOCAB HISTORY (AUTO-PURGE CORRUPT ENTRIES)
 // ==========================================
 export const getVocabHistory = () => {
+  if (typeof window === 'undefined' || typeof localStorage === 'undefined') {
+    return [];
+  }
   try {
     const data = localStorage.getItem(HISTORY_KEY);
     if (data) {
@@ -195,7 +247,29 @@ export const getVocabHistory = () => {
       for (const h of parsed) {
         if (!h || !h.arti) continue;
         const artiStr = typeof h.arti === 'string' ? h.arti : String(h.arti);
+        const hasBadTemplate =
+          (h?.penggunaan &&
+            Array.isArray(h.penggunaan) &&
+            h.penggunaan.some(
+              (ex) =>
+                /Basically,\s+just\s+focus\s+on/i.test(ex) ||
+                /Having a clear grasp of/i.test(ex) ||
+                /He brought up the word/i.test(ex) ||
+                /The conversation shifted when someone mentioned/i.test(ex) ||
+                /A simple reminder that .* really matters in the long run/i.test(ex)
+            )) ||
+          (h.word && artiStr.toLowerCase().trim() === h.word.toLowerCase().trim()) ||
+          (h.teks_asli && artiStr.toLowerCase().trim() === h.teks_asli.toLowerCase().trim());
+
+        const isGenericFiller =
+          h.catatan &&
+          (h.catatan.includes('Kosakata ringkas yang fungsional banget') ||
+            h.catatan.includes('Bikin obrolan dua arah') ||
+            h.catatan.includes('luwes banget dipake pas lagi nongkrong'));
+
         if (
+          hasBadTemplate ||
+          isGenericFiller ||
           artiStr.toLowerCase().includes('thinking process') ||
           artiStr.toLowerCase().includes('analyze user input')
         ) {
@@ -207,10 +281,35 @@ export const getVocabHistory = () => {
         if (cleanedArti !== artiStr) {
           hasChanges = true;
         }
-        cleanHistory.push({
+
+        let itemToSave = {
           ...h,
           arti: cleanedArti
-        });
+        };
+
+        // Auto-sanitize any hallucinated song citations
+        if (
+          itemToSave.detectedSong &&
+          (itemToSave.detectedSong.title === "I Bet on Losing Dogs" ||
+           (itemToSave.catatan && itemToSave.catatan.includes("I Bet on Losing Dogs")))
+        ) {
+          hasChanges = true;
+          itemToSave.detectedSong = null;
+          if (itemToSave.catatan && /I Bet on Losing Dogs/i.test(itemToSave.catatan)) {
+            itemToSave.catatan = "Kalimat ini adalah ungkapan bermakna yang pas buat ngingetin batasan diri (boundaries) dan cara kita menyikapi situasi dengan lebih bijak.";
+          }
+          if (itemToSave.classification?.type === "song") {
+            itemToSave.classification = {
+              type: "sentence",
+              label: "KALIMAT",
+              icon: "✨",
+              color: "bg-purple-500/15 text-purple-700 dark:text-purple-300 border-purple-500/30",
+              badgeText: "Kalimat Lengkap",
+            };
+          }
+        }
+
+        cleanHistory.push(itemToSave);
       }
 
       if (hasChanges) {

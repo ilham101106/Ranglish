@@ -29,14 +29,15 @@ function checkRateLimit(ip) {
  */
 async function callGemini(systemPrompt, userPrompt, apiKey) {
   const models = [
-    "gemini-3.5-flash-lite",
+    "gemini-3.7-flash",
     "gemini-3.6-flash",
-    "gemini-flash-latest",
+    "gemini-3.5-flash",
+    "gemini-2.5-flash",
   ];
 
   for (const model of models) {
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 9000);
+    const timeoutId = setTimeout(() => controller.abort(), 6000);
 
     try {
       const response = await fetch(

@@ -38,6 +38,7 @@ import { speakText, stopSpeech } from "../services/speech";
 import { saveVocabItem } from "../services/storage";
 import WordBreakdownDrawer from "./WordBreakdownDrawer";
 import RantauInsightFlipCard from "./RantauInsightFlipCard";
+import FormattedText from "./FormattedText";
 import CategoryIcon from "./CategoryIcon";
 import {
   DICTIONARY,
@@ -175,9 +176,39 @@ export default function VocabLookup({ onHistoryUpdated }) {
             (res.catatan &&
               (res.catatan.includes("Bikin obrolan dua arah") ||
                 res.catatan.includes("luwes banget dipake pas lagi nongkrong") ||
-                res.catatan.includes("obrolan dua arah jadi lebih hidup"))) ||
+                res.catatan.includes("obrolan dua arah jadi lebih hidup") ||
+                res.catatan.includes("Kosakata ringkas yang fungsional banget") ||
+                res.catatan.includes("I Bet on Losing Dogs") ||
+                (res.detectedSong?.title === "I Bet on Losing Dogs"))) ||
             (Array.isArray(res.penggunaan) &&
-              res.penggunaan.some((ex) => /coffee catchup/i.test(ex)));
+              res.penggunaan.some(
+                (ex) =>
+                  /coffee catchup/i.test(ex) ||
+                  /The conversation shifted when someone mentioned/i.test(ex)
+              )) ||
+            (res.arti &&
+              parsed.inputText &&
+              res.arti.toLowerCase().trim() === parsed.inputText.toLowerCase().trim()) ||
+            (res.arti &&
+              res.word &&
+              res.arti.toLowerCase().trim() === res.word.toLowerCase().trim()) ||
+            (res.arti &&
+              parsed.searchedWord &&
+              res.arti.toLowerCase().trim() === parsed.searchedWord.toLowerCase().trim());
+
+          // Discard any stored result where AI hallucinated a song on a general sentence
+          if (res.detectedSong) {
+            const songTitle = (res.detectedSong.title || "").toLowerCase();
+            const songArtist = (res.detectedSong.artist || "").toLowerCase();
+            const textLower = (parsed.inputText || parsed.searchedWord || "").toLowerCase();
+            const containsAnchor =
+              (songTitle.length >= 3 && textLower.includes(songTitle)) ||
+              (songArtist.length >= 3 && textLower.includes(songArtist));
+            if (!containsAnchor && textLower.split(/\s+/).length > 3) {
+              localStorage.removeItem(STORAGE_KEY);
+              return null;
+            }
+          }
 
           if (isStale) {
             localStorage.removeItem(STORAGE_KEY);
@@ -1001,7 +1032,7 @@ export default function VocabLookup({ onHistoryUpdated }) {
                       <span>ARTI BAHASA INDONESIA</span>
                     </div>
                     <p className="text-sm sm:text-base leading-[1.7] theme-text-main font-medium whitespace-pre-line">
-                      {result.fullTranslation || result.arti}
+                      <FormattedText text={result.fullTranslation || result.arti} />
                     </p>
                   </div>
 
@@ -1046,11 +1077,11 @@ export default function VocabLookup({ onHistoryUpdated }) {
 
                               <div className="flex-1 text-[14px] leading-relaxed">
                                 <div className="theme-text-main font-bold">
-                                  {parsed.en}
+                                  <FormattedText text={parsed.en} />
                                 </div>
                                 {parsed.id && (
                                   <div className="theme-text-muted text-xs sm:text-[13px] mt-1 font-normal">
-                                    {parsed.id}
+                                    <FormattedText text={parsed.id} />
                                   </div>
                                 )}
                               </div>

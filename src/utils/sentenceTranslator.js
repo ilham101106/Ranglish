@@ -226,6 +226,8 @@ export const PHONETIC_DICT = {
   'without': 'with-owt',
 
   // Core Verbs & Variations (from VOCAB_MAP & Beyond)
+  'owe': 'oh',
+  'owing': 'oh-ing',
   'make': 'meyk',
   'makes': 'meyks',
   'making': 'meyk-ing',
@@ -964,6 +966,15 @@ export const VOCAB_MAP = {
   'wife': 'istri',
   'husband': 'suami',
   'figure out': 'mencari jalan keluar / memecahkan',
+  'owe': 'berutang / berhak memberi',
+  'owing': 'berutang',
+  'owe yourself': 'berutang pada diri sendiri / berhak memprioritaskan diri sendiri',
+  'yourself': 'diri lu sendiri',
+  'myself': 'diri gw sendiri',
+  'himself': 'dirinya sendiri',
+  'herself': 'dirinya sendiri',
+  'ourselves': 'diri kita sendiri',
+  'themselves': 'diri mereka sendiri',
 
   // Adjectives & Feelings
   'happy': 'bahagia / seneng',
@@ -1315,6 +1326,10 @@ export function generateSmartSentenceAnalysis(rawInput, exampleCount = 1, option
   }
 
   const translatedMeaning = translateWordOrPhrase(input);
+  if (!translatedMeaning || translatedMeaning.toLowerCase().trim() === lower) {
+    // English words were echoed without actual Indonesian translation! Return null to allow live translation.
+    return null;
+  }
   const phonetics = generateSentencePhonetics(input);
 
   // 3. Reflective / Philosophical check (e.g. fate, destiny, future, cross the line)
@@ -1501,7 +1516,7 @@ export function generateSmartSentenceAnalysis(rawInput, exampleCount = 1, option
   } else {
     generalPool = [
       `"In situations like this, remember that ${input}." ("Di situasi kayak gini, inget kalau ${translatedMeaning}.")`,
-      `"The conversation shifted when someone mentioned: '${input}.'" ("Arah obrolan langsung berubah pas ada yang nyeletuk: '${translatedMeaning}.'")`,
+      `"It's always worth considering whether ${input} makes sense for our current situation." ("Selalu patut dipertimbangkan apakah ${translatedMeaning} masuk akal buat situasi kita sekarang.")`,
       `"It's pretty clear that ${input} under these circumstances." ("Cukup jelas kalau ${translatedMeaning} di kondisi kayak gini.")`,
       `"She smiled gently and said: '${input}.'" ("Dia senyum tipis terus bilang: '${translatedMeaning}.'")`,
       `"Everyone in the room agreed that ${input}." ("Semua orang di ruangan itu setuju kalau ${translatedMeaning}.")`,

@@ -300,6 +300,76 @@ export const DICTIONARY = {
     ],
     catatan: 'Sering dipakai dalam percakapan sehari-hari kayak "pure luck" (murni hoki) atau "pure intention" (niat yang tulus).'
   },
+  'immediately': {
+    arti: 'dengan segera / langsung saat itu juga (tanpa ditunda)',
+    cara_baca: 'i-MI-di-et-li',
+    penggunaan: [
+      'Please call me immediately when you get home. (Tolong langsung telepon gw detik itu juga pas lu sampe rumah.)',
+      'The doctor said he needs medical treatment immediately. (Dokter bilang dia butuh penanganan medis dengan segera.)',
+      'She noticed the mistake and fixed it immediately. (Dia langsung nyadar ada kekeliruan dan benerin seketika itu juga.)'
+    ],
+    catatan: 'Kata "immediately" ini esensial banget di situasi darurat, deadline mepet, atau instruksi kerjaan pas lu butuh tindakan instan tanpa ada jeda penundaan.'
+  },
+  'quickly': {
+    arti: 'dengan cepat / lekas / gesit tanpa buang waktu',
+    cara_baca: 'kwik-li',
+    penggunaan: [
+      'We need to finish this report quickly before the deadline. (Kita harus nyelesaiin laporan ini dengan cepat sebelum deadline.)',
+      'He learned the new software surprisingly quickly. (Dia belajar software baru itu dengan luar biasa cepat.)',
+      'Let us grab lunch quickly so we can get back to work. (Yuk makan siang cepet-cepet biar bisa lanjut kerjaan.)'
+    ],
+    catatan: 'Sangat sering dipake sehari-hari buat ngajak gercep (gerak cepat) atau melukiskan sesuatu yang beres dalam waktu singkat.'
+  },
+  'suddenly': {
+    arti: 'tiba-tiba / mendadak / sekonyong-konyong tanpa aba-aba',
+    cara_baca: 'sad-en-li',
+    penggunaan: [
+      'Suddenly, the power went out across the whole neighborhood. (Tiba-tiba listrik padam di seluruh lingkungan perumahan.)',
+      'She smiled and suddenly started singing along. (Dia senyum terus mendadak ikutan nyanyi bareng.)',
+      'I was about to leave when suddenly it poured rain. (Gw baru mau cabut pas mendadak hujan tumpah deres banget.)'
+    ],
+    catatan: 'Cocok banget pas lagi cerita (storytelling) kejadian tak terduga yang bikin kaget di tengah obrolan.'
+  },
+  'constantly': {
+    arti: 'terus-menerus / non-stop tanpa henti',
+    cara_baca: 'kon-stent-li',
+    penggunaan: [
+      'He is constantly checking his phone for new notifications. (Dia terus-menerus ngecekin HP-nya nunggu notifikasi baru.)',
+      'Technology is constantly changing how we communicate. (Teknologi terus-terusan ngubah cara kita berkomunikasi.)',
+      'Stop constantly worrying about things you cannot control. (Stop terus-terusan cemas mikirin hal yang gak bisa lu kendaliin.)'
+    ],
+    catatan: 'Dipake buat kebiasaan yang berulang-ulang tiada henti, baik yang positif maupun kebiasaan overthinking.'
+  },
+  'rarely': {
+    arti: 'jarang banget / hampir gak pernah',
+    cara_baca: 'rair-li',
+    penggunaan: [
+      'I rarely eat fast food because I prefer cooking at home. (Gw jarang banget makan junk food karena lebih suka masak di rumah.)',
+      'She rarely complains, so if she speaks up, it must be serious. (Dia jarang banget ngeluh, jadi kalo sampe ngomong pasti masalahnya serius.)',
+      'We rarely get the chance to meet up on weekdays. (Kita jarang banget dapet kesempatan nongkrong pas hari kerja.)'
+    ],
+    catatan: 'Sinonim santai dari "hardly ever" atau "seldom". Tingkat frekuensi sangat rendah (sekitar 5-10% aja).'
+  },
+  'curious': {
+    arti: 'penasaran / kepo / punya rasa ingin tahu yang tinggi',
+    cara_baca: 'kyoor-ee-us',
+    penggunaan: [
+      'I am really curious about what happened at the meeting yesterday. (Gw beneran kepo banget apa yang kejadian pas meeting kemarin.)',
+      'Stay curious and never stop learning new things. (Tetep punya rasa penasaran dan jangan pernah berhenti belajar hal baru.)',
+      'Curious minds always find creative solutions. (Pikiran yang selalu penasaran bakal selalu nemu solusi kreatif.)'
+    ],
+    catatan: 'Bisa berarti positif (rasa ingin tahu/kreatif), atau kasual kayak rasa kepo sama gosip atau kabar temen.'
+  },
+  'urgent': {
+    arti: 'mendesak / darurat / butuh perhatian dan tindakan segera',
+    cara_baca: 'ur-jent',
+    penggunaan: [
+      'I just received an urgent email from the client. (Gw baru aja dapet email mendesak dari klien.)',
+      'This is not urgent, so take your time and rest first. (Ini gak mendesak kok, santai aja dan istirahat dulu.)',
+      'We have an urgent issue with the server that needs fixing right now. (Ada masalah darurat di server yang harus diberesin sekarang juga.)'
+    ],
+    catatan: 'Sangat lazim di dunia kantor. Lawan katanya adalah "non-urgent" (bisa ditunda santai).'
+  },
   'nest': {
     arti: 'Sarang (tempat burung bertelur) / kiasan buat rumah atau tempat tinggal yang nyaman',
     cara_baca: 'nest',
@@ -2915,6 +2985,61 @@ export const DICTIONARY = {
       'You are my favorite everything; shut up, I love you, you\'re my best friend. (Lu adalah hal terbaik dalam hidup gue; udah diam, gue cinta banget sama lu, lu adalah sahabat terbaik gue.)'
     ],
     catatan: 'Kutipan lirik paling manis dari lagu "Pink Skies" LANY.'
+  },
+  'stick around': {
+    word: 'stick around',
+    arti: 'tetap tinggal / bertahan / gak ke mana-mana',
+    cara_baca: 'stik uh-rownd',
+    penggunaan: [
+      'Thanks for sticking around to help me finish this mess. (Makasih ya udah tetep di sini bantuin gw beresin kekacauan ini.)'
+    ],
+    catatan: 'Frasa gaul native speaker yang jauh lebih natural daripada bilang "stay here". Enak banget dipake pas lu minta temen buat nemenin atau pas ngucapin terima kasih karena mereka setia mendampingi.',
+    maknaFilosofis: 'Kesediaan untuk "stick around" saat suasana sedang tidak menyenangkan adalah ujian sejati dari ketulusan dan kedewasaan emosional.',
+    isInstant: true
+  },
+  'sticking around': {
+    word: 'sticking around',
+    arti: 'tetap bertahan / menemani / gak beranjak pergi',
+    cara_baca: 'sti-king uh-rownd',
+    penggunaan: [
+      'I really appreciate you sticking around when things got tough. (Gw bener-bener ngehargain lu yang tetep bertahan pas keadaan lagi susah.)'
+    ],
+    catatan: 'Bentuk gerund dari "stick around". Biasa dipakai setelah preposisi (misal: "appreciate you sticking around", "point in sticking around") untuk menggambarkan tindakan bertahan atau menemani.',
+    maknaFilosofis: 'Kehadiran yang konsisten (sticking around) sering kali jauh lebih menyembuhkan daripada seribu kata nasihat tanpa tindakan nyata.',
+    isInstant: true
+  },
+  'owe': {
+    word: 'owe',
+    arti: 'berutang / punya kewajiban atau utang budi',
+    cara_baca: 'oh',
+    penggunaan: [
+      'I owe you one for helping me out with this project. (Gw berutang budi satu ke lu karena udah bantuin gw di proyek ini.)'
+    ],
+    catatan: 'Selain utang finansial ("you owe me $10"), ungkapan paling populernya di tongkrongan adalah "I owe you one" (makasih banyak bro, nanti gantian gw yang bantu lu).',
+    maknaFilosofis: 'Rasa berutang budi yang tulus adalah benang sosial yang merekatkan persahabatan dan gotong royong antar anak rantau.',
+    isInstant: true
+  },
+  'owe yourself': {
+    word: 'owe yourself',
+    arti: 'berutang pada diri sendiri / berhak memprioritaskan diri sendiri',
+    cara_baca: 'oh yoor-self',
+    penggunaan: [
+      'You owe yourself the same love and kindness you give so freely to others. (Lu berutang pada diri sendiri cinta dan kebaikan yang sama kayak yang selama ini lu kasih dengan tulus ke orang lain.)'
+    ],
+    catatan: 'Ungkapan self-worth yang dalam banget ala anak rantau. Dipakai buat ngingetin orang yang suka people-pleasing atau kerja keras sampai burnout, bahwa mereka juga berhak mendapatkan perlakuan terbaik dan istirahat dari diri mereka sendiri.',
+    maknaFilosofis: 'Kita sering gampang berkorban untuk orang lain, tapi pelit dan keras pada diri sendiri. "Owe yourself" adalah pengingat bahwa merawat kewarasan dan kedamaian diri bukanlah keegoisan, melainkan tanggung jawab pertama kita.',
+    isInstant: true
+  },
+  'you owe yourself': {
+    word: 'you owe yourself',
+    arti: 'lu berutang pada diri sendiri / lu berhak memprioritaskan diri lu',
+    cara_baca: 'yoo oh yoor-self',
+    penggunaan: [
+      'You owe yourself a break after working so hard all week. (Lu berutang pada diri sendiri istirahat abis kerja keras seminggu penuh.)'
+    ],
+    catatan: 'Kalimat afirmatif yang kuat buat memvalidasi rasa lelah seseorang dan membebaskan mereka dari rasa bersalah saat mengambil waktu istirahat.',
+    maknaFilosofis: 'Menghargai batasan diri adalah bentuk kedewasaan mental tertinggi.',
+    isInstant: true
   }
 };
 
@@ -3030,7 +3155,13 @@ export function getInstantAnalysis(inputText) {
 
   // 4. Smart conversational generator for unknown words/phrases
   const smartAnalysis = generateSmartSentenceAnalysis(text);
-  if (!smartAnalysis) return null;
+  if (
+    !smartAnalysis ||
+    !smartAnalysis.arti ||
+    smartAnalysis.arti.toLowerCase().trim() === text.toLowerCase().trim()
+  ) {
+    return null;
+  }
   return {
     ...smartAnalysis,
     isGenerated: true
@@ -3050,11 +3181,26 @@ export function syncLearnedVocabBank() {
       });
     }
 
-    // 2. Merge user AI-learned words from local storage
+    // 2. Merge user AI-learned words from local storage (safe merge: skip bad templates & protect built-in)
     const learned = getLearnedVocabBank();
     if (learned && typeof learned === 'object') {
       Object.keys(learned).forEach((k) => {
-        DICTIONARY[k.toLowerCase()] = learned[k];
+        const lower = k.toLowerCase();
+        const item = learned[k];
+        const hasBadTemplate =
+          item?.penggunaan &&
+          Array.isArray(item.penggunaan) &&
+          item.penggunaan.some((ex) =>
+            /Basically,\s+just\s+focus\s+on/i.test(ex) ||
+            /Having a clear grasp of/i.test(ex) ||
+            /He brought up the word/i.test(ex) ||
+            /A simple reminder that .* really matters in the long run/i.test(ex)
+          );
+        if (!hasBadTemplate) {
+          if (!DICTIONARY[lower] || DICTIONARY[lower].isAiLearned) {
+            DICTIONARY[lower] = item;
+          }
+        }
       });
     }
   } catch (err) {

@@ -1,15 +1,15 @@
-import { getSettings } from "./storage";
-import { getInstantAnalysis } from "./instantEngine";
-import { fetchFreeDictionaryData } from "./freeDictionary";
+import { getSettings } from "./storage.js";
+import { getInstantAnalysis } from "./instantEngine.js";
+import { fetchFreeDictionaryData } from "./freeDictionary.js";
 import {
   generateRichSentenceAnalysis,
   generateSongDualPayload,
   validateAndSanitizeExample,
   detectSentenceTone,
   regenerateAlternativeExample,
-} from "./freeTranslator";
-import { generateSmartSentenceAnalysis } from "../utils/sentenceTranslator";
-import { sanitizeResultPayload, isSongInput, classifyText } from "../utils/textClassifier";
+} from "./freeTranslator.js";
+import { generateSmartSentenceAnalysis } from "../utils/sentenceTranslator.js";
+import { sanitizeResultPayload, isSongInput, classifyText } from "../utils/textClassifier.js";
 import {
   isSupabaseConfigured,
   searchCloudVocab,
@@ -28,6 +28,7 @@ ATURAN PENTING:
    ❌ "Tbh kalimat tanya ini luwes banget dipake pas lagi nongkrong..."
    ❌ "Bikin obrolan dua arah jadi lebih hidup..."
    ❌ "which is why native speaker sering banget pake pola ini..."
+6. DILARANG MENYERTAKAN TAG HTML MENTAH seperti <i>, <b>, <span>, </em>, dll. Tulis teks murni secara natural atau gunakan tanda kutip biasa ('...' atau "...").
 
 =======================================================
 🎯 ATURAN KRUSIAL UNTUK FIELD "arti" (DEFINISI / TERJEMAHAN INTI):
@@ -47,24 +48,27 @@ ATURAN PENTING:
 
 
 =======================================================
-🎵 DETEKSI OTOMATIS MUSIK & KARYA POPULER (SANGAT PENTING):
+🚨 INTEGRITAS FAKTUAL & ATURAN ANTI-HALUSINASI (MUTLAK & KETAT):
 =======================================================
-Setiap kali menerima input kata/kalimat/lirik, WAJIB periksa apakah teks ini merupakan bagian dari judul lagu, lirik musik (pop, indie rock, emo, hip hop, R&B, rock, baik musisi internasional maupun musisi lokal/indie Indonesia seperti eleventwelfth, Reality Club, NIKI, Hindia, Pamungkas, Bruno Mars, Taylor Swift, dll), atau dialog film terkenal.
+1. KEJUJURAN DATA ADALAH PRIORITAS UTAMA:
+   - DILARANG KERAS MENGARANG FAKTA, MEMBUAT REFERENSI PALSU, ATAU MENYESATKAN PENGGUNA DENGAN INFORMASI FIKTIF!
+   - 98% input pengguna adalah kata tunggal, frasa percakapan, idiom, kalimat sehari-hari, atau quote/refleksi umum. Anggap SEMUA input sebagai kalimat/frasa umum KECUALI ada bukti faktual 100% otentik.
+   - JANGAN PERNAH menghubung-hubungkan input ke lagu atau musisi mana pun HANYA KARENA "vibe", topik emosional, atau kata kuncinya mirip (contoh fatal: kalimat refleksi tentang "self-worth" dikarang-karang jadi lagu Mitski dan mengarang lirik lanjutan palsu — INI PELANGGARAN FATAL & DILARANG KERAS!).
+   - DILARANG KERAS MENGARANG LIRIK LANJUTAN ATAU BAIT PALSU!
 
-JIKA TERDETEKSI SEBAGAI LIRIK / JUDUL LAGU:
-- Di field "catatan", WAJIB sebutkan Konteks Musik secara spesifik ala anak rantau:
-  "Frasa/kalimat ini merupakan bagian dari judul lagu sekaligus lirik karya band/musisi [Nama Artis/Band], dari album [Nama Album] ([Tahun]). Lirik lengkapnya berbunyi: '[Lirik lanjutan / bait lengkap]'."
-- Di field "detectedSong", isi: { "title": "...", "artist": "...", "album": "..." }
-- Di field "maknaFilosofis", kupas emosi dan pesan yang ingin disampaikan dari lagu tersebut.
+2. SYARAT KETAT DETEKSI LAGU (HANYA JIKA 100% NYATA & VERBATIM):
+   - HANYA isi "detectedSong" ({ "title": "...", "artist": "...", "album": "..." }) jika teks input BENAR-BENAR 100% VERBATIM (persis kata demi kata) merupakan penggalan lirik nyata atau judul lagu resmi yang secara faktual dirilis oleh musisi tersebut di dunia nyata.
+   - Jika teks adalah kalimat nasihat, ungkapan mental health, quote motivasi, atau kalimat percakapan: WAJIB set "detectedSong": null!
+   - JIKA RAGU ATAU TIDAK 100% YAKIN SECARA FAKTUAL: WAJIB set "detectedSong": null!
 
-JIKA TERDETEKSI SEBAGAI DIALOG FILM / KUTIPAN FILM:
-- Di field "catatan", sebutkan film & karakternya:
-  "Dialog ikonik [Karakter] di film [Judul Film] ([Tahun])..."
-- Di field "detectedMovie", isi: { "title": "...", "character": "..." }
+3. SYARAT KETAT DETEKSI FILM:
+   - HANYA isi "detectedMovie" ({ "title": "...", "character": "..." }) jika teks input memang dialog ikonik yang benar-benar ada di film tersebut (misal: "Why so serious?" -> The Dark Knight).
+   - JIKA BUKAN DIALOG RESMI: WAJIB set "detectedMovie": null!
 
-JIKA BUKAN LAGU / FILM:
-- Set "detectedSong": null dan "detectedMovie": null
-- Di field "catatan", berikan tips nuansa pemakaian sehari-hari ala anak rantau yang spesifik.
+4. KETENTUAN UNTUK KALIMAT BIASA / QUOTE / IDIOM (KONDISI DEFAULT):
+   - Set "detectedSong": null dan "detectedMovie": null.
+   - Di field "catatan": Berikan tips nuansa pemakaian sehari-hari ala anak rantau (kapan enaknya dipakai, gaya bicaranya, atau situasi relevannya). DILARANG menyebut nama musisi, band, album, atau lirik fiktif!
+   - Di field "maknaFilosofis": Bedah perspektif psikologis atau emosional dari kalimat tersebut (misalnya tentang pentingnya self-worth, menjaga boundaries, kedewasaan emosi, atau perjuangan hidup anak rantau) secara jujur dan mendalam.
 
 =======================================================
 FORMAT OUTPUT JSON:
@@ -77,7 +81,7 @@ Kembalikan satu blok JSON valid:
   "penggunaan": [
     "Natural English sentence strictly relevant to context. (Arti terjemahan santai gw/lu)"
   ],
-  "catatan": "penjelasan nuansa/tips konteks pemakaian sehari-hari ala anak rantau (wajib sertakan konteks musik/film jika terdeteksi)",
+  "catatan": "penjelasan nuansa/tips konteks pemakaian sehari-hari ala anak rantau (faktual & tidak mengada-ada)",
   "maknaFilosofis": "refleksi psikologi emosional / perspektif mendalam tentang kata/kalimat ini ala anak rantau",
   "detectedSong": null,
   "detectedMovie": null
@@ -232,8 +236,7 @@ function detectTypoCorrection(catatan, originalText) {
   return null;
 }
 
-// Rock-solid JSON extractor that strictly rejects reasoning thoughts
-function extractCleanResponse(rawContent, text) {
+export function extractCleanResponse(rawContent, text, options = {}) {
   if (!rawContent) return null;
 
   // 1. Strip reasoning tags (<think>...</think>) and raw thinking process preambles
@@ -358,22 +361,84 @@ function extractCleanResponse(rawContent, text) {
             ? candidateTypo
             : null;
 
+        // Strict Sanity Check for detectedSong & detectedMovie (Anti-Hallucination Guard)
+        let safeSong = parsed.detectedSong;
+        let safeMovie = parsed.detectedMovie;
+        let finalCatatan = rawCatatan;
+
+        if (safeSong && (safeSong.title || safeSong.artist)) {
+          const songTitle = (safeSong.title || "").trim().toLowerCase();
+          const songArtist = (safeSong.artist || "").trim().toLowerCase();
+          const cleanLower = text.toLowerCase();
+          const baseClass = classifyText(text, options);
+          const isExplicitSongIntent = Boolean(options?.isFromSongChip || baseClass.type === "song");
+
+          const containsSongAnchor =
+            (songTitle.length >= 3 && cleanLower.includes(songTitle)) ||
+            (songArtist.length >= 3 && cleanLower.includes(songArtist));
+
+          const isGeneralSentence =
+            baseClass.type === "sentence" ||
+            baseClass.type === "phrase" ||
+            baseClass.type === "word";
+
+          // If not explicit song intent and input text doesn't contain song title or artist:
+          if (!isExplicitSongIntent && !containsSongAnchor && isGeneralSentence) {
+            console.warn(
+              `[Ranglish Anti-Hallucination] Discarding ungrounded AI song detection: "${safeSong.title}" by "${safeSong.artist}" for query: "${text}"`
+            );
+            safeSong = null;
+
+            // Purge hallucinated music note in catatan if present
+            if (
+              finalCatatan &&
+              /merupakan penggalan lirik|karya band|karya musisi|album \*|lirik lengkap/i.test(
+                finalCatatan
+              )
+            ) {
+              finalCatatan = `Kalimat ini adalah ungkapan bermakna yang pas banget buat ngingetin prinsip hidup, batasan diri (boundaries), atau cara kita menyikapi situasi dengan lebih bijak.`;
+            }
+          }
+        }
+
+        if (safeMovie && (safeMovie.title || safeMovie.character)) {
+          const movieTitle = (safeMovie.title || "").trim().toLowerCase();
+          const character = (safeMovie.character || "").trim().toLowerCase();
+          const cleanLower = text.toLowerCase();
+          const baseClass = classifyText(text, options);
+          const isExplicitMovieIntent = Boolean(options?.isFromMovieChip || baseClass.type === "movie");
+          const containsMovieAnchor =
+            (movieTitle.length >= 3 && cleanLower.includes(movieTitle)) ||
+            (character.length >= 3 && cleanLower.includes(character));
+
+          if (!isExplicitMovieIntent && !containsMovieAnchor) {
+            console.warn(
+              `[Ranglish Anti-Hallucination] Discarding ungrounded AI movie detection: "${safeMovie.title}" for query: "${text}"`
+            );
+            safeMovie = null;
+
+            if (finalCatatan && /dialog ikonik|film \*|karakter/i.test(finalCatatan)) {
+              finalCatatan = `Ungkapan ini sering dipakai dalam obrolan santai buat memberikan penekanan dengan gaya yang lugas.`;
+            }
+          }
+        }
+
         let classificationOverride = null;
-        if (parsed.detectedSong && (parsed.detectedSong.title || parsed.detectedSong.artist)) {
+        if (safeSong && (safeSong.title || safeSong.artist)) {
           classificationOverride = {
             type: "song",
             label: "LIRIK LAGU",
             icon: "🎵",
             color: "bg-pink-500/15 text-pink-700 dark:text-pink-300 border-pink-500/30",
-            badgeText: `Lirik Lagu: ${parsed.detectedSong.artist || parsed.detectedSong.title}`,
+            badgeText: `Lirik Lagu: ${safeSong.artist || safeSong.title}`,
           };
-        } else if (parsed.detectedMovie && (parsed.detectedMovie.title || parsed.detectedMovie.character)) {
+        } else if (safeMovie && (safeMovie.title || safeMovie.character)) {
           classificationOverride = {
             type: "movie",
             label: "DIALOG FILM",
             icon: "🎬",
             color: "bg-amber-500/15 text-amber-700 dark:text-amber-300 border-amber-500/30",
-            badgeText: `Dialog Film: ${parsed.detectedMovie.title || 'Film Ikonik'}`,
+            badgeText: `Dialog Film: ${safeMovie.title || 'Film Ikonik'}`,
           };
         }
 
@@ -391,11 +456,11 @@ function extractCleanResponse(rawContent, text) {
                   `"${text}" ("${rawArti}")`,
                 ],
           catatan:
-            rawCatatan ||
+            finalCatatan ||
             `Tips pemakaian kata "${text}" dalam obrolan sehari-hari.`,
           maknaFilosofis: rawMaknaFilosofis || null,
-          detectedSong: parsed.detectedSong || null,
-          detectedMovie: parsed.detectedMovie || null,
+          detectedSong: safeSong || null,
+          detectedMovie: safeMovie || null,
           classification: classificationOverride,
         };
       }
@@ -545,25 +610,42 @@ export const lookupVocabulary = async (text, options = {}) => {
 
   // 1. Check if it's already in the built-in dictionary
   const instantData = getInstantAnalysis(clean);
+  const isEcho =
+    instantData?.arti &&
+    (instantData.arti.toLowerCase().trim() === clean.toLowerCase().trim() ||
+      (instantData.word && instantData.arti.toLowerCase().trim() === instantData.word.toLowerCase().trim()));
   const isOldRobotNote =
     instantData?.catatan &&
     (instantData.catatan.includes("Bikin obrolan dua arah") ||
       instantData.catatan.includes("luwes banget dipake pas lagi nongkrong") ||
-      instantData.catatan.includes("during our coffee catchup"));
+      instantData.catatan.includes("during our coffee catchup") ||
+      instantData.catatan.includes("Kosakata ringkas yang fungsional banget"));
   const hasCoffeeCatchup =
     instantData?.penggunaan &&
     Array.isArray(instantData.penggunaan) &&
     instantData.penggunaan.some((ex) => /coffee catchup/i.test(ex));
+  const hasBadTemplate =
+    instantData?.penggunaan &&
+    Array.isArray(instantData.penggunaan) &&
+    instantData.penggunaan.some((ex) =>
+      /Basically,\s+just\s+focus\s+on/i.test(ex) ||
+      /Having a clear grasp of/i.test(ex) ||
+      /He brought up the word/i.test(ex) ||
+      /The conversation shifted when someone mentioned/i.test(ex) ||
+      /A simple reminder that .* really matters in the long run/i.test(ex)
+    );
 
   // Only exact built-in matches (never typo-corrected guesses or robot templates) qualify for instant 0ms
   const isBuiltIn =
     instantData &&
+    !isEcho &&
     !instantData.isTypoCorrected &&
     !instantData.isGenerated &&
     !instantData.isAiLearned &&
     wordCount <= 3 &&
     !isOldRobotNote &&
-    !hasCoffeeCatchup;
+    !hasCoffeeCatchup &&
+    !hasBadTemplate;
 
   // If already in built-in dictionary, return immediately (0ms latency)
   if (isBuiltIn) {
@@ -617,7 +699,7 @@ export const lookupVocabulary = async (text, options = {}) => {
     );
   }
 
-  let cleanedData = rawContent ? extractCleanResponse(rawContent, clean) : null;
+  let cleanedData = rawContent ? extractCleanResponse(rawContent, clean, options) : null;
 
   // Grounding check on AI output (MASALAH 3: AI results must also contain original input text!)
   if (cleanedData && Array.isArray(cleanedData.penggunaan)) {
@@ -628,9 +710,9 @@ export const lookupVocabulary = async (text, options = {}) => {
   }
 
   // STEP 2: Only if AI failed or returned invalid response -> Fallback 1 to live translation
-  if (!cleanedData) {
+  if (!cleanedData || !cleanedData.arti || cleanedData.arti.toLowerCase().trim() === clean.toLowerCase().trim()) {
     console.log(
-      `[Ranglish Engine] [Fallback-1] Triggering live translation fallback for: "${clean}" (AI Reason: ${aiErrorReason || "invalid JSON"})...`,
+      `[Ranglish Engine] [Fallback-1] Triggering live translation fallback for: "${clean}" (AI Reason: ${aiErrorReason || "invalid JSON or echo"})...`,
     );
     try {
       if (isSong) {
@@ -651,11 +733,44 @@ export const lookupVocabulary = async (text, options = {}) => {
   }
 
   // STEP 3: Only if live translation ALSO failed or returned no arti -> Fallback 2 to pure local template
-  if (!cleanedData || !cleanedData.arti) {
+  if (!cleanedData || !cleanedData.arti || cleanedData.arti.toLowerCase().trim() === clean.toLowerCase().trim()) {
     console.log(
       `[Ranglish Engine] [Fallback-2] Falling back to pure local smart sentence generator for: "${clean}"...`,
     );
     cleanedData = generateSmartSentenceAnalysis(clean, 1, { ...options, classifiedType });
+  }
+
+  // Final Safety Net: If arti is still empty or just echoing the English input, fetch live translation
+  if (
+    !cleanedData ||
+    !cleanedData.arti ||
+    cleanedData.arti.toLowerCase().trim() === clean.toLowerCase().trim()
+  ) {
+    try {
+      const live = await fetchLiveTranslation(clean);
+      if (live && live.toLowerCase().trim() !== clean.toLowerCase().trim()) {
+        const isActionPhrase =
+          /^(stick|sticking|hang|hanging|give|giving|hold|holding|look|looking|run|running|show|showing|come|coming|go|going|take|taking|get|getting|make|making|figure|figuring|keep|keeping|break|breaking|turn|turning|stand|standing|carry|carrying|bring|bringing|fall|falling|grow|growing|put|putting|set|setting|catch|catching|pick|picking|pass|passing|call|calling|leave|leaving)\b/i.test(
+            clean
+          ) || /\b(around|up|out|down|off|on|away|in|over|through|back)\b/i.test(clean);
+
+        cleanedData = {
+          arti: live,
+          cara_baca: generateSentencePhonetics(clean),
+          penggunaan: [
+            isActionPhrase
+              ? `"I really appreciate you ${clean} when things got tough." ("Gw bener-bener ngehargain lu yang ${live} pas situasi lagi susah.")`
+              : `"Finding the right ${clean} can make a huge difference." ("Nemu ${live} yang pas bisa ngebawa perubahan gede.")`
+          ],
+          catatan: `Frasa "${clean}" sangat umum dipakai dalam percakapan santai sehari-hari ala anak rantau.`,
+          maknaFilosofis: `Tindakan yang konsisten dan kesediaan untuk hadir selalu berbicara lebih lantang daripada sekadar kata-kata manis.`,
+          confidenceLevel: "medium",
+          success: true
+        };
+      }
+    } catch (e) {
+      console.warn('[Ranglish Engine] Final live translation safety net failed:', e.message);
+    }
   }
 
   const finalClassification = cleanedData?.classification || classification;

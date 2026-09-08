@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { X, Sparkles, Loader2, RefreshCw, Volume2, VolumeX, Eye, EyeOff, BookOpen, RotateCw, ArrowRight } from "lucide-react";
 import { speakText, stopSpeech } from "../services/speech";
+import FormattedText from "./FormattedText";
 
 export default function WordBreakdownDrawer({
   isOpen = false,
@@ -260,7 +261,7 @@ export default function WordBreakdownDrawer({
                           </div>
 
                           <p className="font-extrabold text-[14px] sm:text-[15px] theme-text-main leading-snug line-clamp-2">
-                            {item.phrase}
+                            <FormattedText text={item.phrase} />
                           </p>
 
                           <div className="flex items-center justify-between">
@@ -287,7 +288,7 @@ export default function WordBreakdownDrawer({
                           </div>
 
                           <p className="font-extrabold text-[13px] sm:text-[13.5px] text-[#4338ca] dark:text-[#c9c2ff] leading-snug line-clamp-2">
-                            {item.arti}
+                            <FormattedText text={item.arti} />
                           </p>
 
                           <div className="flex items-center justify-between">

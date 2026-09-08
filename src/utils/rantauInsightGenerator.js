@@ -1,4 +1,4 @@
-import { pickVariedTemplate } from './textClassifier';
+import { pickVariedTemplate } from './textClassifier.js';
 
 /**
  * Dynamic, context-driven linguistic insight generator for Ranglish ("Catatan Anak Rantau" & "Makna Rasa").
@@ -56,6 +56,14 @@ export function generateDynamicRantauNote(text, cleanTranslation = '', tone = 'c
     return `Idiom visual yang asik banget: **'out of the blue'** melukiskan sesuatu yang tiba-tiba kejadian tanpa aba-aba sama sekali, kayak kilat yang menyambar di langit cerah.`;
   }
 
+  if (/\bowe\s+(one'?s?|your|my|him|her|them)?\s*self\b/i.test(lower)) {
+    return `Ungkapan self-worth yang dalam banget: **'owe yourself'** artinya kita berutang pada diri sendiri — buat istirahat, buat bahagia, atau buat gak memaksakan diri demi menyenangkan orang lain. Mengadopsi analogi finansial: jika kita merasa wajib melunasi utang ke orang lain, maka kita punya kewajiban moral yang setara untuk bersikap adil dan welas asih pada diri sendiri.`;
+  }
+
+  if (/\bstick(ing)?\s+around\b/i.test(lower)) {
+    return `Phrasal verb **'stick around'** (atau bentuk gerundnya **'sticking around'**) dipakai saat seseorang memilih untuk tetap tinggal, menemani, atau bertahan di satu tempat/situasi — terutama ketika keadaan sedang tidak mudah. Kehadiran fisik atau emosional yang konsisten jauh lebih terasa maknanya ketimbang janji manis.`;
+  }
+
   if (/\b(on\s+the\s+fence|sit\s+on\s+the\s+fence)\b/i.test(lower)) {
     return `Pas lagi galau dan belum bisa nentuin sikap di antara dua pilihan berat, native speaker bakal bilang mereka lagi **'on the fence'** — duduk di atas pagar tanpa memihak ke kiri atau kanan.`;
   }
@@ -104,7 +112,12 @@ export function generateDynamicRantauNote(text, cleanTranslation = '', tone = 'c
   }
 
   if (wordCount <= 2) {
-    return `Kosakata ringkas yang fungsional banget. Kalo lu bisa selipin kata ini dengan intonasi yang pas, ritme bahasa Inggris lu bakal terdengar jauh lebih percaya diri dan mengalir alami.`;
+    const shortPhrasesNotes = [
+      `Kosakata ringkas yang to-the-point. Kunci pelafalannya ada di penekanan suku kata pertama agar terdengar natural dan mengalir saat diselipkan dalam obrolan.`,
+      `Pilihan kata yang fungsional dan sering muncul dalam percakapan kasual native speaker. Enak dipakai buat merespons cepat tanpa perlu menyusun kalimat panjang.`,
+      `Frasa ringkas berdaya guna tinggi. Begitu lu terbiasa menggunakannya, alur bahasa Inggris lu bakal terdengar jauh lebih percaya diri dan refleksnya terasa alami.`
+    ];
+    return pickVariedTemplate('dynamic_rantau_note_short', shortPhrasesNotes);
   }
 
   if (wordCount <= 5) {
@@ -126,6 +139,14 @@ export function generateDynamicRantauNote(text, cleanTranslation = '', tone = 'c
 
 export function generateDynamicMaknaFilosofis(text, cleanTranslation = '', tone = 'casual_chill', wordCount = 1) {
   const lower = (text || '').toLowerCase().trim();
+
+  if (/\bowe\s+(one'?s?|your|my|him|her|them)?\s*self\b/i.test(lower)) {
+    return `Kita sering merasa bersalah saat beristirahat atau memilih mendahulukan diri sendiri. "Owe yourself" mengingatkan bahwa menghargai diri sendiri bukanlah keegoisan, melainkan prasyarat agar kita tetap waras dan mampu terus melangkah.`;
+  }
+
+  if (/\bstick(ing)?\s+around\b/i.test(lower)) {
+    return `Dalam hubungan manusia, kesetiaan untuk bertahan (sticking around) saat situasi tidak ideal adalah ujian terberat sekaligus pembuktian paling nyata dari sebuah komitmen.`;
+  }
 
   if (/\bcross(\s+the)?\s+line\b/i.test(lower) || tone === 'reflective_philosophical') {
     return `Secara psikologis dan eksistensial, kalimat ini mencerminkan fase 'threshold anxiety' — kegelisahan alami saat seseorang berdiri di ambang batas perubahan besar. Menatap masa depan yang belum jelas dan bertanya apakah diri kita siap melangkah bukanlah tanda kelemahan, melainkan wujud kedewasaan batin bahwa setiap langkah baru selalu menuntut keberanian untuk melepaskan kepastian lama.`;
